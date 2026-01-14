@@ -13,6 +13,9 @@ import LandingPage from './pages/storefront/LandingPage';
 import ProductCatalog from './pages/storefront/ProductCatalog';
 import About from './pages/storefront/About';
 import Contact from './pages/storefront/Contact';
+import Inventory from './pages/storefront/Inventory';
+import WhatsNew from './pages/storefront/WhatsNew';
+import Resources from './pages/storefront/Resources';
 
 /* Auth Components */
 import Login from './pages/auth/Login';
@@ -29,6 +32,9 @@ function App() {
         <Route path="catalog" element={<ProductCatalog />} />
         <Route path="about" element={<About />} />
         <Route path="contact" element={<Contact />} />
+        <Route path="inventory" element={<Inventory />} />
+        <Route path="whats-new" element={<WhatsNew />} />
+        <Route path="resources" element={<Resources />} />
       </Route>
 
       {/* Auth Routes */}
