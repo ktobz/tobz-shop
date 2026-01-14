@@ -8,27 +8,30 @@ const WhatsNew = () => {
     const slides = [
         {
             id: 1,
-            title: 'New Analytics Dashboard',
-            description: 'Get deeper insights into your business with our completely redesigned analytics dashboard. Track metrics in real-time and make data-driven decisions.',
-            icon: Zap,
-            color: '#4F46E5',
-            image: 'linear-gradient(135deg, #4F46E5 0%, #6366F1 100%)',
+            title: 'New Fashion Collection',
+            description: 'Discover our latest clothing arrivals. From trendy streetwear to elegant evening wear, we have something for everyone.',
+            icon: Sparkles,
+            color: '#EC4899',
+            image: 'url(https://images.unsplash.com/photo-1441984904996-e0b6ba687e04?auto=format&fit=crop&w=800&q=80)',
+            link: '/latest-releases'
         },
         {
             id: 2,
-            title: 'AI-Powered Recommendations',
-            description: 'Our new AI engine learns from customer behavior to provide personalized product recommendations, increasing conversion rates by up to 40%.',
-            icon: Star,
-            color: '#F59E0B',
-            image: 'linear-gradient(135deg, #F59E0B 0%, #FBBF24 100%)',
+            title: 'New Analytics Dashboard',
+            description: 'Get deeper insights into your business with our completely redesigned analytics dashboard. Track metrics in real-time.',
+            icon: Zap,
+            color: '#4F46E5',
+            image: 'linear-gradient(135deg, #4F46E5 0%, #6366F1 100%)',
+            link: '/dashboard'
         },
         {
             id: 3,
-            title: 'Mobile App Launch',
-            description: 'Shop on the go with our brand new mobile app. Available on iOS and Android with exclusive mobile-only deals and features.',
-            icon: Sparkles,
-            color: '#10B981',
-            image: 'linear-gradient(135deg, #10B981 0%, #34D399 100%)',
+            title: 'AI-Powered Recommendations',
+            description: 'Our new AI engine learns from customer behavior to provide personalized product recommendations.',
+            icon: Star,
+            color: '#F59E0B',
+            image: 'linear-gradient(135deg, #F59E0B 0%, #FBBF24 100%)',
+            link: '/catalog'
         },
     ];
 

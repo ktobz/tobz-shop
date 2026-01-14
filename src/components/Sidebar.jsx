@@ -5,19 +5,19 @@ import '../index.css';
 
 const Sidebar = () => {
   const navItems = [
-    { icon: LayoutDashboard, label: 'Dashboard', path: '/' },
-    { icon: BarChart3, label: 'Analytics', path: '/analytics' },
-    { icon: Settings, label: 'Settings', path: '/settings' },
+    { icon: LayoutDashboard, label: 'Dashboard', path: '/dashboard' },
+    { icon: BarChart3, label: 'Analytics', path: '/dashboard/analytics' },
+    { icon: Settings, label: 'Settings', path: '/dashboard/settings' },
   ];
 
   return (
     <aside className="sidebar glass-panel">
-      <div className="sidebar-header flex-center">
+      <NavLink to="/" className="sidebar-header flex-center" style={{ textDecoration: 'none', cursor: 'pointer' }}>
         <div className="logo-container flex-center">
           <ShoppingBag size={24} className="text-primary" />
         </div>
         <span className="brand-name">1shopapp</span>
-      </div>
+      </NavLink>
 
       <nav className="sidebar-nav">
         {navItems.map((item) => (

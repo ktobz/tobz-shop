@@ -67,7 +67,11 @@ const Dashboard = () => {
                         </thead>
                         <tbody>
                             {orders.map((order) => (
-                                <tr key={order.id} style={{ borderBottom: '1px solid var(--border-color)', fontSize: '0.9rem' }}>
+                                <tr
+                                    key={order.id}
+                                    style={{ borderBottom: '1px solid var(--border-color)', fontSize: '0.9rem', cursor: 'pointer' }}
+                                    onClick={() => alert(`Viewing details for order ${order.id}`)}
+                                >
                                     <td style={{ padding: '1rem', fontWeight: '600' }}>{order.id}</td>
                                     <td style={{ padding: '1rem' }}>{order.customer}</td>
                                     <td style={{ padding: '1rem', color: 'var(--text-secondary)' }}>{order.date}</td>

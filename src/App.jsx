@@ -16,6 +16,8 @@ import Contact from './pages/storefront/Contact';
 import Inventory from './pages/storefront/Inventory';
 import WhatsNew from './pages/storefront/WhatsNew';
 import Resources from './pages/storefront/Resources';
+import LatestReleases from './pages/storefront/LatestReleases';
+import Cart from './pages/storefront/Cart';
 
 /* Auth Components */
 import Login from './pages/auth/Login';
@@ -35,6 +37,8 @@ function App() {
         <Route path="inventory" element={<Inventory />} />
         <Route path="whats-new" element={<WhatsNew />} />
         <Route path="resources" element={<Resources />} />
+        <Route path="latest-releases" element={<LatestReleases />} />
+        <Route path="cart" element={<Cart />} />
       </Route>
 
       {/* Auth Routes */}

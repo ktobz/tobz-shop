@@ -136,11 +136,17 @@ const Inventory = () => {
                                 </div>
 
                                 <div className="inventory-actions">
-                                    <button className="btn-outline btn-sm">
+                                    <button
+                                        className="btn-outline btn-sm"
+                                        onClick={() => alert(`Editing: ${item.title}`)}
+                                    >
                                         <Package size={16} />
                                         Edit
                                     </button>
-                                    <button className="btn-outline btn-sm">
+                                    <button
+                                        className="btn-outline btn-sm"
+                                        onClick={() => alert(`Ordering more: ${item.title}`)}
+                                    >
                                         <Truck size={16} />
                                         Order
                                     </button>

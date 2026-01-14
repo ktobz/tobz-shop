@@ -1,7 +1,22 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Mail, Phone, MapPin, Send } from 'lucide-react';
 
 const Contact = () => {
+    const [heroImage, setHeroImage] = useState('');
+
+    useEffect(() => {
+        const fetchImage = async () => {
+            try {
+                const response = await fetch('https://fakestoreapi.com/products?limit=10');
+                const data = await response.json();
+                setHeroImage(data[9]?.image); // Use a different image than about
+            } catch (err) {
+                console.error('Failed to fetch image', err);
+            }
+        };
+        fetchImage();
+    }, []);
+
     const [formData, setFormData] = useState({
         name: '',
         email: '',
@@ -50,9 +65,9 @@ const Contact = () => {
     return (
         <div className="contact-page fade-in">
             {/* Hero Section */}
-            <section className="contact-hero">
-                <h1>Get in Touch</h1>
-                <p>Have questions? We'd love to hear from you. Send us a message and we'll respond as soon as possible.</p>
+            <section className="contact-hero" style={{ background: heroImage ? `linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url(${heroImage}) center/cover no-repeat` : 'var(--gradient-primary)', padding: '6rem 2rem' }}>
+                <h1 className="hero-title white-text">Get in <span className="text-gradient">Touch</span></h1>
+                <p className="white-text" style={{ maxWidth: '600px', margin: '0 auto' }}>Have questions? We'd love to hear from you. Send us a message and we'll respond as soon as possible.</p>
             </section>
 
             <div className="contact-container">
