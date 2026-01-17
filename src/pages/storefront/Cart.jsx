@@ -1,7 +1,7 @@
 import React from 'react';
 import { ShoppingBag, Trash2, Plus, Minus, ArrowRight } from 'lucide-react';
 import { NavLink } from 'react-router-dom';
-import { useCart } from '../../context/CartContext';
+import { useCart } from '../../hooks/useCart';
 
 const Cart = () => {
     const { cartItems, updateQuantity, removeFromCart, getTotalPrice } = useCart();

@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { Mail, Lock, User } from 'lucide-react';
 import * as yup from 'yup';
-import { useAuth } from '../../context/AuthContext';
+import { useAuth } from '../../hooks/useAuth';
 
 const signupSchema = yup.object().shape({
     name: yup.string().required('Full name is required'),

@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { Mail, Lock } from 'lucide-react';
 import * as yup from 'yup';
-import { useAuth } from '../../context/AuthContext';
+import { useAuth } from '../../hooks/useAuth';
 
 const loginSchema = yup.object().shape({
     email: yup.string().email('Invalid email address').required('Email is required'),

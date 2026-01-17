@@ -3,7 +3,7 @@ import { Heart, Trash2, ShoppingCart, ArrowRight } from 'lucide-react';
 import { NavLink } from 'react-router-dom';
 import { fetchProductById } from '../../services/mockApi';
 import { useWatchlist } from '../../context/WatchlistContext';
-import { useCart } from '../../context/CartContext';
+import { useCart } from '../../hooks/useCart';
 
 const Wishlist = () => {
     const { watchlist, toggleWatchlist } = useWatchlist();

@@ -1,7 +1,7 @@
 import React, { useState, useEffect, lazy, Suspense } from 'react';
 import styled from '@emotion/styled';
 import { BookOpen, FileText, Code, Heart, ChevronUp } from 'lucide-react';
-import { useAuth } from '../../context/AuthContext';
+import { useAuth } from '../../hooks/useAuth';
 
 // Lazy load components for code splitting
 const TopPicksSection = lazy(() => import('./resources/TopPicksSection'));
@@ -195,7 +195,7 @@ const HelpSection = styled.section`
 `;
 
 const HelpCard = styled.div`
-  background: ${props => props.bgImage 
+  background: ${props => props.bgImage
     ? `linear-gradient(rgba(0,0,0,0.8), rgba(0,0,0,0.8)), url(${props.bgImage}) center/cover no-repeat`
     : 'var(--bg-card)'};
   backdrop-filter: blur(12px);
@@ -316,151 +316,149 @@ const LoadingFallback = styled.div`
 `;
 
 const Resources = () => {
-    const { user } = useAuth();
-    const [resourceImages, setResourceImages] = useState([]);
-    const [showBackToTop, setShowBackToTop] = useState(false);
-    const [watchlist, setWatchlist] = useState(new Set());
+  const { user } = useAuth();
+  const [resourceImages, setResourceImages] = useState([]);
+  const [showBackToTop, setShowBackToTop] = useState(false);
+  const [watchlist, setWatchlist] = useState(() => {
+    // Load watchlist from localStorage
+    const savedWatchlist = localStorage.getItem('resources_watchlist');
+    return savedWatchlist ? new Set(JSON.parse(savedWatchlist)) : new Set();
+  });
 
-    useEffect(() => {
-        const fetchImages = async () => {
-            try {
-                const response = await fetch('https://fakestoreapi.com/products?limit=3');
-                const data = await response.json();
-                setResourceImages(data.map(item => item.image));
-            } catch (err) {
-                console.error('Failed to fetch images', err);
-            }
-        };
-        fetchImages();
+  useEffect(() => {
+    const fetchImages = async () => {
+      try {
+        const response = await fetch('https://fakestoreapi.com/products?limit=3');
+        const data = await response.json();
+        setResourceImages(data.map(item => item.image));
+      } catch (err) {
+        console.error('Failed to fetch images', err);
+      }
+    };
+    fetchImages();
+  }, []);
 
-        // Load watchlist from localStorage
-        const savedWatchlist = localStorage.getItem('resources_watchlist');
-        if (savedWatchlist) {
-            setWatchlist(new Set(JSON.parse(savedWatchlist)));
-        }
-    }, []);
-
-    useEffect(() => {
-        const handleScroll = () => {
-            setShowBackToTop(window.scrollY > 400);
-        };
-
-        window.addEventListener('scroll', handleScroll);
-        return () => window.removeEventListener('scroll', handleScroll);
-    }, []);
-
-    const scrollToTop = () => {
-        window.scrollTo({
-            top: 0,
-            behavior: 'smooth'
-        });
+  useEffect(() => {
+    const handleScroll = () => {
+      setShowBackToTop(window.scrollY > 400);
     };
 
-    const toggleWatchlist = (id) => {
-        setWatchlist(prev => {
-            const newSet = new Set(prev);
-            if (newSet.has(id)) {
-                newSet.delete(id);
-            } else {
-                newSet.add(id);
-            }
-            localStorage.setItem('resources_watchlist', JSON.stringify([...newSet]));
-            return newSet;
-        });
-    };
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
-    const resourceCategories = [
-        {
-            icon: BookOpen,
-            title: 'Documentation',
-            description: 'Comprehensive guides and API documentation',
-            links: ['Getting Started', 'API Reference', 'Best Practices', 'FAQ'],
-            image: resourceImages[0]
-        },
-        {
-            icon: FileText,
-            title: 'Tutorials',
-            description: 'Step-by-step tutorials for common tasks',
-            links: ['Store Setup', 'Product Management', 'Marketing Guide', 'Analytics'],
-            image: resourceImages[1]
-        },
-        {
-            icon: Code,
-            title: 'Developer Resources',
-            description: 'Tools and resources for developers',
-            links: ['API Docs', 'SDKs', 'Code Examples', 'Developer Community'],
-            image: resourceImages[2]
-        },
-    ];
+  const scrollToTop = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    });
+  };
 
-    return (
-        <ResourcesPage>
-            <ResourcesHeader>
-                <HeroTitle>
-                    Resources & <TextGradient>Support</TextGradient>
-                </HeroTitle>
-                <Subtitle>Everything you need to succeed with 1shopapp</Subtitle>
-            </ResourcesHeader>
+  const toggleWatchlist = (id) => {
+    setWatchlist(prev => {
+      const newSet = new Set(prev);
+      if (newSet.has(id)) {
+        newSet.delete(id);
+      } else {
+        newSet.add(id);
+      }
+      localStorage.setItem('resources_watchlist', JSON.stringify([...newSet]));
+      return newSet;
+    });
+  };
 
-            <ResourcesGrid>
-                {resourceCategories.map((category, i) => (
-                    <ResourceCard key={i}>
-                        <ResourceCardImage bgImage={category.image} />
-                        <ResourceCardContent>
-                            <ResourceIcon>
-                                <category.icon size={40} />
-                            </ResourceIcon>
-                            <CardTitle>{category.title}</CardTitle>
-                            <CardDescription>{category.description}</CardDescription>
-                            <ResourceLinks>
-                                {category.links.map((link, idx) => (
-                                    <li key={idx}>
-                                        <ResourceLink href="#">{link}</ResourceLink>
-                                    </li>
-                                ))}
-                            </ResourceLinks>
-                        </ResourceCardContent>
-                    </ResourceCard>
+  const resourceCategories = [
+    {
+      icon: BookOpen,
+      title: 'Documentation',
+      description: 'Comprehensive guides and API documentation',
+      links: ['Getting Started', 'API Reference', 'Best Practices', 'FAQ'],
+      image: resourceImages[0]
+    },
+    {
+      icon: FileText,
+      title: 'Tutorials',
+      description: 'Step-by-step tutorials for common tasks',
+      links: ['Store Setup', 'Product Management', 'Marketing Guide', 'Analytics'],
+      image: resourceImages[1]
+    },
+    {
+      icon: Code,
+      title: 'Developer Resources',
+      description: 'Tools and resources for developers',
+      links: ['API Docs', 'SDKs', 'Code Examples', 'Developer Community'],
+      image: resourceImages[2]
+    },
+  ];
+
+  return (
+    <ResourcesPage>
+      <ResourcesHeader>
+        <HeroTitle>
+          Resources & <TextGradient>Support</TextGradient>
+        </HeroTitle>
+        <Subtitle>Everything you need to succeed with 1shopapp</Subtitle>
+      </ResourcesHeader>
+
+      <ResourcesGrid>
+        {resourceCategories.map((category, i) => (
+          <ResourceCard key={i}>
+            <ResourceCardImage bgImage={category.image} />
+            <ResourceCardContent>
+              <ResourceIcon>
+                <category.icon size={40} />
+              </ResourceIcon>
+              <CardTitle>{category.title}</CardTitle>
+              <CardDescription>{category.description}</CardDescription>
+              <ResourceLinks>
+                {category.links.map((link, idx) => (
+                  <li key={idx}>
+                    <ResourceLink href="#">{link}</ResourceLink>
+                  </li>
                 ))}
-            </ResourcesGrid>
+              </ResourceLinks>
+            </ResourceCardContent>
+          </ResourceCard>
+        ))}
+      </ResourcesGrid>
 
-            {/* Top Picks Section */}
-            <Suspense fallback={<LoadingFallback>Loading Top Picks...</LoadingFallback>}>
-                <TopPicksSection 
-                    watchlist={watchlist} 
-                    toggleWatchlist={toggleWatchlist}
-                    user={user}
-                />
-            </Suspense>
+      {/* Top Picks Section */}
+      <Suspense fallback={<LoadingFallback>Loading Top Picks...</LoadingFallback>}>
+        <TopPicksSection
+          watchlist={watchlist}
+          toggleWatchlist={toggleWatchlist}
+          user={user}
+        />
+      </Suspense>
 
-            {/* Related Interests Section */}
-            <Suspense fallback={<LoadingFallback>Loading Related Interests...</LoadingFallback>}>
-                <RelatedInterestsSection user={user} />
-            </Suspense>
+      {/* Related Interests Section */}
+      <Suspense fallback={<LoadingFallback>Loading Related Interests...</LoadingFallback>}>
+        <RelatedInterestsSection user={user} />
+      </Suspense>
 
-            {/* Storyline Section */}
-            <Suspense fallback={<LoadingFallback>Loading Storyline...</LoadingFallback>}>
-                <StorylineSection />
-            </Suspense>
+      {/* Storyline Section */}
+      <Suspense fallback={<LoadingFallback>Loading Storyline...</LoadingFallback>}>
+        <StorylineSection />
+      </Suspense>
 
-            {/* FAQ Section */}
-            <Suspense fallback={<LoadingFallback>Loading FAQ...</LoadingFallback>}>
-                <FAQSection />
-            </Suspense>
+      {/* FAQ Section */}
+      <Suspense fallback={<LoadingFallback>Loading FAQ...</LoadingFallback>}>
+        <FAQSection />
+      </Suspense>
 
-            <HelpSection>
-                <HelpCard bgImage={resourceImages[1]}>
-                    <HelpTitle>Can't find what you're looking for?</HelpTitle>
-                    <HelpText>Our support team is here to help. Contact us anytime!</HelpText>
-                    <PrimaryButton>Contact Support</PrimaryButton>
-                </HelpCard>
-            </HelpSection>
+      <HelpSection>
+        <HelpCard bgImage={resourceImages[1]}>
+          <HelpTitle>Can't find what you're looking for?</HelpTitle>
+          <HelpText>Our support team is here to help. Contact us anytime!</HelpText>
+          <PrimaryButton>Contact Support</PrimaryButton>
+        </HelpCard>
+      </HelpSection>
 
-            <BackToTopButton visible={showBackToTop} onClick={scrollToTop} aria-label="Back to top">
-                <ChevronUp size={24} />
-            </BackToTopButton>
-        </ResourcesPage>
-    );
+      <BackToTopButton visible={showBackToTop} onClick={scrollToTop} aria-label="Back to top">
+        <ChevronUp size={24} />
+      </BackToTopButton>
+    </ResourcesPage>
+  );
 };
 
 export default Resources;

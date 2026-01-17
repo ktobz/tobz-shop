@@ -35,7 +35,7 @@ const Inventory = () => {
             const updated = await updateInventory(item.id, { stock: parseInt(editStock) });
             setInventory(prev => prev.map(inv => inv.id === item.id ? updated : inv));
             setEditing(null);
-        } catch (_) {
+        } catch {
             alert('Failed to update stock');
         }
     };

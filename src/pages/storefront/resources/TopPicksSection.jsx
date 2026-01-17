@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import styled from '@emotion/styled';
 import { Heart, Star, TrendingUp, ShoppingCart } from 'lucide-react';
 import { useWatchlist } from '../../../context/WatchlistContext';
-import { useCart } from '../../../context/CartContext';
+import { useCart } from '../../../hooks/useCart';
 import { fetchProducts } from '../../../services/mockApi';
 
 // Section Container
@@ -227,8 +227,7 @@ const CategoryBadge = styled.span`
 const TopPicksSection = ({ user }) => {
   const [topPicks, setTopPicks] = useState([]);
   const [loading, setLoading] = useState(true);
-  const { watchlist, toggleWatchlist, isInWatchlist } = useWatchlist();
-  const { addToCart } = useCart();
+  const { toggleWatchlist, isInWatchlist } = useWatchlist();
 
   useEffect(() => {
     const fetchTopPicks = async () => {

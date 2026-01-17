@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Mail, Phone, MapPin, Send } from 'lucide-react';
+import FAQSection from './resources/FAQSection';
 
 const Contact = () => {
     const [heroImage, setHeroImage] = useState('');
@@ -170,6 +171,7 @@ const Contact = () => {
                                         rows="6"
                                         required
                                     ></textarea>
+                                    {errors.message && <span className="error">{errors.message}</span>}
                                 </div>
 
                                 <button type="submit" className="btn-primary submit-btn">
@@ -181,6 +183,8 @@ const Contact = () => {
                     </div>
                 </section>
             </div>
+
+            <FAQSection />
         </div>
     );
 };

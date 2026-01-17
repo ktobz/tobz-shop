@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import styled from '@emotion/styled';
 import { Sparkles, ArrowRight, Laptop, Shirt, Home, Trophy, BookOpen, Car } from 'lucide-react';
 
@@ -147,7 +147,7 @@ const Tag = styled.span`
   font-weight: 600;
 `;
 
-const RelatedInterestsSection = ({ user }) => {
+const RelatedInterestsSection = () => {
   const interests = [
     {
       id: 1,

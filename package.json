@@ -10,14 +10,21 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@chakra-ui/icons": "^2.2.4",
+    "@chakra-ui/react": "^3.31.0",
     "@emotion/react": "^11.14.0",
     "@emotion/styled": "^11.14.1",
+    "@fontsource/inter": "^5.2.8",
+    "@mui/material": "^7.3.7",
     "@supabase/supabase-js": "^2.90.1",
+    "antd": "^6.2.0",
+    "framer-motion": "^12.26.2",
     "js-cookie": "^3.0.5",
     "lucide-react": "^0.562.0",
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
     "react-router-dom": "^7.12.0",
+    "recharts": "^3.6.0",
     "yup": "^1.7.1"
   },
   "devDependencies": {

@@ -1,10 +1,9 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { ShoppingBag, User, LogOut, Menu, X, ChevronDown, Package, BookOpen, Users, Mail, BarChart3, AppWindow, Megaphone, Building, Headphones, ShoppingCart, Heart } from 'lucide-react';
-import { useAuth } from '../../context/AuthContext';
-import { useCart } from '../../context/CartContext';
+import { useAuth } from '../../hooks/useAuth';
+import { useCart } from '../../hooks/useCart';
 import { useWatchlist } from '../../context/WatchlistContext';
-import ThemeToggle from '../ThemeToggle';
 
 const StorefrontNavbar = () => {
     const { user, logout } = useAuth();
@@ -149,7 +148,6 @@ const StorefrontNavbar = () => {
                             )}
                         </div>
                     </NavLink>
-                    <ThemeToggle />
                     {user ? (
                         <div className="user-profile">
                             <span className="user-name">Hi, {user.name}</span>
