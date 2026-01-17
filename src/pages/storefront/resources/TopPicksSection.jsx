@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import styled from '@emotion/styled';
 import { Heart, Star, TrendingUp, ShoppingCart } from 'lucide-react';
 import { useWatchlist } from '../../../context/WatchlistContext';
-import { useCart } from '../../../hooks/useCart';
+
 import { fetchProducts } from '../../../services/mockApi';
 
 // Section Container

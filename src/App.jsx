@@ -1,6 +1,12 @@
 import React from 'react';
 import { Routes, Route } from 'react-router-dom';
 
+// UI Library Providers
+import { ChakraProvider, defaultSystem } from '@chakra-ui/react';
+import { ThemeProvider, createTheme } from '@mui/material/styles';
+import CssBaseline from '@mui/material/CssBaseline';
+import { ConfigProvider, theme } from 'antd';
+
 /* Admin Components */
 import Layout from './components/Layout';
 import Dashboard from './pages/Dashboard';
@@ -27,32 +33,42 @@ import Signup from './pages/auth/Signup';
 import './App.css';
 
 function App() {
+  const theme = createTheme(); // Default MUI theme
+
   return (
-    <Routes>
-      {/* Storefront Routes */}
-      <Route path="/" element={<StorefrontLayout />}>
-        <Route index element={<LandingPage />} />
-        <Route path="catalog" element={<ProductCatalog />} />
-        <Route path="about" element={<About />} />
-        <Route path="contact" element={<Contact />} />
-        <Route path="inventory" element={<Inventory />} />
-        <Route path="whats-new" element={<WhatsNew />} />
-        <Route path="resources" element={<Resources />} />
-        <Route path="latest-releases" element={<LatestReleases />} />
-        <Route path="cart" element={<Cart />} />
-      </Route>
+    <ChakraProvider value={defaultSystem}>
+      <ThemeProvider theme={theme}>
+        <CssBaseline />
+        <ConfigProvider theme={{ algorithm: theme.darkAlgorithm }}>
+          <Routes>
+            {/* Storefront Routes */}
+            <Route path="/" element={<StorefrontLayout />}>
+              <Route index element={<LandingPage />} />
+              <Route path="catalog" element={<ProductCatalog />} />
+              <Route path="about" element={<About />} />
+              <Route path="contact" element={<Contact />} />
+              <Route path="inventory" element={<Inventory />} />
+              <Route path="whats-new" element={<WhatsNew />} />
+              <Route path="resources" element={<Resources />} />
+              <Route path="latest-releases" element={<LatestReleases />} />
+              <Route path="cart" element={<Cart />} />
+              <Route path="wishlist" element={<Wishlist />} />
+            </Route>
 
-      {/* Auth Routes */}
-      <Route path="/login" element={<Login />} />
-      <Route path="/signup" element={<Signup />} />
+            {/* Auth Routes */}
+            <Route path="/login" element={<Login />} />
+            <Route path="/signup" element={<Signup />} />
 
-      {/* Admin Dashboard Routes */}
-      <Route path="/dashboard" element={<Layout />}>
-        <Route index element={<Dashboard />} />
-        <Route path="analytics" element={<Analytics />} />
-        <Route path="settings" element={<Settings />} />
-      </Route>
-    </Routes>
+            {/* Admin Dashboard Routes */}
+            <Route path="/dashboard" element={<Layout />}>
+              <Route index element={<Dashboard />} />
+              <Route path="analytics" element={<Analytics />} />
+              <Route path="settings" element={<Settings />} />
+            </Route>
+          </Routes>
+        </ConfigProvider>
+      </ThemeProvider>
+    </ChakraProvider>
   );
 }
 

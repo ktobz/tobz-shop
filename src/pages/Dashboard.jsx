@@ -23,7 +23,12 @@ const Dashboard = () => {
             ]);
             setAnalytics(analyticsData);
             setUsers(usersData);
-            setOrders(ordersData);
+            // Enrich orders with customer names
+            const enrichedOrders = ordersData.map(order => ({
+                ...order,
+                customer: usersData.find(user => user.id === order.userId)?.name || 'Unknown'
+            }));
+            setOrders(enrichedOrders);
         } catch (error) {
             console.error('Failed to fetch data:', error);
         } finally {
@@ -46,9 +51,9 @@ const Dashboard = () => {
 
     const getStatusColor = (status) => {
         switch (status) {
-            case 'Delivered': return 'var(--success)';
-            case 'Processing': return 'var(--warning)';
-            case 'Shipped': return 'var(--primary)';
+            case 'completed': return 'var(--success)';
+            case 'pending': return 'var(--warning)';
+            case 'shipped': return 'var(--primary)';
             default: return 'var(--text-secondary)';
         }
     };
@@ -98,8 +103,8 @@ const Dashboard = () => {
         },
         {
             title: 'Amount',
-            dataIndex: 'amount',
-            key: 'amount',
+            dataIndex: 'total',
+            key: 'total',
         },
     ];
 

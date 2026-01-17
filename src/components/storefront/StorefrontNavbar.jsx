@@ -4,6 +4,7 @@ import { ShoppingBag, User, LogOut, Menu, X, ChevronDown, Package, BookOpen, Use
 import { useAuth } from '../../hooks/useAuth';
 import { useCart } from '../../hooks/useCart';
 import { useWatchlist } from '../../context/WatchlistContext';
+import ThemeToggle from '../ThemeToggle';
 
 const StorefrontNavbar = () => {
     const { user, logout } = useAuth();
@@ -164,6 +165,7 @@ const StorefrontNavbar = () => {
 
                     {!user && (
                         <NavLink to="/signup" className="btn-primary desktop-only">Sign Up</NavLink>
+                     <ThemeToggle />
                     )}
 
                     {/* Mobile Menu Toggle - Only visible on mobile */}
