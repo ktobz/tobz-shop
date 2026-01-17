@@ -1,25 +1,12 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { ShoppingBag, Trash2, Plus, Minus, ArrowRight } from 'lucide-react';
 import { NavLink } from 'react-router-dom';
+import { useCart } from '../../context/CartContext';
 
 const Cart = () => {
-    // Mock cart data
-    const [cartItems, setCartItems] = useState([
-        { id: 1, title: 'Cotton T-Shirt', price: 29.99, quantity: 2, image: 'https://fakestoreapi.com/img/71li-ujtlUL._AC_UX679_.jpg' },
-        { id: 2, title: 'Slim Fit Jeans', price: 59.99, quantity: 1, image: 'https://fakestoreapi.com/img/81fPKd-2AYL._AC_SL1500_.jpg' },
-    ]);
+    const { cartItems, updateQuantity, removeFromCart, getTotalPrice } = useCart();
 
-    const updateQuantity = (id, delta) => {
-        setCartItems(prev => prev.map(item =>
-            item.id === id ? { ...item, quantity: Math.max(1, item.quantity + delta) } : item
-        ));
-    };
-
-    const removeItem = (id) => {
-        setCartItems(prev => prev.filter(item => item.id !== id));
-    };
-
-    const subtotal = cartItems.reduce((acc, item) => acc + item.price * item.quantity, 0);
+    const subtotal = getTotalPrice();
     const shipping = 5.99;
     const total = subtotal + shipping;
 
@@ -33,7 +20,7 @@ const Cart = () => {
                     <h2>Your cart is empty</h2>
                     <p style={{ color: 'var(--text-secondary)', marginTop: '0.5rem' }}>Looks like you haven't added anything yet.</p>
                 </div>
-                <NavLink to="/catalog" className="btn-primary">Start Shopping</NavLink>
+                <NavLink to="/catalog" className="btn-primary">Browse Products</NavLink>
             </div>
         );
     }
@@ -53,11 +40,11 @@ const Cart = () => {
                             </div>
                             <div style={{ display: 'flex', alignItems: 'center', gap: '1.5rem' }}>
                                 <div className="quantity-controls" style={{ display: 'flex', alignItems: 'center', gap: '1rem', background: 'rgba(255,255,255,0.05)', padding: '0.5rem', borderRadius: '8px' }}>
-                                    <button onClick={() => updateQuantity(item.id, -1)} className="icon-btn-sm"><Minus size={16} /></button>
+                                    <button onClick={() => updateQuantity(item.id, item.quantity - 1)} className="icon-btn-sm"><Minus size={16} /></button>
                                     <span style={{ fontWeight: '700', minWidth: '20px', textAlign: 'center' }}>{item.quantity}</span>
-                                    <button onClick={() => updateQuantity(item.id, 1)} className="icon-btn-sm"><Plus size={16} /></button>
+                                    <button onClick={() => updateQuantity(item.id, item.quantity + 1)} className="icon-btn-sm"><Plus size={16} /></button>
                                 </div>
-                                <button onClick={() => removeItem(item.id)} style={{ color: 'var(--danger)', background: 'none', border: 'none', cursor: 'pointer' }}>
+                                <button onClick={() => removeFromCart(item.id)} style={{ color: 'var(--danger)', background: 'none', border: 'none', cursor: 'pointer' }}>
                                     <Trash2 size={20} />
                                 </button>
                             </div>

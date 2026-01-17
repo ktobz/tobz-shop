@@ -1,4 +1,5 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
+import { supabase } from '../config/supabase';
 
 const AuthContext = createContext();
 
@@ -7,41 +8,63 @@ export const AuthProvider = ({ children }) => {
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        // Check local storage for existing session
-        const savedUser = localStorage.getItem('1shopapp_user');
-        if (savedUser) {
-            setUser(JSON.parse(savedUser));
-        }
-        setLoading(false);
+        // Get initial session
+        const getSession = async () => {
+            const { data: { session } } = await supabase.auth.getSession();
+            setUser(session?.user ?? null);
+            setLoading(false);
+        };
+
+        getSession();
+
+        // Listen for auth changes
+        const {
+            data: { subscription },
+        } = supabase.auth.onAuthStateChange((_event, session) => {
+            setUser(session?.user ?? null);
+            setLoading(false);
+        });
+
+        return () => subscription.unsubscribe();
     }, []);
 
-    const login = (email, password) => {
-        // Mock login
-        const mockUser = { email, name: email.split('@')[0], id: '123' };
-        setUser(mockUser);
-        localStorage.setItem('1shopapp_user', JSON.stringify(mockUser));
-        return Promise.resolve(mockUser);
+    const login = async (email, password) => {
+        const { data, error } = await supabase.auth.signInWithPassword({
+            email,
+            password,
+        });
+        if (error) throw error;
+        return data.user;
     };
 
-    const signup = (name, email, password) => {
-        // Mock signup
-        const mockUser = { name, email, id: Date.now().toString() };
-        setUser(mockUser);
-        localStorage.setItem('1shopapp_user', JSON.stringify(mockUser));
-        return Promise.resolve(mockUser);
+    const signup = async (name, email, password) => {
+        const { data, error } = await supabase.auth.signUp({
+            email,
+            password,
+            options: {
+                data: {
+                    full_name: name,
+                },
+            },
+        });
+        if (error) throw error;
+        return data.user;
     };
 
-    const loginWithGoogle = () => {
-        // Mock Google login
-        const mockUser = { name: 'Google User', email: 'google@example.com', id: 'google_123' };
-        setUser(mockUser);
-        localStorage.setItem('1shopapp_user', JSON.stringify(mockUser));
-        return Promise.resolve(mockUser);
+    const loginWithGoogle = async () => {
+        const { data, error } = await supabase.auth.signInWithOAuth({
+            provider: 'google',
+            options: {
+                redirectTo: `${window.location.origin}/`,
+            },
+        });
+        if (error) throw error;
+        return data;
     };
 
-    const logout = () => {
-        setUser(null);
-        localStorage.removeItem('1shopapp_user');
+    const logout = async () => {
+        const { error } = await supabase.auth.signOut();
+        if (error) throw error;
     };
 
     return (

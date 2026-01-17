@@ -25,14 +25,34 @@ const Contact = () => {
     });
 
     const [submitted, setSubmitted] = useState(false);
+    const [errors, setErrors] = useState({});
 
     const handleChange = (e) => {
         const { name, value } = e.target;
         setFormData(prev => ({ ...prev, [name]: value }));
+        if (errors[name]) {
+            setErrors(prev => ({ ...prev, [name]: '' }));
+        }
+    };
+
+    const validateForm = () => {
+        const newErrors = {};
+        if (!formData.name.trim()) newErrors.name = 'Name is required';
+        if (!formData.email.trim()) newErrors.email = 'Email is required';
+        else if (!/\S+@\S+\.\S+/.test(formData.email)) newErrors.email = 'Email is invalid';
+        if (!formData.subject.trim()) newErrors.subject = 'Subject is required';
+        if (!formData.message.trim()) newErrors.message = 'Message is required';
+        return newErrors;
     };
 
     const handleSubmit = (e) => {
         e.preventDefault();
+        const validationErrors = validateForm();
+        if (Object.keys(validationErrors).length > 0) {
+            setErrors(validationErrors);
+            return;
+        }
+        setErrors({});
         console.log('Form submitted:', formData);
         setSubmitted(true);
         setTimeout(() => {
@@ -108,6 +128,7 @@ const Contact = () => {
                                         placeholder="John Doe"
                                         required
                                     />
+                                    {errors.name && <span className="error">{errors.name}</span>}
                                 </div>
 
                                 <div className="form-group">
@@ -121,6 +142,7 @@ const Contact = () => {
                                         placeholder="john@example.com"
                                         required
                                     />
+                                    {errors.email && <span className="error">{errors.email}</span>}
                                 </div>
 
                                 <div className="form-group">
@@ -134,6 +156,7 @@ const Contact = () => {
                                         placeholder="How can we help?"
                                         required
                                     />
+                                    {errors.subject && <span className="error">{errors.subject}</span>}
                                 </div>
 
                                 <div className="form-group">

@@ -1,10 +1,15 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
-import { ShoppingBag, User, LogOut, Menu, X, ChevronDown, Package, BookOpen, Users, Mail } from 'lucide-react';
+import { ShoppingBag, User, LogOut, Menu, X, ChevronDown, Package, BookOpen, Users, Mail, BarChart3, AppWindow, Megaphone, Building, Headphones, ShoppingCart, Heart } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
+import { useCart } from '../../context/CartContext';
+import { useWatchlist } from '../../context/WatchlistContext';
+import ThemeToggle from '../ThemeToggle';
 
 const StorefrontNavbar = () => {
     const { user, logout } = useAuth();
+    const { cartItems } = useCart();
+    const { watchlist } = useWatchlist();
     const navigate = useNavigate();
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
     const [solutionsOpen, setSolutionsOpen] = useState(false);
@@ -33,24 +38,24 @@ const StorefrontNavbar = () => {
             label: 'Business',
             icon: Package,
             items: [
-                { label: 'Inventory Management', path: '/inventory', description: 'Manage your stock efficiently' },
-                { label: 'Analytics Dashboard', path: '/dashboard/analytics', description: 'Track your performance' },
+                { label: 'Products', path: '/inventory', description: 'Manage your stock efficiently', icon: Package },
+                { label: 'Analytics', path: '/dashboard/analytics', description: 'Track your performance', icon: BarChart3 },
             ]
         },
         resources: {
             label: 'Resources',
             icon: BookOpen,
             items: [
-                { label: 'Documentation', path: '/resources', description: 'Guides and tutorials' },
-                { label: 'API Reference', path: '/resources#api', description: 'Developer resources' },
+                { label: 'Apps', path: '/resources', description: 'Guides and tutorials', icon: AppWindow },
+                { label: 'Marketing', path: '/resources#api', description: 'Developer resources', icon: Megaphone },
             ]
         },
         company: {
             label: 'Company',
             icon: Users,
             items: [
-                { label: 'About Us', path: '/about', description: 'Learn about our story' },
-                { label: 'Contact', path: '/contact', description: 'Get in touch with us' },
+                { label: 'About Us', path: '/about', description: 'Learn about our story', icon: Building },
+                { label: 'Support', path: '/contact', description: 'Get in touch with us', icon: Headphones },
             ]
         }
     };
@@ -65,20 +70,20 @@ const StorefrontNavbar = () => {
 
                 {/* Desktop Links */}
                 <div className="nav-links desktop-only">
-                    <NavLink to="/" className="nav-link">Home</NavLink>
-                    <NavLink to="/catalog" className="nav-link">Shop</NavLink>
-                    <NavLink to="/latest-releases" className="nav-link">New Releases</NavLink>
-                    
+                    <NavLink to="/" className="nav-link">Store</NavLink>
+                    <NavLink to="/catalog" className="nav-link">Products</NavLink>
+                    <NavLink to="/latest-releases" className="nav-link">Latest Products</NavLink>
+
                     {/* Solutions Mega Menu */}
                     <div className="nav-dropdown" ref={dropdownRef}>
-                        <button 
+                        <button
                             className="dropdown-trigger nav-link"
                             onClick={() => setSolutionsOpen(!solutionsOpen)}
                             onMouseEnter={() => setSolutionsOpen(true)}
                         >
                             Solutions
-                            <ChevronDown 
-                                size={16} 
+                            <ChevronDown
+                                size={16}
                                 className={`dropdown-icon ${solutionsOpen ? 'open' : ''}`}
                             />
                         </button>
@@ -100,26 +105,51 @@ const StorefrontNavbar = () => {
                                     })}
                                 </div>
                                 <div className="mega-menu-content">
-                                    {solutionsTabs[activeTab].items.map((item, index) => (
-                                        <NavLink
-                                            key={index}
-                                            to={item.path}
-                                            className="mega-menu-item"
-                                            onClick={() => setSolutionsOpen(false)}
-                                        >
-                                            <div className="mega-menu-item-title">{item.label}</div>
-                                            <div className="mega-menu-item-desc">{item.description}</div>
-                                        </NavLink>
-                                    ))}
+                                    {solutionsTabs[activeTab].items.map((item, index) => {
+                                        const ItemIcon = item.icon;
+                                        return (
+                                            <NavLink
+                                                key={index}
+                                                to={item.path}
+                                                className="mega-menu-item"
+                                                onClick={() => setSolutionsOpen(false)}
+                                            >
+                                                <div className="mega-menu-item-icon">
+                                                    <ItemIcon size={20} />
+                                                </div>
+                                                <div className="mega-menu-item-text">
+                                                    <div className="mega-menu-item-title">{item.label}</div>
+                                                    <div className="mega-menu-item-desc">{item.description}</div>
+                                                </div>
+                                            </NavLink>
+                                        );
+                                    })}
                                 </div>
                             </div>
                         )}
                     </div>
 
-                    <NavLink to="/dashboard" className="nav-link admin-link">Admin</NavLink>
+                    <NavLink to="/dashboard" className="nav-link admin-link">Dashboard</NavLink>
                 </div>
 
                 <div className="nav-actions">
+                    <NavLink to="/cart" className="icon-link" title="Shopping Cart">
+                        <div className="icon-container">
+                            <ShoppingCart size={20} />
+                            {cartItems.length > 0 && (
+                                <span className="badge">{cartItems.length}</span>
+                            )}
+                        </div>
+                    </NavLink>
+                    <NavLink to="/wishlist" className="icon-link" title="Wishlist">
+                        <div className="icon-container">
+                            <Heart size={20} />
+                            {watchlist.size > 0 && (
+                                <span className="badge">{watchlist.size}</span>
+                            )}
+                        </div>
+                    </NavLink>
+                    <ThemeToggle />
                     {user ? (
                         <div className="user-profile">
                             <span className="user-name">Hi, {user.name}</span>
@@ -152,13 +182,13 @@ const StorefrontNavbar = () => {
             {mobileMenuOpen && (
                 <div className="mobile-menu fade-in">
                     <div className="mobile-menu-content">
-                        <NavLink to="/" className="mobile-menu-item" onClick={() => setMobileMenuOpen(false)}>Home</NavLink>
-                        <NavLink to="/catalog" className="mobile-menu-item" onClick={() => setMobileMenuOpen(false)}>Shop</NavLink>
-                        <NavLink to="/latest-releases" className="mobile-menu-item" onClick={() => setMobileMenuOpen(false)}>New Releases</NavLink>
-                        
+                        <NavLink to="/" className="mobile-menu-item" onClick={() => setMobileMenuOpen(false)}>Store</NavLink>
+                        <NavLink to="/catalog" className="mobile-menu-item" onClick={() => setMobileMenuOpen(false)}>Products</NavLink>
+                        <NavLink to="/latest-releases" className="mobile-menu-item" onClick={() => setMobileMenuOpen(false)}>Latest Products</NavLink>
+
                         <div className="mobile-menu-divider"></div>
                         <div style={{ fontSize: '0.75rem', fontWeight: '700', textTransform: 'uppercase', color: 'var(--text-secondary)', padding: '0.5rem 1rem', letterSpacing: '0.5px' }}>Solutions</div>
-                        
+
                         {Object.entries(solutionsTabs).map(([key, tab]) => (
                             <div key={key}>
                                 {tab.items.map((item, index) => (
@@ -174,10 +204,10 @@ const StorefrontNavbar = () => {
                                 ))}
                             </div>
                         ))}
-                        
+
                         <div className="mobile-menu-divider"></div>
-                        <NavLink to="/dashboard" className="mobile-menu-item admin-link" onClick={() => setMobileMenuOpen(false)}>Admin</NavLink>
-                        
+                        <NavLink to="/dashboard" className="mobile-menu-item admin-link" onClick={() => setMobileMenuOpen(false)}>Dashboard</NavLink>
+
                         {!user && (
                             <NavLink to="/signup" className="btn-primary mobile-menu-btn" onClick={() => setMobileMenuOpen(false)}>Sign Up</NavLink>
                         )}

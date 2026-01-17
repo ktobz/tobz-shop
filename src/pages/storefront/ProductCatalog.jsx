@@ -1,27 +1,53 @@
-import React, { useState, useEffect } from 'react';
-import { ShoppingCart, Star, Heart, ArrowRight } from 'lucide-react';
+import React, { useState, useEffect, useCallback } from 'react';
+import { ShoppingCart, Star, Heart, ArrowRight, Search, Filter } from 'lucide-react';
+import { fetchProducts, getCategories } from '../../services/mockApi';
+import { useCart } from '../../context/CartContext';
+import { useWatchlist } from '../../context/WatchlistContext';
 
 const ProductCatalog = () => {
     const [products, setProducts] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
+    const [search, setSearch] = useState('');
+    const [category, setCategory] = useState('');
+    const [categories, setCategories] = useState([]);
+    const [currentPage, setCurrentPage] = useState(1);
+    const [total, setTotal] = useState(0);
+    const limit = 12;
+    const { addToCart } = useCart();
+    const { toggleWatchlist, isInWatchlist } = useWatchlist();
+
+    const loadProducts = useCallback(async () => {
+        try {
+            setLoading(true);
+            const response = await fetchProducts({ search, category, page: currentPage, limit });
+            setProducts(response.data);
+            setTotal(response.total);
+        } catch (err) {
+            setError(err.message);
+        } finally {
+            setLoading(false);
+        }
+    }, [search, category, currentPage]);
 
     useEffect(() => {
-        const fetchProducts = async () => {
+        loadProducts();
+    }, [loadProducts]);
+
+    useEffect(() => {
+        setCurrentPage(1);
+    }, [search, category]);
+
+    useEffect(() => {
+        const loadCategories = async () => {
             try {
-                setLoading(true);
-                const response = await fetch('https://fakestoreapi.com/products');
-                if (!response.ok) throw new Error('Failed to fetch products');
-                const data = await response.json();
-                setProducts(data);
+                const cats = await getCategories();
+                setCategories(cats);
             } catch (err) {
-                setError(err.message);
-            } finally {
-                setLoading(false);
+                console.error('Failed to load categories:', err);
             }
         };
-
-        fetchProducts();
+        loadCategories();
     }, []);
 
     if (loading) {
@@ -64,40 +90,73 @@ const ProductCatalog = () => {
                 <p className="catalog-subtitle">Browse our complete collection of premium products</p>
             </div>
 
+            <div className="filters-section" style={{ marginBottom: '2rem', display: 'flex', gap: '1rem', alignItems: 'center' }}>
+                <div className="search-bar" style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', background: 'var(--glass-bg)', padding: '0.5rem 1rem', borderRadius: '8px', flex: 1 }}>
+                    <Search size={18} />
+                    <input
+                        type="text"
+                        placeholder="Search products..."
+                        value={search}
+                        onChange={(e) => setSearch(e.target.value)}
+                        style={{ border: 'none', background: 'transparent', outline: 'none', flex: 1, color: 'var(--text-color)' }}
+                    />
+                </div>
+                <div className="category-filter" style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                    <Filter size={18} />
+                    <select
+                        value={category}
+                        onChange={(e) => setCategory(e.target.value)}
+                        style={{ padding: '0.5rem', borderRadius: '4px', border: '1px solid var(--border-color)', background: 'var(--bg-color)' }}
+                    >
+                        <option value="">All Categories</option>
+                        {categories.map(cat => (
+                            <option key={cat} value={cat}>{cat}</option>
+                        ))}
+                    </select>
+                </div>
+            </div>
+
             <div className="product-grid">
                 {products.map((product) => (
                     <div key={product.id} className="product-card">
                         <div className="product-image-container">
                             <div className="product-image">
-                                <img src={product.image} alt={product.title} />
+                                <img src={product.image} alt={product.name} />
                             </div>
-                            <button className="wishlist-btn" title="Add to wishlist">
-                                <Heart size={18} />
+                            <button
+                                className={`wishlist-btn ${isInWatchlist(product.id) ? 'active' : ''}`}
+                                title={isInWatchlist(product.id) ? 'Remove from wishlist' : 'Add to wishlist'}
+                                onClick={(e) => {
+                                    e.stopPropagation();
+                                    toggleWatchlist(product.id);
+                                }}
+                            >
+                                <Heart size={18} fill={isInWatchlist(product.id) ? 'currentColor' : 'none'} />
                             </button>
                         </div>
                         <div className="product-info">
                             <div className="product-header">
-                                <h3 className="product-name">{product.title}</h3>
+                                <h3 className="product-name">{product.name}</h3>
                                 <span className="product-price">${product.price.toFixed(2)}</span>
                             </div>
                             <span className="product-category">{product.category}</span>
-                            <div className="product-rating">
-                                <div className="stars">
-                                    {[...Array(5)].map((_, i) => (
-                                        <Star
-                                            key={i}
-                                            size={14}
-                                            fill={i < Math.floor(product.rating?.rate || 0) ? 'var(--warning)' : 'none'}
-                                            color={i < Math.floor(product.rating?.rate || 0) ? 'var(--warning)' : 'var(--border-color)'}
-                                        />
-                                    ))}
-                                </div>
-                                <span className="rating-text">{product.rating?.rate || 'N/A'}</span>
-                                <span className="rating-count">({product.rating?.count || 0})</span>
+                            <div style={{ display: 'flex', alignItems: 'center', gap: '0.25rem', margin: '0.5rem 0', fontSize: '0.875rem' }}>
+                                <Star size={14} fill="var(--warning)" color="var(--warning)" />
+                                <span>{product.rating}</span>
+                            </div>
+                            <p className="product-description" style={{ fontSize: '0.875rem', color: 'var(--text-secondary)', margin: '0.5rem 0' }}>
+                                {product.description}
+                            </p>
+                            <div className="product-stock" style={{ fontSize: '0.875rem', color: product.inStock ? 'var(--success)' : 'var(--danger)' }}>
+                                {product.inStock ? 'In Stock' : 'Out of Stock'}
                             </div>
                             <div className="product-footer">
-                                <button className="btn-primary add-to-cart-btn">
-                                    Add to Cart
+                                <button
+                                    className="btn-primary add-to-cart-btn"
+                                    disabled={!product.inStock}
+                                    onClick={() => addToCart(product)}
+                                >
+                                    {product.inStock ? 'Add to Cart' : 'Out of Stock'}
                                     <ShoppingCart size={16} />
                                 </button>
                             </div>
@@ -105,6 +164,25 @@ const ProductCatalog = () => {
                     </div>
                 ))}
             </div>
+            {total > limit && (
+                <div className="pagination" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '1rem', marginTop: '2rem' }}>
+                    <button
+                        className="btn-secondary"
+                        disabled={currentPage === 1}
+                        onClick={() => setCurrentPage(currentPage - 1)}
+                    >
+                        Previous
+                    </button>
+                    <span>Page {currentPage} of {Math.ceil(total / limit)}</span>
+                    <button
+                        className="btn-secondary"
+                        disabled={currentPage === Math.ceil(total / limit)}
+                        onClick={() => setCurrentPage(currentPage + 1)}
+                    >
+                        Next
+                    </button>
+                </div>
+            )}
         </div>
     );
 };

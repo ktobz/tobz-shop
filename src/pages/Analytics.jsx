@@ -1,9 +1,55 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import { RefreshCw } from 'lucide-react';
+import { fetchAnalytics } from '../services/mockApi';
 
 const Analytics = () => {
+    const [analytics, setAnalytics] = useState(null);
+    const [loading, setLoading] = useState(true);
+    const [refreshing, setRefreshing] = useState(false);
+
+    useEffect(() => {
+        loadAnalytics();
+    }, []);
+
+    const loadAnalytics = async () => {
+        try {
+            const data = await fetchAnalytics();
+            setAnalytics(data);
+        } catch (error) {
+            console.error('Failed to fetch analytics:', error);
+        } finally {
+            setLoading(false);
+            setRefreshing(false);
+        }
+    };
+
+    const handleRefresh = () => {
+        setRefreshing(true);
+        loadAnalytics();
+    };
+
+    if (loading) {
+        return (
+            <div className="analytics fade-in">
+                <h1 style={{ fontSize: '2rem', marginBottom: '1.5rem', fontWeight: 'bold' }}>Analytics</h1>
+                <div className="loading">Loading analytics...</div>
+            </div>
+        );
+    }
     return (
         <div className="analytics fade-in">
-            <h1 style={{ fontSize: '2rem', marginBottom: '1.5rem', fontWeight: 'bold' }}>Analytics</h1>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.5rem' }}>
+                <h1 style={{ fontSize: '2rem', fontWeight: 'bold' }}>Analytics</h1>
+                <button
+                    onClick={handleRefresh}
+                    disabled={refreshing}
+                    className="btn-secondary"
+                    style={{ padding: '0.5rem 1rem', borderRadius: '8px' }}
+                >
+                    <RefreshCw size={16} style={{ marginRight: '0.5rem' }} />
+                    {refreshing ? 'Refreshing...' : 'Refresh'}
+                </button>
+            </div>
 
             <div className="dashboard-grid">
                 <div className="glass-panel" style={{ padding: '2rem', gridColumn: '1 / -1' }}>
@@ -35,31 +81,21 @@ const Analytics = () => {
                         </svg>
                     </div>
                     <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '1rem', color: 'var(--text-secondary)', fontSize: '0.875rem' }}>
-                        <span>Mon</span>
-                        <span>Tue</span>
-                        <span>Wed</span>
-                        <span>Thu</span>
-                        <span>Fri</span>
-                        <span>Sat</span>
-                        <span>Sun</span>
+                        {analytics.salesOverTime.map((data, index) => (
+                            <span key={index}>{data.month}</span>
+                        ))}
                     </div>
                 </div>
 
                 <div className="glass-panel" style={{ padding: '1.5rem' }}>
                     <h3>Top Products</h3>
                     <ul style={{ listStyle: 'none', marginTop: '1rem', display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-                        <li style={{ display: 'flex', justifyContent: 'space-between' }}>
-                            <span>Neon Hoodie</span>
-                            <span style={{ fontWeight: '600' }}>$4,200</span>
-                        </li>
-                        <li style={{ display: 'flex', justifyContent: 'space-between' }}>
-                            <span>Cyber Sneakers</span>
-                            <span style={{ fontWeight: '600' }}>$3,150</span>
-                        </li>
-                        <li style={{ display: 'flex', justifyContent: 'space-between' }}>
-                            <span>Glow Watch</span>
-                            <span style={{ fontWeight: '600' }}>$2,800</span>
-                        </li>
+                        {analytics.topProducts.map((product, index) => (
+                            <li key={index} style={{ display: 'flex', justifyContent: 'space-between' }}>
+                                <span>{product.name}</span>
+                                <span style={{ fontWeight: '600' }}>{product.sales} units</span>
+                            </li>
+                        ))}
                     </ul>
                 </div>
 

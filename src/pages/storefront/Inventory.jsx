@@ -1,42 +1,47 @@
 import React, { useState, useEffect } from 'react';
-import { Package, Truck, AlertCircle } from 'lucide-react';
+import { Package, Truck, AlertCircle, RefreshCw, Edit3 } from 'lucide-react';
+import { fetchInventory, updateInventory } from '../../services/mockApi';
 
 const Inventory = () => {
     const [inventory, setInventory] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
+    const [editing, setEditing] = useState(null);
+    const [editStock, setEditStock] = useState('');
 
     useEffect(() => {
-        const fetchInventory = async () => {
-            try {
-                setLoading(true);
-                // Fetch 50 products from fake store API
-                const response = await fetch('https://fakestoreapi.com/products?limit=50');
-
-                if (!response.ok) {
-                    throw new Error('Failed to fetch inventory');
-                }
-
-                const data = await response.json();
-                setInventory(data);
-                setError(null);
-            } catch (err) {
-                setError(err.message);
-                console.error('Error fetching inventory:', err);
-            } finally {
-                setLoading(false);
-            }
-        };
-
-        fetchInventory();
+        loadInventory();
     }, []);
 
-    const getStockStatus = (id) => {
-        const stock = Math.floor(Math.random() * 100) + 1;
-        return {
-            stock,
-            status: stock > 50 ? 'In Stock' : stock > 0 ? 'Low Stock' : 'Out of Stock'
-        };
+    const loadInventory = async () => {
+        try {
+            setLoading(true);
+            const data = await fetchInventory();
+            setInventory(data);
+        } catch (err) {
+            setError(err.message);
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    const handleEditStock = (item) => {
+        setEditing(item.id);
+        setEditStock(item.stock.toString());
+    };
+
+    const handleSaveStock = async (item) => {
+        try {
+            const updated = await updateInventory(item.id, { stock: parseInt(editStock) });
+            setInventory(prev => prev.map(inv => inv.id === item.id ? updated : inv));
+            setEditing(null);
+        } catch (_) {
+            alert('Failed to update stock');
+        }
+    };
+
+    const getStockStatus = (stock) => {
+        return stock > 50 ? 'In Stock' : stock > 10 ? 'Low Stock' : stock > 0 ? 'Very Low' : 'Out of Stock';
     };
 
     const getStatusColor = (status) => {
@@ -90,66 +95,106 @@ const Inventory = () => {
 
     return (
         <div className="inventory-page fade-in">
-            <div className="inventory-header">
-                <h1>Inventory Management</h1>
-                <p className="inventory-subtitle">Manage and monitor {inventory.length} items</p>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.5rem' }}>
+                <div>
+                    <h1>Inventory Management</h1>
+                    <p className="inventory-subtitle">Manage and monitor {inventory.length} items</p>
+                </div>
+                <button
+                    onClick={loadInventory}
+                    disabled={loading}
+                    className="btn-secondary"
+                    style={{ padding: '0.5rem 1rem', borderRadius: '8px' }}
+                >
+                    <RefreshCw size={16} style={{ marginRight: '0.5rem' }} />
+                    Refresh
+                </button>
             </div>
 
             <div className="inventory-grid">
                 {inventory.map((item) => {
-                    const stockInfo = getStockStatus(item.id);
+                    const status = getStockStatus(item.stock);
                     return (
                         <div key={item.id} className="inventory-card glass-panel">
                             <div className="inventory-image">
                                 <img
-                                    src={item.image}
-                                    alt={item.title}
+                                    src="/api/placeholder/150/150"
+                                    alt={item.name}
                                     loading="lazy"
                                 />
                             </div>
 
                             <div className="inventory-info">
-                                <div className="inventory-category">{item.category}</div>
-                                <h3 className="inventory-name">{item.title}</h3>
+                                <div className="inventory-category">{item.supplier}</div>
+                                <h3 className="inventory-name">{item.name}</h3>
 
                                 <div className="inventory-details">
                                     <div className="detail-row">
-                                        <span className="detail-label">Price:</span>
-                                        <span className="detail-value">${item.price.toFixed(2)}</span>
+                                        <span className="detail-label">Reorder Point:</span>
+                                        <span className="detail-value">{item.reorderPoint} units</span>
                                     </div>
                                     <div className="detail-row">
                                         <span className="detail-label">Stock:</span>
-                                        <span className="detail-value stock-count">{stockInfo.stock} units</span>
+                                        {editing === item.id ? (
+                                            <input
+                                                type="number"
+                                                value={editStock}
+                                                onChange={(e) => setEditStock(e.target.value)}
+                                                style={{ width: '60px', padding: '0.25rem', borderRadius: '4px', border: '1px solid var(--border-color)' }}
+                                            />
+                                        ) : (
+                                            <span className="detail-value stock-count">{item.stock} units</span>
+                                        )}
                                     </div>
                                     <div className="detail-row">
                                         <span className="detail-label">Status:</span>
                                         <span
                                             className="detail-value status-badge"
                                             style={{
-                                                color: getStatusColor(stockInfo.status),
-                                                backgroundColor: `${getStatusColor(stockInfo.status)}20`,
+                                                color: getStatusColor(status),
+                                                backgroundColor: `${getStatusColor(status)}20`,
                                             }}
                                         >
-                                            {stockInfo.status}
+                                            {status}
                                         </span>
                                     </div>
                                 </div>
 
                                 <div className="inventory-actions">
-                                    <button
-                                        className="btn-outline btn-sm"
-                                        onClick={() => alert(`Editing: ${item.title}`)}
-                                    >
-                                        <Package size={16} />
-                                        Edit
-                                    </button>
-                                    <button
-                                        className="btn-outline btn-sm"
-                                        onClick={() => alert(`Ordering more: ${item.title}`)}
-                                    >
-                                        <Truck size={16} />
-                                        Order
-                                    </button>
+                                    {editing === item.id ? (
+                                        <>
+                                            <button
+                                                className="btn-primary btn-sm"
+                                                onClick={() => handleSaveStock(item)}
+                                            >
+                                                Save
+                                            </button>
+                                            <button
+                                                className="btn-outline btn-sm"
+                                                onClick={() => setEditing(null)}
+                                            >
+                                                Cancel
+                                            </button>
+                                        </>
+                                    ) : (
+                                        <>
+                                            <button
+                                                className="btn-outline btn-sm"
+                                                onClick={() => handleEditStock(item)}
+                                            >
+                                                <Edit3 size={16} />
+                                                Edit Stock
+                                            </button>
+                                            <button
+                                                className="btn-outline btn-sm"
+                                                onClick={() => alert(`Ordering more: ${item.name}`)}
+                                                disabled={item.stock >= item.reorderPoint}
+                                            >
+                                                <Truck size={16} />
+                                                Order
+                                            </button>
+                                        </>
+                                    )}
                                 </div>
                             </div>
                         </div>

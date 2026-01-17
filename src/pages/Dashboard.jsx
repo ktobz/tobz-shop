@@ -1,20 +1,47 @@
-import React from 'react';
-import { DollarSign, Users, ShoppingCart, TrendingUp, MoreHorizontal } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import { DollarSign, Users, ShoppingCart, TrendingUp, MoreHorizontal, RefreshCw } from 'lucide-react';
+import { fetchAnalytics, getUsers, getOrders } from '../services/mockApi';
 
 const Dashboard = () => {
-    const stats = [
-        { label: 'Total Sales', value: '$12,450', icon: DollarSign, trend: '+14%' },
-        { label: 'Active Users', value: '1,234', icon: Users, trend: '+5%' },
-        { label: 'Total Orders', value: '450', icon: ShoppingCart, trend: '+18%' },
-        { label: 'Conversion Rate', value: '3.2%', icon: TrendingUp, trend: '+1.2%' },
-    ];
+    const [analytics, setAnalytics] = useState(null);
+    const [users, setUsers] = useState([]);
+    const [orders, setOrders] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [refreshing, setRefreshing] = useState(false);
 
-    const orders = [
-        { id: '#1204', customer: 'Alice Johnson', date: 'Oct 24, 2023', status: 'Delivered', amount: '$120.00' },
-        { id: '#1203', customer: 'Bob Smith', date: 'Oct 24, 2023', status: 'Processing', amount: '$85.50' },
-        { id: '#1202', customer: 'Charlie Brown', date: 'Oct 23, 2023', status: 'Shipped', amount: '$240.00' },
-        { id: '#1201', customer: 'Diana Prince', date: 'Oct 22, 2023', status: 'Delivered', amount: '$45.00' },
-    ];
+    useEffect(() => {
+        loadData();
+    }, []);
+
+    const loadData = async () => {
+        try {
+            const [analyticsData, usersData, ordersData] = await Promise.all([
+                fetchAnalytics(),
+                getUsers(),
+                getOrders()
+            ]);
+            setAnalytics(analyticsData);
+            setUsers(usersData);
+            setOrders(ordersData);
+        } catch (error) {
+            console.error('Failed to fetch data:', error);
+        } finally {
+            setLoading(false);
+            setRefreshing(false);
+        }
+    };
+
+    const handleRefresh = () => {
+        setRefreshing(true);
+        loadData();
+    };
+
+    const stats = analytics && users ? [
+        { label: 'Total Sales', value: `${analytics.totalSales.toLocaleString()}`, icon: DollarSign, trend: '+14%' },
+        { label: 'Active Users', value: users.length.toString(), icon: Users, trend: '+5%' },
+        { label: 'Total Orders', value: analytics.totalOrders.toString(), icon: ShoppingCart, trend: '+18%' },
+        { label: 'Avg Order Value', value: `${analytics.averageOrderValue}`, icon: TrendingUp, trend: '+1.2%' },
+    ] : [];
 
     const getStatusColor = (status) => {
         switch (status) {
@@ -25,9 +52,29 @@ const Dashboard = () => {
         }
     };
 
+    if (loading) {
+        return (
+            <div className="dashboard fade-in">
+                <h1 style={{ fontSize: '2rem', marginBottom: '1.5rem', fontWeight: 'bold' }}>Dashboard</h1>
+                <div className="loading">Loading dashboard...</div>
+            </div>
+        );
+    }
+
     return (
         <div className="dashboard fade-in">
-            <h1 style={{ fontSize: '2rem', marginBottom: '1.5rem', fontWeight: 'bold' }}>Dashboard</h1>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.5rem' }}>
+                <h1 style={{ fontSize: '2rem', fontWeight: 'bold' }}>Dashboard</h1>
+                <button
+                    onClick={handleRefresh}
+                    disabled={refreshing}
+                    className="btn-secondary"
+                    style={{ padding: '0.5rem 1rem', borderRadius: '8px' }}
+                >
+                    <RefreshCw size={16} style={{ marginRight: '0.5rem' }} />
+                    {refreshing ? 'Refreshing...' : 'Refresh'}
+                </button>
+            </div>
 
             <div className="dashboard-grid">
                 {stats.map((stat, index) => (

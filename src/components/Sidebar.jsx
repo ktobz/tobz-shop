@@ -5,7 +5,7 @@ import '../index.css';
 
 const Sidebar = () => {
   const navItems = [
-    { icon: LayoutDashboard, label: 'Dashboard', path: '/dashboard' },
+    { icon: LayoutDashboard, label: 'Store', path: '/dashboard' },
     { icon: BarChart3, label: 'Analytics', path: '/dashboard/analytics' },
     { icon: Settings, label: 'Settings', path: '/dashboard/settings' },
   ];

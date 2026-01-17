@@ -18,6 +18,7 @@ import WhatsNew from './pages/storefront/WhatsNew';
 import Resources from './pages/storefront/Resources';
 import LatestReleases from './pages/storefront/LatestReleases';
 import Cart from './pages/storefront/Cart';
+import Wishlist from './pages/storefront/Wishlist';
 
 /* Auth Components */
 import Login from './pages/auth/Login';
