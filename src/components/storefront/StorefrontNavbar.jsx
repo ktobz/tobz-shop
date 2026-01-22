@@ -4,6 +4,7 @@ import { ShoppingBag, User, LogOut, Menu, X, ChevronDown, Package, BookOpen, Use
 import { useAuth } from '../../hooks/useAuth';
 import { useCart } from '../../hooks/useCart';
 import { useWatchlist } from '../../hooks/useWatchlist';
+import ThemeToggle from '../ThemeToggle';
 
 const StorefrontNavbar = () => {
     const { user, logout } = useAuth();
@@ -132,6 +133,7 @@ const StorefrontNavbar = () => {
                 </div>
 
                 <div className="nav-actions">
+                    <ThemeToggle />
                     <NavLink to="/cart" className="icon-link" title="Shopping Cart">
                         <div className="icon-container">
                             <ShoppingCart size={20} />

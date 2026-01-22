@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Zap, Shield, Globe, ArrowRight, ChevronLeft, ChevronRight } from 'lucide-react';
 import { NavLink } from 'react-router-dom';
 
@@ -19,6 +19,12 @@ const LandingPage = () => {
     const prevSlide = () => {
         setCurrentSlide((prev) => (prev - 1 + clothingImages.length) % clothingImages.length);
     };
+
+    // Auto-play carousel
+    useEffect(() => {
+        const interval = setInterval(nextSlide, 5000); // Change slide every 5 seconds
+        return () => clearInterval(interval);
+    }, []);
 
     const valueProps = [
         {

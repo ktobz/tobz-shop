@@ -1,0 +1,97 @@
+.theme-toggle {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 4px;
+  border-radius: var(--radius-full);
+  transition: all var(--transition-fast);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  min-width: 48px;
+  min-height: 24px;
+}
+
+.theme-toggle:hover {
+  background: rgba(var(--primary), 0.1);
+}
+
+.theme-toggle:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(var(--primary), 0.5);
+}
+
+.toggle-track {
+  width: 40px;
+  height: 20px;
+  background: var(--bg-secondary);
+  border-radius: 10px;
+  position: relative;
+  border: 1px solid var(--border-color);
+  transition: all var(--transition-base);
+}
+
+.toggle-slider {
+  width: 16px;
+  height: 16px;
+  background: var(--gradient-primary);
+  border-radius: 50%;
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  transition: all var(--transition-base);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 10px;
+}
+
+.theme-toggle[aria-pressed="true"] .toggle-slider {
+  transform: translateX(20px);
+}
+
+.icon {
+  transition: opacity var(--transition-base);
+}
+
+.theme-toggle[aria-pressed="true"] .sun {
+  opacity: 0;
+}
+
+.theme-toggle[aria-pressed="false"] .moon {
+  opacity: 0;
+}
+
+.theme-toggle[aria-pressed="true"] .moon {
+  opacity: 1;
+}
+
+.theme-toggle[aria-pressed="false"] .sun {
+  opacity: 1;
+}
+
+/* Mobile responsive */
+@media (max-width: 768px) {
+  .theme-toggle {
+    min-width: 44px;
+    min-height: 22px;
+  }
+
+  .toggle-track {
+    width: 36px;
+    height: 18px;
+    border-radius: 9px;
+  }
+
+  .toggle-slider {
+    width: 14px;
+    height: 14px;
+    top: 2px;
+    left: 2px;
+  }
+
+  .theme-toggle[aria-pressed="true"] .toggle-slider {
+    transform: translateX(18px);
+  }
+}

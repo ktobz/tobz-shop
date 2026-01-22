@@ -33,7 +33,11 @@ import Signup from './pages/auth/Signup';
 import './App.css';
 
 function App() {
-  const theme = createTheme(); // Default MUI theme
+  const theme = createTheme({
+    palette: {
+      mode: 'dark',
+    },
+  }); // Default MUI theme
 
   return (
     <ChakraProvider value={defaultSystem}>

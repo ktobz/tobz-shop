@@ -600,8 +600,8 @@ const mockSettings = {
     },
 };
 
-// Simulate delay
-const delay = (ms = 500) => new Promise(resolve => setTimeout(resolve, ms));
+// Simulate delay - fast for demo
+const delay = (ms = 0) => new Promise(resolve => setTimeout(resolve, ms));
 
 // API functions
 export const fetchProducts = async (params = {}) => {
