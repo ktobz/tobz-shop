@@ -39,7 +39,7 @@ const Carousel = ({ items, itemsPerView = 3, autoPlay = false, autoPlayDelay = 3
         return () => {
             if (intervalRef.current) clearInterval(intervalRef.current);
         };
-    }, [isPlaying, autoPlayDelay]);
+    }, [isPlaying, autoPlayDelay, nextSlide]);
 
     const handleMouseEnter = () => {
         if (autoPlay) setIsPlaying(false);
@@ -48,8 +48,6 @@ const Carousel = ({ items, itemsPerView = 3, autoPlay = false, autoPlayDelay = 3
     const handleMouseLeave = () => {
         if (autoPlay) setIsPlaying(true);
     };
-
-    const visibleItems = items.slice(currentIndex, currentIndex + itemsPerView);
 
     return (
         <div

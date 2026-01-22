@@ -24,7 +24,7 @@ const LandingPage = () => {
     useEffect(() => {
         const interval = setInterval(nextSlide, 5000); // Change slide every 5 seconds
         return () => clearInterval(interval);
-    }, []);
+    }, [nextSlide]);
 
     const valueProps = [
         {
