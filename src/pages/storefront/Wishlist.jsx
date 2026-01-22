@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Heart, Trash2, ShoppingCart, ArrowRight } from 'lucide-react';
 import { NavLink } from 'react-router-dom';
 import { fetchProductById } from '../../services/mockApi';
-import { useWatchlist } from '../../context/WatchlistContext';
+import { useWatchlist } from '../../hooks/useWatchlist';
 import { useCart } from '../../hooks/useCart';
 
 const Wishlist = () => {

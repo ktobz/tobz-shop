@@ -3,8 +3,7 @@ import { NavLink, useNavigate } from 'react-router-dom';
 import { ShoppingBag, User, LogOut, Menu, X, ChevronDown, Package, BookOpen, Users, Mail, BarChart3, AppWindow, Megaphone, Building, Headphones, ShoppingCart, Heart } from 'lucide-react';
 import { useAuth } from '../../hooks/useAuth';
 import { useCart } from '../../hooks/useCart';
-import { useWatchlist } from '../../context/WatchlistContext';
-import ThemeToggle from '../ThemeToggle';
+import { useWatchlist } from '../../hooks/useWatchlist';
 
 const StorefrontNavbar = () => {
     const { user, logout } = useAuth();
@@ -165,7 +164,6 @@ const StorefrontNavbar = () => {
 
                     {!user && (
                         <NavLink to="/signup" className="btn-primary desktop-only">Sign Up</NavLink>
-                     <ThemeToggle />
                     )}
 
                     {/* Mobile Menu Toggle - Only visible on mobile */}

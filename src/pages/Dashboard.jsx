@@ -125,7 +125,7 @@ const Dashboard = () => {
 
                 <Row gutter={16}>
                     {stats.map((stat, index) => (
-                        <Col span={6} key={index}>
+                        <Col xs={24} sm={12} lg={6} key={index}>
                             <Card>
                                 <Statistic
                                     title={stat.label}

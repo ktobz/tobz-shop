@@ -2,7 +2,7 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { ShoppingCart, Star, Heart, ArrowRight, Search, Filter } from 'lucide-react';
 import { fetchProducts, getCategories } from '../../services/mockApi';
 import { useCart } from '../../hooks/useCart';
-import { useWatchlist } from '../../context/WatchlistContext';
+import { useWatchlist } from '../../hooks/useWatchlist';
 
 const ProductCatalog = () => {
     const [products, setProducts] = useState([]);

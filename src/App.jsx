@@ -5,7 +5,7 @@ import { Routes, Route } from 'react-router-dom';
 import { ChakraProvider, defaultSystem } from '@chakra-ui/react';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
-import { ConfigProvider, theme } from 'antd';
+import { ConfigProvider, theme as antdTheme } from 'antd';
 
 /* Admin Components */
 import Layout from './components/Layout';
@@ -39,7 +39,7 @@ function App() {
     <ChakraProvider value={defaultSystem}>
       <ThemeProvider theme={theme}>
         <CssBaseline />
-        <ConfigProvider theme={{ algorithm: theme.darkAlgorithm }}>
+        <ConfigProvider theme={{ algorithm: antdTheme.darkAlgorithm }}>
           <Routes>
             {/* Storefront Routes */}
             <Route path="/" element={<StorefrontLayout />}>

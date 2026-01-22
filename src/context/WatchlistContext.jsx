@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useState } from 'react';
 import { WatchlistContext } from './watchlistContext';
 
 export const WatchlistProvider = ({ children }) => {
@@ -36,12 +36,4 @@ export const WatchlistProvider = ({ children }) => {
             {children}
         </WatchlistContext.Provider>
     );
-};
-
-export const useWatchlist = () => {
-    const context = useContext(WatchlistContext);
-    if (!context) {
-        throw new Error('useWatchlist must be used within a WatchlistProvider');
-    }
-    return context;
 };
