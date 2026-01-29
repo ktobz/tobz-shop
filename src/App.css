@@ -1,6 +1,0 @@
-/* App specific styles can go here, or be empty if using modules/global CSS */
-#root {
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-}

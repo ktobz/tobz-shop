@@ -1,3 +1,7 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 /* =============================================
    1SHOPAPP - THEME VARIABLES
    ============================================= */
@@ -20,20 +24,20 @@
   /* Slate 900 */
   --text-secondary: #475569;
   /* Slate 600 */
-  --text-accent: #7c3aed;
-  /* Violet 600 */
+  --text-accent: #14b8a6;
+  /* Turquoise 500 */
 
-  /* Accents - Purple & Indigo (No Green) */
-  --primary: #7c3aed;
-  /* Violet 600 */
-  --primary-hover: #6d28d9;
-  /* Violet 700 */
-  --primary-light: #ddd6fe;
-  /* Violet 200 */
-  --secondary: #6366f1;
-  /* Indigo 500 */
-  --secondary-light: #c7d2fe;
-  /* Indigo 200 */
+  /* Accents - Turquoise (Replaced Purple) */
+  --primary: #14b8a6;
+  /* Turquoise 500 */
+  --primary-hover: #0d9488;
+  /* Turquoise 600 */
+  --primary-light: #ccfbf1;
+  /* Turquoise 100 */
+  --secondary: #0d9488;
+  /* Turquoise 600 */
+  --secondary-light: #99f6e4;
+  /* Turquoise 200 */
 
   /* Status Colors */
   --success: #10b981;
@@ -57,15 +61,15 @@
   --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
 
   /* Gradients */
-  --gradient-primary: linear-gradient(135deg, #7c3aed 0%, #6366f1 100%);
-  --gradient-soft: linear-gradient(135deg, rgba(124, 58, 237, 0.05) 0%, rgba(99, 102, 241, 0.05) 100%);
+  --gradient-primary: linear-gradient(135deg, #14b8a6 0%, #0d9488 100%);
+  --gradient-soft: linear-gradient(135deg, rgba(20, 184, 166, 0.05) 0%, rgba(13, 148, 136, 0.05) 100%);
   --gradient-card: linear-gradient(180deg, rgba(255, 255, 255, 0.95) 0%, rgba(248, 250, 252, 0.95) 100%);
-  --gradient-hero: linear-gradient(180deg, #ffffff 0%, #f3e8ff 100%);
+  --gradient-hero: linear-gradient(180deg, #ffffff 0%, #f0fdfa 100%);
 
   /* Star Colors (Subtle for Light Mode) */
   --star-white: rgba(15, 23, 42, 0.1);
-  --star-teal: rgba(124, 58, 237, 0.15);
-  --star-green: rgba(99, 102, 241, 0.15);
+  --star-teal: rgba(20, 184, 166, 0.15);
+  --star-green: rgba(13, 148, 136, 0.15);
 
   /* Navbar */
   --nav-bg: rgba(255, 255, 255, 0.85);
@@ -137,8 +141,8 @@
 
   /* Star Colors (Bright for Dark Mode) */
   --star-white: rgba(255, 255, 255, 0.2);
-  --star-teal: rgba(139, 92, 246, 0.3);
-  --star-green: rgba(99, 102, 241, 0.3);
+  --star-teal: rgba(20, 184, 166, 0.3);
+  --star-green: rgba(13, 148, 136, 0.3);
 
   /* Navbar */
   --nav-bg: rgba(2, 6, 23, 0.85);
