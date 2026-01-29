@@ -1,3 +1,5 @@
+"use client";
+
 import React, { useState, useRef, useEffect } from 'react';
 import Link from 'next/link';
 import { useRouter, usePathname } from 'next/navigation';
@@ -63,160 +65,116 @@ const StorefrontNavbar = () => {
     };
 
     return (
-        <nav className="storefront-nav">
-            <div className="nav-container">
-                <Link href="/" className="brand-link">
-                    <ShoppingBag className="text-primary" size={28} />
-                    <span>1shopapp</span>
-                </Link>
-
-                {/* Desktop Links */}
-                <div className="nav-links desktop-only">
-                    <Link href="/" className={`nav-link ${pathname === '/' ? 'active' : ''}`}>Store</Link>
-                    <Link href="/catalog" className={`nav-link ${pathname === '/catalog' ? 'active' : ''}`}>Products</Link>
-                    <Link href="/latest-releases" className={`nav-link ${pathname === '/latest-releases' ? 'active' : ''}`}>Latest Products</Link>
-
-                    {/* Solutions Mega Menu */}
-                    <div className="nav-dropdown" ref={dropdownRef}>
-                        <button
-                            className="dropdown-trigger nav-link"
-                            onClick={() => setSolutionsOpen(!solutionsOpen)}
-                            onMouseEnter={() => setSolutionsOpen(true)}
-                        >
-                            Solutions
-                            <ChevronDown
-                                size={16}
-                                className={`dropdown-icon ${solutionsOpen ? 'open' : ''}`}
-                            />
-                        </button>
-                        {solutionsOpen && (
-                            <div className="mega-menu" onMouseLeave={() => setSolutionsOpen(false)}>
-                                <div className="mega-menu-tabs">
-                                    {Object.entries(solutionsTabs).map(([key, tab]) => {
-                                        const Icon = tab.icon;
-                                        return (
-                                            <button
-                                                key={key}
-                                                className={`mega-menu-tab ${activeTab === key ? 'active' : ''}`}
-                                                onMouseEnter={() => setActiveTab(key)}
-                                            >
-                                                <Icon size={18} />
-                                                <span>{tab.label}</span>
-                                            </button>
-                                        );
-                                    })}
-                                </div>
-                                <div className="mega-menu-content">
-                                    {solutionsTabs[activeTab].items.map((item, index) => {
-                                        const ItemIcon = item.icon;
-                                        return (
-                                            <Link
-                                                key={index}
-                                                href={item.path}
-                                                className="mega-menu-item"
-                                                onClick={() => setSolutionsOpen(false)}
-                                            >
-                                                <div className="mega-menu-item-icon">
-                                                    <ItemIcon size={20} />
-                                                </div>
-                                                <div className="mega-menu-item-text">
-                                                    <div className="mega-menu-item-title">{item.label}</div>
-                                                    <div className="mega-menu-item-desc">{item.description}</div>
-                                                </div>
-                                            </Link>
-                                        );
-                                    })}
-                                </div>
-                            </div>
-                        )}
-                    </div>
-
-                    <Link href="/dashboard" className="nav-link admin-link">Dashboard</Link>
-                </div>
-
-                <div className="nav-actions">
-                    <ThemeToggle />
-                    <Link href="/cart" className="icon-link" title="Shopping Cart">
-                        <div className="icon-container">
-                            <ShoppingCart size={20} />
-                            {cartItems.length > 0 && (
-                                <span className="badge">{cartItems.length}</span>
-                            )}
-                        </div>
-                    </Link>
-                    <Link href="/wishlist" className="icon-link" title="Wishlist">
-                        <div className="icon-container">
-                            <Heart size={20} />
-                            {watchlist.size > 0 && (
-                                <span className="badge">{watchlist.size}</span>
-                            )}
-                        </div>
-                    </Link>
-                    {user ? (
-                        <div className="user-profile">
-                            <span className="user-name">Hi, {user.name}</span>
-                            <button onClick={handleLogout} className="login-btn" title="Logout">
-                                <LogOut size={20} />
-                            </button>
-                        </div>
-                    ) : (
-                        <Link href="/login" className="login-btn">
-                            <User size={20} />
-                            <span>Login</span>
-                        </Link>
-                    )}
-
-                    {!user && (
-                        <Link href="/signup" className="btn-primary desktop-only">Sign Up</Link>
-                    )}
-
-                    {/* Mobile Menu Toggle - Only visible on mobile */}
-                    <button
-                        className="mobile-menu-toggle mobile-only"
+        <div className="navbar bg-base-100/80 backdrop-blur-lg sticky top-0 z-[100] border-b border-base-200 px-4 lg:px-10">
+            <div className="navbar-start">
+                <div className="dropdown lg:hidden">
+                    <label
+                        tabIndex={0}
+                        className="btn btn-ghost btn-circle"
                         onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
                     >
                         {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
-                    </button>
+                    </label>
                 </div>
+                <Link href="/" className="btn btn-ghost text-xl normal-case gap-2 px-2 hover:bg-transparent">
+                    <ShoppingBag className="text-primary" size={28} />
+                    <span className="font-extrabold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent italic">1shopapp</span>
+                </Link>
+            </div>
+
+            <div className="navbar-center hidden lg:flex">
+                <ul className="menu menu-horizontal px-1 gap-2">
+                    <li><Link href="/" className={`font-semibold ${pathname === '/' ? 'text-primary' : ''}`}>Store</Link></li>
+                    <li><Link href="/catalog" className={`font-semibold ${pathname === '/catalog' ? 'text-primary' : ''}`}>Products</Link></li>
+                    <li><Link href="/latest-releases" className={`font-semibold ${pathname === '/latest-releases' ? 'text-primary' : ''}`}>Latest</Link></li>
+                    <li tabIndex={0} className="z-[101]" ref={dropdownRef}>
+                        <details open={solutionsOpen}>
+                            <summary className="font-semibold" onClick={(e) => { e.preventDefault(); setSolutionsOpen(!solutionsOpen); }}>
+                                Solutions
+                            </summary>
+                            <ul className="p-2 bg-base-100 rounded-lg shadow-xl border border-base-200 w-80">
+                                {Object.entries(solutionsTabs).map(([key, tab]) => {
+                                    const Icon = tab.icon;
+                                    return (
+                                        <React.Fragment key={key}>
+                                            <li className="menu-title flex flex-row items-center gap-2 mt-2 first:mt-0">
+                                                <Icon size={14} className="text-primary" />
+                                                <span>{tab.label}</span>
+                                            </li>
+                                            {tab.items.map((item, idx) => (
+                                                <li key={idx}><Link href={item.path} className="text-sm font-normal py-2">{item.label}</Link></li>
+                                            ))}
+                                        </React.Fragment>
+                                    )
+                                })}
+                            </ul>
+                        </details>
+                    </li>
+                    <li><Link href="/dashboard" className="font-semibold">Dashboard</Link></li>
+                </ul>
+            </div>
+
+            <div className="navbar-end gap-2">
+                <div className="hidden sm:flex items-center gap-1">
+                    <ThemeToggle />
+                    <Link href="/wishlist" className="btn btn-ghost btn-circle" title="Wishlist">
+                        <div className="indicator">
+                            <Heart size={20} />
+                            {watchlist.size > 0 && (
+                                <span className="badge badge-sm badge-primary indicator-item">{watchlist.size}</span>
+                            )}
+                        </div>
+                    </Link>
+                    <Link href="/cart" className="btn btn-ghost btn-circle" title="Shopping Cart">
+                        <div className="indicator">
+                            <ShoppingCart size={20} />
+                            {cartItems.length > 0 && (
+                                <span className="badge badge-sm badge-primary indicator-item">{cartItems.length}</span>
+                            )}
+                        </div>
+                    </Link>
+                </div>
+
+                {user ? (
+                    <div className="dropdown dropdown-end">
+                        <label tabIndex={0} className="btn btn-ghost gap-2 normal-case border-none hover:bg-base-200">
+                            <div className="avatar placeholder">
+                                <div className="bg-primary text-primary-content rounded-full w-8">
+                                    <span className="text-xs">{user.name?.[0] || 'U'}</span>
+                                </div>
+                            </div>
+                            <span className="hidden md:inline font-semibold">{user.name}</span>
+                            <ChevronDown size={14} />
+                        </label>
+                        <ul tabIndex={0} className="dropdown-content z-[101] menu p-2 shadow-xl bg-base-100 rounded-box w-52 border border-base-200 mt-4">
+                            <li><Link href="/dashboard"><User size={16} /> Profile</Link></li>
+                            <li><Link href="/dashboard/settings"><BarChart3 size={16} /> Settings</Link></li>
+                            <div className="divider my-0"></div>
+                            <li><button onClick={handleLogout} className="text-error"><LogOut size={16} /> Logout</button></li>
+                        </ul>
+                    </div>
+                ) : (
+                    <div className="flex gap-2">
+                        <Link href="/login" className="btn btn-ghost hidden sm:inline-flex rounded-full">Login</Link>
+                        <Link href="/signup" className="btn btn-primary text-white shadow-lg shadow-primary/20 rounded-full">Sign Up</Link>
+                    </div>
+                )}
             </div>
 
             {/* Mobile Menu */}
             {mobileMenuOpen && (
-                <div className="mobile-menu fade-in">
-                    <div className="mobile-menu-content">
-                        <Link href="/" className="mobile-menu-item" onClick={() => setMobileMenuOpen(false)}>Store</Link>
-                        <Link href="/catalog" className="mobile-menu-item" onClick={() => setMobileMenuOpen(false)}>Products</Link>
-                        <Link href="/latest-releases" className="mobile-menu-item" onClick={() => setMobileMenuOpen(false)}>Latest Products</Link>
-
-                        <div className="mobile-menu-divider"></div>
-                        <div style={{ fontSize: '0.75rem', fontWeight: '700', textTransform: 'uppercase', color: 'var(--text-secondary)', padding: '0.5rem 1rem', letterSpacing: '0.5px' }}>Solutions</div>
-
-                        {Object.entries(solutionsTabs).map(([key, tab]) => (
-                            <div key={key}>
-                                {tab.items.map((item, index) => (
-                                    <Link
-                                        key={index}
-                                        href={item.path}
-                                        className="mobile-menu-item"
-                                        style={{ paddingLeft: '2rem' }}
-                                        onClick={() => setMobileMenuOpen(false)}
-                                    >
-                                        {item.label}
-                                    </Link>
-                                ))}
-                            </div>
-                        ))}
-
-                        <div className="mobile-menu-divider"></div>
-                        <Link href="/dashboard" className="mobile-menu-item admin-link" onClick={() => setMobileMenuOpen(false)}>Dashboard</Link>
-
-                        {!user && (
-                            <Link href="/signup" className="btn-primary mobile-menu-btn" onClick={() => setMobileMenuOpen(false)}>Sign Up</Link>
-                        )}
-                    </div>
+                <div className="lg:hidden absolute top-full left-0 w-full bg-base-100 border-b border-base-200 shadow-xl p-4 flex flex-col gap-2 z-[99]">
+                    <Link href="/" className="btn btn-ghost justify-start" onClick={() => setMobileMenuOpen(false)}>Store</Link>
+                    <Link href="/catalog" className="btn btn-ghost justify-start" onClick={() => setMobileMenuOpen(false)}>Products</Link>
+                    <Link href="/latest-releases" className="btn btn-ghost justify-start" onClick={() => setMobileMenuOpen(false)}>Latest</Link>
+                    <Link href="/dashboard" className="btn btn-ghost justify-start" onClick={() => setMobileMenuOpen(false)}>Dashboard</Link>
+                    <div className="divider my-1"></div>
+                    {!user && (
+                        <Link href="/signup" className="btn btn-primary w-full" onClick={() => setMobileMenuOpen(false)}>Sign Up</Link>
+                    )}
                 </div>
             )}
-        </nav>
+        </div>
     );
 };
 

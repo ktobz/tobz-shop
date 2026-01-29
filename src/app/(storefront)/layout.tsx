@@ -10,8 +10,10 @@ export default function StorefrontLayout({ children }: { children: React.ReactNo
             <main className="fade-in">
                 {children}
             </main>
-            <footer style={{ padding: '3rem 2rem', textAlign: 'center', borderTop: '1px solid var(--border-light)', marginTop: '6rem', color: 'var(--text-secondary)', background: 'var(--bg-secondary)' }}>
-                <p>© 2026 <strong style={{ color: 'var(--primary)' }}>1shopapp</strong>. Your modern e-commerce destination.</p>
+            <footer className="footer footer-center p-10 bg-base-200 text-base-content border-t border-base-300 mt-24">
+                <aside>
+                    <p>© 2026 <strong className="text-primary">1shopapp</strong>. Your modern e-commerce destination.</p>
+                </aside>
             </footer>
         </div>
     );
