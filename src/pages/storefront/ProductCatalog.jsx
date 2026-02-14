@@ -4,6 +4,8 @@ import { fetchProducts, getCategories } from '../../services/mockApi';
 import { useCart } from '../../hooks/useCart';
 import { useWatchlist } from '../../hooks/useWatchlist';
 
+import './ProductCatalog.scss';
+
 const ProductCatalog = () => {
     const [products, setProducts] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -20,7 +22,7 @@ const ProductCatalog = () => {
     const loadProducts = useCallback(async () => {
         try {
             setLoading(true);
-            const response = await fetchProducts({ search, category, page: currentPage, limit });
+            const response = await fetchProducts({ search, category, page: currentPage, limit: 50 });
             setProducts(response.data);
             setTotal(response.total);
         } catch (err) {

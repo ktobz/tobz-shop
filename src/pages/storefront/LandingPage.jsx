@@ -7,37 +7,35 @@ const LandingPage = () => {
     const [currentSlide, setCurrentSlide] = useState(0);
 
     const clothingImages = [
-        'https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=1200&h=800&fit=crop',
-        'https://images.unsplash.com/photo-1441984904996-e0b6ba687e04?w=1200&h=800&fit=crop',
-        'https://images.unsplash.com/photo-1434389677669-e08b4cac3105?w=1200&h=800&fit=crop',
-        'https://images.unsplash.com/photo-1445205170230-053b83016050?w=1200&h=800&fit=crop'
+        'https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=1600&h=900&fit=crop&q=80', // Premium Tech/Macbook
+        'https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=1600&h=900&fit=crop&q=80', // Premium Watch
+        'https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=1600&h=900&fit=crop&q=80', // Premium Sneaker
+        'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=1600&h=900&fit=crop&q=80'  // Premium Headphones
     ];
 
     const [heroProducts, setHeroProducts] = useState([]);
     const [loadingHero, setLoadingHero] = useState(true);
 
     const nextSlide = () => {
-        if (heroProducts.length === 0) return;
-        setCurrentSlide((prev) => (prev + 1) % heroProducts.length);
+        const count = heroProducts.length > 0 ? heroProducts.length : clothingImages.length;
+        setCurrentSlide((prev) => (prev + 1) % count);
     };
 
     const prevSlide = () => {
-        if (heroProducts.length === 0) return;
-        setCurrentSlide((prev) => (prev - 1 + heroProducts.length) % heroProducts.length);
+        const count = heroProducts.length > 0 ? heroProducts.length : clothingImages.length;
+        setCurrentSlide((prev) => (prev - 1 + count) % count);
     };
 
-    // Fetch hero products (first 4 items from jewelry or electronics for variety)
+    // Fetch hero products using mockApi
     useEffect(() => {
         const fetchHero = async () => {
             try {
                 setLoadingHero(true);
-                const response = await fetch('https://fakestoreapi.com/products?limit=4');
-                if (!response.ok) throw new Error('API unstable');
-                const data = await response.json();
-                if (data && data.length > 0) {
-                    setHeroProducts(data);
+                const response = await fetchProducts({ limit: 4 });
+                if (response.data && response.data.length > 0) {
+                    setHeroProducts(response.data);
                 } else {
-                    throw new Error('Empty data');
+                    throw new Error('No products found');
                 }
             } catch (err) {
                 console.error('Failed to fetch hero products, using fallbacks:', err);
@@ -45,8 +43,8 @@ const LandingPage = () => {
                 setHeroProducts(clothingImages.map((img, i) => ({
                     id: `fallback-${i}`,
                     image: img,
-                    title: 'Premium Collections 2026',
-                    category: 'New Arrivals'
+                    title: 'Stunning Collections 2026',
+                    category: 'Featured'
                 })));
             } finally {
                 setLoadingHero(false);
@@ -57,9 +55,9 @@ const LandingPage = () => {
 
     // Auto-play carousel
     useEffect(() => {
-        const interval = setInterval(nextSlide, 5000);
+        const interval = setInterval(nextSlide, 7000);
         return () => clearInterval(interval);
-    }, [heroProducts]);
+    }, [heroProducts, clothingImages]);
 
     const valueProps = [
         {
@@ -119,17 +117,17 @@ const LandingPage = () => {
                         }}
                     ></div>
                 )}
-                <div className="hero-overlay" style={{ background: 'linear-gradient(to right, rgba(255,255,255,0.9), rgba(255,255,255,0.2))', width: '100%', height: '100%', position: 'absolute', top: 0, left: 0, display: 'flex', alignItems: 'center', padding: '0 4rem' }}>
-                    <div className="hero-content" style={{ maxWidth: '600px', zIndex: 2 }}>
-                        <h1 className="hero-title" style={{ fontSize: '3.5rem', fontWeight: 800, color: 'var(--text-primary)', lineHeight: 1.1, marginBottom: '1.5rem' }}>
+                <div className="hero-overlay" style={{ background: 'linear-gradient(to right, rgba(20, 20, 20, 0.4), rgba(20, 20, 20, 0.1))', width: '100%', height: '100%', position: 'absolute', top: 0, left: 0, display: 'flex', alignItems: 'center', padding: '0 4rem' }}>
+                    <div className="hero-content" style={{ maxWidth: '650px', zIndex: 3 }}>
+                        <h1 className="hero-title" style={{ fontSize: '3.5rem', fontWeight: 800, color: '#ffffff', lineHeight: 1.1, marginBottom: '1.5rem', textShadow: '0 2px 10px rgba(0,0,0,0.3)' }}>
                             {heroProducts.length > 0 ? (
-                                <>Discover <span style={{ color: '#6d28d9' }}>{heroProducts[currentSlide].category}</span> Today</>
+                                <>Discover <span style={{ color: '#a78bfa' }}>Amazing {heroProducts[currentSlide].category || heroProducts[currentSlide].name}</span> Products</>
                             ) : (
-                                <>Discover Amazing <span style={{ color: '#6d28d9' }}>Products</span> Today</>
+                                <>Discover <span style={{ color: '#a78bfa' }}>Amazing Things</span> Today</>
                             )}
                         </h1>
-                        <p className="hero-subtitle" style={{ fontSize: '1.25rem', color: 'var(--text-secondary)', marginBottom: '2.5rem', lineHeight: 1.6 }}>
-                            {heroProducts.length > 0 ? heroProducts[currentSlide].title : "Welcome to 1shopapp - your modern e-commerce destination where style meets functionality."}
+                        <p className="hero-subtitle" style={{ fontSize: '1.25rem', color: '#f1f5f9', marginBottom: '2.5rem', lineHeight: 1.6, textShadow: '0 1px 4px rgba(0,0,0,0.2)' }}>
+                            {heroProducts.length > 0 ? (heroProducts[currentSlide].title || heroProducts[currentSlide].description) : "Explore our premium hand-picked collections and discover unique products just for you."}
                         </p>
                         <div className="hero-btns" style={{ display: 'flex', gap: '1rem' }}>
                             <NavLink to="/catalog" className="btn-primary" style={{ padding: '1rem 2rem', fontSize: '1rem' }}>
