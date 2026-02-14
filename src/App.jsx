@@ -35,15 +35,15 @@ import './App.scss';
 function App() {
   const theme = createTheme({
     palette: {
-      mode: 'dark',
+      mode: 'light',
     },
-  }); // Default MUI theme
+  }); // Light MUI theme
 
   return (
     <ChakraProvider value={defaultSystem}>
       <ThemeProvider theme={theme}>
         <CssBaseline />
-        <ConfigProvider theme={{ algorithm: antdTheme.darkAlgorithm }}>
+        <ConfigProvider theme={{ algorithm: antdTheme.defaultAlgorithm }}>
           <Routes>
             {/* Storefront Routes */}
             <Route path="/" element={<StorefrontLayout />}>
