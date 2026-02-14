@@ -1,8 +1,10 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
+import { useCart } from '../hooks/useCart';
 import './Carousel.scss';
 
 const Carousel = ({ items, itemsPerView = 3, autoPlay = false, autoPlayDelay = 3000 }) => {
+    const { addToCart } = useCart();
     const [currentIndex, setCurrentIndex] = useState(0);
     const [isPlaying, setIsPlaying] = useState(autoPlay);
     const carouselRef = useRef(null);
@@ -82,7 +84,12 @@ const Carousel = ({ items, itemsPerView = 3, autoPlay = false, autoPlayDelay = 3
                                 <img src={item.image} alt={item.name} className="product-image" />
                                 <h3 className="product-name">{item.name}</h3>
                                 <p className="product-price">${item.price}</p>
-                                <button className="product-btn">View Details</button>
+                                <button
+                                    className="product-btn"
+                                    onClick={() => addToCart(item)}
+                                >
+                                    Add to Cart
+                                </button>
                             </div>
                         </div>
                     ))}

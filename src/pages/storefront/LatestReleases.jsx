@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { ShoppingCart, Star, Heart, ArrowRight } from 'lucide-react';
+import { useCart } from '../../hooks/useCart';
 
 const LatestReleases = () => {
     const [products, setProducts] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
+    const { addToCart } = useCart();
 
     useEffect(() => {
         const fetchClothing = async () => {
@@ -83,12 +85,15 @@ const LatestReleases = () => {
                             <h3 className="product-name" title={product.title}>{product.title}</h3>
                             <div className="product-rating">
                                 <Star className="star-icon fill-star" size={14} />
-                                <span>{product.rating?.rate}</span>
+                                <span className="rating-count">({product.rating?.rate})</span>
                                 <span className="rating-count">({product.rating?.count})</span>
                             </div>
                             <div className="product-footer">
                                 <span className="product-price">${product.price.toFixed(2)}</span>
-                                <button className="add-to-cart-btn">
+                                <button
+                                    className="add-to-cart-btn"
+                                    onClick={() => addToCart(product)}
+                                >
                                     <span>Add to Cart</span>
                                     <ArrowRight size={16} />
                                 </button>
