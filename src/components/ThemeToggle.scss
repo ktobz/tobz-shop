@@ -14,12 +14,12 @@
 }
 
 .theme-toggle:hover {
-  background: rgba(var(--primary), 0.1);
+  background: var(--glass-border);
 }
 
 .theme-toggle:focus {
   outline: none;
-  box-shadow: 0 0 0 2px rgba(var(--primary), 0.5);
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--primary), transparent 50%);
 }
 
 .toggle-track {

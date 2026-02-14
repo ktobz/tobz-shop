@@ -1,6 +1,6 @@
 import React from 'react';
 import { useTheme } from '../hooks/useTheme';
-import './ThemeToggle.css';
+import './ThemeToggle.scss';
 
 const ThemeToggle = () => {
     const { theme, toggleTheme } = useTheme();
