@@ -30,7 +30,7 @@ import Wishlist from './pages/storefront/Wishlist';
 import Login from './pages/auth/Login';
 import Signup from './pages/auth/Signup';
 
-import './App.css';
+import './App.scss';
 
 function App() {
   const theme = createTheme({

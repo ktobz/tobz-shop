@@ -1,7 +1,6 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 import { LayoutDashboard, BarChart3, Settings, ShoppingBag } from 'lucide-react';
-import '../index.css';
 
 const Sidebar = () => {
   const navItems = [

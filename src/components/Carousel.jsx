@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
-import './Carousel.css';
+import './Carousel.scss';
 
 const Carousel = ({ items, itemsPerView = 3, autoPlay = false, autoPlayDelay = 3000 }) => {
     const [currentIndex, setCurrentIndex] = useState(0);

@@ -9,31 +9,32 @@
 
   /* Light Theme (Default) */
   --bg-primary: #ffffff;
-  --bg-secondary: #f8fafc;
+  --bg-secondary: #f3e8ff;
+  /* Very light purple tint for secondary bg */
   /* Slate 50 */
-  --bg-card: rgba(255, 255, 255, 0.9);
-  --bg-card-hover: #f1f5f9;
+  --bg-card: #ffffff;
+  --bg-card-hover: #faf5ff;
   /* Slate 100 */
 
   /* Text Colors */
-  --text-primary: #0f172a;
-  /* Slate 900 */
-  --text-secondary: #475569;
-  /* Slate 600 */
+  --text-primary: #000000;
+  /* Pure Black */
+  --text-secondary: #4a4a4a;
+  /* Dark Gray */
   --text-accent: #7c3aed;
   /* Violet 600 */
 
-  /* Accents - Purple & Indigo (No Green) */
+  /* Accents - Purple & Purple (Monochrome-ish) */
   --primary: #7c3aed;
   /* Violet 600 */
   --primary-hover: #6d28d9;
   /* Violet 700 */
   --primary-light: #ddd6fe;
   /* Violet 200 */
-  --secondary: #6366f1;
-  /* Indigo 500 */
-  --secondary-light: #c7d2fe;
-  /* Indigo 200 */
+  --secondary: #a855f7;
+  /* Purple 500 */
+  --secondary-light: #e9d5ff;
+  /* Purple 200 */
 
   /* Status Colors */
   --success: #10b981;
