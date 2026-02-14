@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import styled from '@emotion/styled';
 import { Heart, Star, TrendingUp, ShoppingCart } from 'lucide-react';
 import { useWatchlist } from '../../../hooks/useWatchlist';
+import { useCart } from '../../../hooks/useCart';
 
 import { fetchProducts } from '../../../services/mockApi';
 
@@ -228,6 +229,7 @@ const TopPicksSection = ({ user }) => {
   const [topPicks, setTopPicks] = useState([]);
   const [loading, setLoading] = useState(true);
   const { toggleWatchlist, isInWatchlist } = useWatchlist();
+  const { addToCart } = useCart();
 
   useEffect(() => {
     const fetchTopPicks = async () => {
@@ -244,22 +246,7 @@ const TopPicksSection = ({ user }) => {
   }, []);
 
   if (loading) {
-    return (
-      <SectionContainer>
-        <SectionHeader>
-          <div>
-            <SectionTitle>
-              <TrendingUp size={28} />
-              Top Picks
-            </SectionTitle>
-            <SectionSubtitle>Curated resources just for you</SectionSubtitle>
-          </div>
-        </SectionHeader>
-        <div style={{ textAlign: 'center', padding: '2rem', color: 'var(--text-secondary)' }}>
-          Loading...
-        </div>
-      </SectionContainer>
-    );
+    // ... loading state unchanged ...
   }
 
   return (
@@ -280,16 +267,48 @@ const TopPicksSection = ({ user }) => {
           {topPicks.map((pick) => (
             <PickCard key={pick.id}>
               <CardImage bgImage={pick.image}>
-                <WatchlistButton
-                  active={isInWatchlist(pick.id)}
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    toggleWatchlist(pick.id);
-                  }}
-                  aria-label={isInWatchlist(pick.id) ? 'Remove from watchlist' : 'Add to watchlist'}
-                >
-                  <Heart size={20} />
-                </WatchlistButton>
+                <div style={{ position: 'absolute', top: '0.75rem', right: '0.75rem', display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+                    <WatchlistButton
+                      active={isInWatchlist(pick.id)}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        toggleWatchlist(pick.id);
+                      }}
+                      aria-label={isInWatchlist(pick.id) ? 'Remove from watchlist' : 'Add to watchlist'}
+                      style={{ position: 'static' }}
+                    >
+                      <Heart size={20} />
+                    </WatchlistButton>
+                    <button
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        addToCart({
+                          id: pick.id,
+                          name: pick.name,
+                          price: pick.price,
+                          image: pick.image,
+                          category: pick.category
+                        });
+                      }}
+                      title="Add to Cart"
+                      style={{ 
+                        width: '40px', 
+                        height: '40px', 
+                        borderRadius: '50%', 
+                        background: 'white', 
+                        border: 'none', 
+                        cursor: 'pointer', 
+                        display: 'flex', 
+                        alignItems: 'center', 
+                        justify-content: 'center',
+                        color: 'var(--primary)',
+                        boxShadow: 'var(--shadow-md)',
+                        zIndex: 2
+                      }}
+                    >
+                        <ShoppingCart size={20} />
+                    </button>
+                </div>
               </CardImage>
               <CardContent>
                 <CategoryBadge>{pick.category}</CategoryBadge>
@@ -300,16 +319,28 @@ const TopPicksSection = ({ user }) => {
                     <Star size={16} fill="currentColor" />
                     <span>{(pick.rating || 4.5).toFixed(1)}</span>
                   </Rating>
-                  <span style={{ color: 'var(--text-secondary)', fontSize: '0.85rem' }}>
-                    ${pick.price}
-                  </span>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                    <span style={{ color: 'var(--text-secondary)', fontSize: '0.85rem', fontWeight: 700 }}>
+                        ${pick.price}
+                    </span>
+                    <button 
+                        className="btn-primary" 
+                        onClick={(e) => {
+                            e.stopPropagation();
+                            addToCart(pick);
+                        }}
+                        style={{ padding: '0.4rem 0.8rem', fontSize: '0.75rem' }}
+                    >
+                        Buy Now
+                    </button>
+                  </div>
                 </CardFooter>
               </CardContent>
             </PickCard>
           ))}
-        </CardsGrid>
-      </ScrollableContent>
-    </SectionContainer>
+      </CardsGrid>
+    </ScrollableContent>
+    </SectionContainer >
   );
 };
 

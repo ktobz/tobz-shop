@@ -1,10 +1,12 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { ChevronLeft, ChevronRight } from 'lucide-react';
+import { ChevronLeft, ChevronRight, Heart, ShoppingCart } from 'lucide-react';
 import { useCart } from '../hooks/useCart';
+import { useWatchlist } from '../hooks/useWatchlist';
 import './Carousel.scss';
 
 const Carousel = ({ items, itemsPerView = 3, autoPlay = false, autoPlayDelay = 3000 }) => {
     const { addToCart } = useCart();
+    const { toggleWatchlist, isInWatchlist } = useWatchlist();
     const [currentIndex, setCurrentIndex] = useState(0);
     const [isPlaying, setIsPlaying] = useState(autoPlay);
     const carouselRef = useRef(null);
@@ -80,16 +82,28 @@ const Carousel = ({ items, itemsPerView = 3, autoPlay = false, autoPlayDelay = 3
                             className="carousel-item"
                             style={{ flex: `0 0 ${100 / itemsPerView}%` }}
                         >
-                            <div className="product-card glass-panel">
-                                <img src={item.image} alt={item.name} className="product-image" />
-                                <h3 className="product-name">{item.name}</h3>
-                                <p className="product-price">${item.price}</p>
-                                <button
-                                    className="product-btn"
-                                    onClick={() => addToCart(item)}
-                                >
-                                    Add to Cart
-                                </button>
+                            <div className="product-card glass-panel hvr-lift">
+                                <div className="product-image-container">
+                                    <img src={item.image} alt={item.name} className="product-image" />
+                                    <button
+                                        className={`wishlist-btn overlay ${isInWatchlist(item.id) ? 'active' : ''}`}
+                                        onClick={() => toggleWatchlist(item.id)}
+                                        title={isInWatchlist(item.id) ? "Remove from Wishlist" : "Add to Wishlist"}
+                                    >
+                                        <Heart size={18} fill={isInWatchlist(item.id) ? "currentColor" : "none"} />
+                                    </button>
+                                </div>
+                                <div className="product-info">
+                                    <h3 className="product-name" title={item.name}>{item.name}</h3>
+                                    <p className="product-price">${item.price}</p>
+                                    <button
+                                        className="btn-primary add-to-cart-btn"
+                                        onClick={() => addToCart(item)}
+                                    >
+                                        <span>Add to Cart</span>
+                                        <ShoppingCart size={16} />
+                                    </button>
+                                </div>
                             </div>
                         </div>
                     ))}
