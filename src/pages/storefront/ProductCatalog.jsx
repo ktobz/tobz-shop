@@ -4,6 +4,8 @@ import { fetchProducts, getCategories } from '../../services/mockApi';
 import { useCart } from '../../hooks/useCart';
 import { useWatchlist } from '../../hooks/useWatchlist';
 
+import './ProductCatalog.scss';
+
 const ProductCatalog = () => {
     const [products, setProducts] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -20,7 +22,7 @@ const ProductCatalog = () => {
     const loadProducts = useCallback(async () => {
         try {
             setLoading(true);
-            const response = await fetchProducts({ search, category, page: currentPage, limit });
+            const response = await fetchProducts({ search, category, page: currentPage, limit: 50 });
             setProducts(response.data);
             setTotal(response.total);
         } catch (err) {
@@ -119,44 +121,38 @@ const ProductCatalog = () => {
             <div className="product-grid">
                 {products.map((product) => (
                     <div key={product.id} className="product-card">
+                        {!product.inStock && <div className="product-badge" style={{ background: '#ef4444' }}>Out of Stock</div>}
                         <div className="product-image-container">
-                            <div className="product-image">
-                                <img src={product.image} alt={product.name} />
+                            <img src={product.image} alt={product.name} className="product-image" />
+                            <div className="product-overlay" style={{ position: 'absolute', top: '1rem', right: '1rem', display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+                                <button
+                                    className={`wishlist-btn icon-btn ${isInWatchlist(product.id) ? 'active' : ''}`}
+                                    title={isInWatchlist(product.id) ? 'Remove from wishlist' : 'Add to wishlist'}
+                                    onClick={(e) => {
+                                        e.stopPropagation();
+                                        toggleWatchlist(product.id);
+                                    }}
+                                    style={{ background: 'white', border: '1px solid var(--border-color)', borderRadius: '50%', width: '36px', height: '36px' }}
+                                >
+                                    <Heart size={18} fill={isInWatchlist(product.id) ? '#ef4444' : 'none'} color={isInWatchlist(product.id) ? '#ef4444' : 'currentColor'} />
+                                </button>
                             </div>
-                            <button
-                                className={`wishlist-btn ${isInWatchlist(product.id) ? 'active' : ''}`}
-                                title={isInWatchlist(product.id) ? 'Remove from wishlist' : 'Add to wishlist'}
-                                onClick={(e) => {
-                                    e.stopPropagation();
-                                    toggleWatchlist(product.id);
-                                }}
-                            >
-                                <Heart size={18} fill={isInWatchlist(product.id) ? 'currentColor' : 'none'} />
-                            </button>
                         </div>
                         <div className="product-info">
-                            <div className="product-header">
-                                <h3 className="product-name">{product.name}</h3>
-                                <span className="product-price">${product.price.toFixed(2)}</span>
-                            </div>
                             <span className="product-category">{product.category}</span>
-                            <div style={{ display: 'flex', alignItems: 'center', gap: '0.25rem', margin: '0.5rem 0', fontSize: '0.875rem' }}>
-                                <Star size={14} fill="var(--warning)" color="var(--warning)" />
-                                <span>{product.rating}</span>
+                            <h3 className="product-name" title={product.name}>{product.name}</h3>
+                            <div className="product-rating" style={{ display: 'flex', alignItems: 'center', gap: '0.25rem', marginBottom: '0.5rem' }}>
+                                <Star size={14} fill="#f59e0b" color="#f59e0b" />
+                                <span style={{ fontSize: '0.875rem', fontWeight: 500 }}>{product.rating}</span>
                             </div>
-                            <p className="product-description" style={{ fontSize: '0.875rem', color: 'var(--text-secondary)', margin: '0.5rem 0' }}>
-                                {product.description}
-                            </p>
-                            <div className="product-stock" style={{ fontSize: '0.875rem', color: product.inStock ? 'var(--success)' : 'var(--danger)' }}>
-                                {product.inStock ? 'In Stock' : 'Out of Stock'}
-                            </div>
-                            <div className="product-footer">
+                            <div className="product-footer" style={{ marginTop: 'auto', display: 'flex', alignItems: 'center', justifyContent: 'space-between', width: '100%' }}>
+                                <span className="product-price">${product.price.toFixed(2)}</span>
                                 <button
-                                    className="btn-primary add-to-cart-btn"
+                                    className="btn-primary"
                                     disabled={!product.inStock}
                                     onClick={() => addToCart(product)}
+                                    style={{ padding: '0.5rem 1rem', borderRadius: '8px' }}
                                 >
-                                    {product.inStock ? 'Add to Cart' : 'Out of Stock'}
                                     <ShoppingCart size={16} />
                                 </button>
                             </div>
