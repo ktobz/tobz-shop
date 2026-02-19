@@ -7,107 +7,117 @@ const mockProducts = [
         name: 'Wireless Headphones',
         price: 199.99,
         category: 'Electronics',
-        image: '/api/placeholder/150/150',
+        image: 'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&w=800&q=80',
         description: 'High-quality wireless headphones with noise cancellation.',
         rating: 4.5,
-        inStock: true
+        inStock: true,
+        stock: 45
     },
     {
         id: 2,
         name: 'Smart Watch',
         price: 299.99,
         category: 'Electronics',
-        image: '/api/placeholder/150/150',
+        image: 'https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&w=800&q=80',
         description: 'Feature-packed smart watch with health monitoring.',
         rating: 4.7,
-        inStock: true
+        inStock: true,
+        stock: 12
     },
     {
         id: 3,
         name: 'Laptop Stand',
         price: 49.99,
         category: 'Electronics',
-        image: '/api/placeholder/150/150',
+        image: 'https://images.unsplash.com/photo-1544244015-0df4b3ffc6b0?auto=format&fit=crop&w=800&q=80',
         description: 'Adjustable laptop stand for ergonomic working.',
         rating: 4.2,
-        inStock: true
+        inStock: true,
+        stock: 85
     },
     {
         id: 4,
         name: 'Bluetooth Speaker',
         price: 79.99,
         category: 'Electronics',
-        image: '/api/placeholder/150/150',
+        image: 'https://images.unsplash.com/photo-1608156639585-34a0a56ee6c9?auto=format&fit=crop&w=800&q=80',
         description: 'Portable Bluetooth speaker with excellent sound quality.',
         rating: 4.3,
-        inStock: true
+        inStock: true,
+        stock: 5
     },
     {
         id: 5,
         name: 'Gaming Mouse',
         price: 59.99,
         category: 'Electronics',
-        image: '/api/placeholder/150/150',
+        image: 'https://images.unsplash.com/photo-1527443224154-c4a3942d3acf?auto=format&fit=crop&w=800&q=80',
         description: 'High-precision gaming mouse with customizable buttons.',
         rating: 4.6,
-        inStock: false
+        inStock: false,
+        stock: 0
     },
     {
         id: 6,
         name: 'Wireless Keyboard',
         price: 89.99,
         category: 'Electronics',
-        image: '/api/placeholder/150/150',
+        image: 'https://images.unsplash.com/photo-1587829741301-dc798b83bac1?auto=format&fit=crop&w=800&q=80',
         description: 'Ergonomic wireless keyboard for comfortable typing.',
         rating: 4.4,
-        inStock: true
+        inStock: true,
+        stock: 18
     },
     {
         id: 7,
         name: 'Smartphone Case',
         price: 19.99,
         category: 'Electronics',
-        image: '/api/placeholder/150/150',
+        image: 'https://images.unsplash.com/photo-1541807084-5c52b6b3adef?auto=format&fit=crop&w=800&q=80',
         description: 'Protective case for smartphones with stylish design.',
         rating: 4.1,
-        inStock: true
+        inStock: true,
+        stock: 150
     },
     {
         id: 8,
         name: 'Tablet',
         price: 399.99,
         category: 'Electronics',
-        image: '/api/placeholder/150/150',
+        image: 'https://images.unsplash.com/photo-1544244015-0df4b3ffc6b0?auto=format&fit=crop&w=800&q=80',
         description: 'High-performance tablet for work and entertainment.',
         rating: 4.8,
-        inStock: true
+        inStock: true,
+        stock: 7
     },
     {
         id: 9,
         name: 'VR Headset',
         price: 499.99,
         category: 'Electronics',
-        image: '/api/placeholder/150/150',
+        image: 'https://images.unsplash.com/photo-1622979135225-d2ba269cf1ac?auto=format&fit=crop&w=800&q=80',
         description: 'Immersive virtual reality headset for gaming.',
         rating: 4.5,
-        inStock: false
+        inStock: false,
+        stock: 0
     },
     {
         id: 10,
         name: 'Charging Cable',
         price: 9.99,
         category: 'Electronics',
-        image: '/api/placeholder/150/150',
+        image: 'https://images.unsplash.com/photo-1583863788434-e58a36330cf0?auto=format&fit=crop&w=800&q=80',
         description: 'Durable charging cable compatible with multiple devices.',
         rating: 4.0,
-        inStock: true
+        inStock: true,
+        stock: 300
     },
     {
         id: 11,
         name: 'Cotton T-Shirt',
         price: 14.99,
         category: 'Fashion',
-        image: '/api/placeholder/150/150',
+        image: 'https://placehold.co/400x400/1e1e1e/white?text=Cotton+T-Shirt',
         description: 'Comfortable cotton t-shirt in various colors.',
         rating: 4.2,
         inStock: true
@@ -117,7 +127,7 @@ const mockProducts = [
         name: 'Jeans',
         price: 49.99,
         category: 'Fashion',
-        image: '/api/placeholder/150/150',
+        image: 'https://placehold.co/400x400/1e1e1e/white?text=Jeans',
         description: 'Classic denim jeans with a perfect fit.',
         rating: 4.4,
         inStock: true
@@ -528,6 +538,7 @@ const mockAnalytics = {
 const mockInventory = mockProducts.map(product => ({
     id: product.id,
     name: product.name,
+    image: product.image,
     stock: product.stock,
     reorderPoint: 10,
     supplier: 'Mock Supplier',

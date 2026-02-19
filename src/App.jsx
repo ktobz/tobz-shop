@@ -25,6 +25,10 @@ import Resources from './pages/storefront/Resources';
 import LatestReleases from './pages/storefront/LatestReleases';
 import Cart from './pages/storefront/Cart';
 import Wishlist from './pages/storefront/Wishlist';
+import Terms from './pages/storefront/Terms';
+import Warranty from './pages/storefront/Warranty';
+import Checkout from './pages/storefront/Checkout';
+import PaymentSuccess from './pages/storefront/PaymentSuccess';
 
 /* Auth Components */
 import Login from './pages/auth/Login';
@@ -57,6 +61,10 @@ function App() {
               <Route path="latest-releases" element={<LatestReleases />} />
               <Route path="cart" element={<Cart />} />
               <Route path="wishlist" element={<Wishlist />} />
+              <Route path="terms" element={<Terms />} />
+              <Route path="warranty" element={<Warranty />} />
+              <Route path="checkout" element={<Checkout />} />
+              <Route path="payment-success" element={<PaymentSuccess />} />
             </Route>
 
             {/* Auth Routes */}

@@ -38,23 +38,24 @@ const StorefrontNavbar = () => {
             icon: Package,
             items: [
                 { label: 'Products', path: '/inventory', description: 'Manage your stock efficiently', icon: Package },
-                { label: 'Analytics', path: '/dashboard/analytics', description: 'Track your performance', icon: BarChart3 },
+                { label: 'About Us', path: '/about', description: 'Learn about our story', icon: Building },
+                { label: 'Support', path: '/contact', description: 'Get in touch with us', icon: Headphones },
             ]
         },
         resources: {
             label: 'Resources',
             icon: BookOpen,
             items: [
-                { label: 'Apps', path: '/resources', description: 'Guides and tutorials', icon: AppWindow },
-                { label: 'Marketing', path: '/resources#api', description: 'Developer resources', icon: Megaphone },
+                { label: 'Apps & Resources', path: '/resources', description: 'Guides, tutorials and more', icon: AppWindow },
+                { label: 'Help Center', path: '/contact', description: 'Get technical support', icon: Headphones },
             ]
         },
         company: {
             label: 'Company',
             icon: Users,
             items: [
-                { label: 'About Us', path: '/about', description: 'Learn about our story', icon: Building },
-                { label: 'Support', path: '/contact', description: 'Get in touch with us', icon: Headphones },
+                { label: 'Analytics', path: '/dashboard/analytics', description: 'Track your performance', icon: BarChart3 },
+                { label: 'Marketing', path: '/resources#api', description: 'Developer resources', icon: Megaphone },
             ]
         }
     };

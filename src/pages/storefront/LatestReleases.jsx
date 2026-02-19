@@ -78,7 +78,7 @@ const LatestReleases = () => {
                 {currentProducts.map((product) => (
                     <div key={product.id} className="product-card">
                         <div className="product-image-container">
-                            <img src={product.image} alt={product.title} className="product-image" />
+                            <img src={product.image} alt={product.name} className="product-image" />
                             <div className="product-overlay" style={{ position: 'absolute', top: '1rem', right: '1rem', display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
                                 <button
                                     className={`wishlist-btn ${isInWatchlist(product.id) ? 'active' : ''}`}
@@ -91,7 +91,7 @@ const LatestReleases = () => {
                         </div>
                         <div className="product-info">
                             <span className="product-category">{product.category}</span>
-                            <h3 className="product-name">{product.title}</h3>
+                            <h3 className="product-name">{product.name}</h3>
                             <div className="product-footer">
                                 <span className="product-price">${product.price.toFixed(2)}</span>
                                 <button

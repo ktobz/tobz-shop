@@ -74,6 +74,14 @@
         color: #6d28d9;
     }
 
+    .product-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+        gap: 2rem;
+        width: 100%;
+        margin-bottom: 2rem;
+    }
+
     .pagination {
         display: flex;
         justify-content: center;

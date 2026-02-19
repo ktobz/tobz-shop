@@ -116,11 +116,12 @@ const Inventory = () => {
                     const status = getStockStatus(item.stock);
                     return (
                         <div key={item.id} className="inventory-card glass-panel">
-                            <div className="inventory-image">
+                            <div className="inventory-image" style={{ height: '180px', overflow: 'hidden', borderRadius: '12px', marginBottom: '1rem' }}>
                                 <img
-                                    src="/api/placeholder/150/150"
+                                    src={item.image || "/api/placeholder/150/150"}
                                     alt={item.name}
                                     loading="lazy"
+                                    style={{ width: '100%', height: '100%', objectFit: 'cover' }}
                                 />
                             </div>
 

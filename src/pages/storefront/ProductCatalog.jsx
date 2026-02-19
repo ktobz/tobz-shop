@@ -22,7 +22,7 @@ const ProductCatalog = () => {
     const loadProducts = useCallback(async () => {
         try {
             setLoading(true);
-            const response = await fetchProducts({ search, category, page: currentPage, limit: 50 });
+            const response = await fetchProducts({ search, category, page: currentPage, limit });
             setProducts(response.data);
             setTotal(response.total);
         } catch (err) {

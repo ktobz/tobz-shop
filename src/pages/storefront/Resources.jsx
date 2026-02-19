@@ -370,9 +370,9 @@ const Resources = () => {
   const resourceCategories = [
     {
       icon: BookOpen,
-      title: 'Documentation',
-      description: 'Comprehensive guides and API documentation',
-      links: ['Getting Started', 'API Reference', 'Best Practices', 'FAQ'],
+      title: 'Our Apps',
+      description: 'Explore our ecosystem of powerful applications',
+      links: ['Inventory App', 'Analytics Pro', 'Marketing Suite', 'Support Tools'],
       image: resourceImages[0]
     },
     {
@@ -395,9 +395,9 @@ const Resources = () => {
     <ResourcesPage>
       <ResourcesHeader>
         <HeroTitle>
-          Resources & <TextGradient>Support</TextGradient>
+          Apps & <TextGradient>Resources</TextGradient>
         </HeroTitle>
-        <Subtitle>Everything you need to succeed with 1shopapp</Subtitle>
+        <Subtitle>Discover powerful applications and helpful guides for 1shopapp</Subtitle>
       </ResourcesHeader>
 
       <ResourcesGrid>
