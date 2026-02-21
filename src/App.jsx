@@ -31,6 +31,7 @@ import Checkout from './pages/storefront/Checkout';
 import PaymentSuccess from './pages/storefront/PaymentSuccess';
 import Marketing from './pages/storefront/Marketing';
 import JoinJourney from './pages/storefront/JoinJourney';
+import GenericPage from './pages/storefront/GenericPage';
 
 /* Auth Components */
 import Login from './pages/auth/Login';
@@ -66,9 +67,16 @@ function App() {
               <Route path="terms" element={<Terms />} />
               <Route path="warranty" element={<Warranty />} />
               <Route path="checkout" element={<Checkout />} />
+              <Route path="payment" element={<GenericPage title="Payment Processing" description="Securely complete your transaction" />} />
               <Route path="payment-success" element={<PaymentSuccess />} />
               <Route path="marketing" element={<Marketing />} />
               <Route path="join-journey" element={<JoinJourney />} />
+
+              {/* New Dynamic/Placeholder Routes */}
+              <Route path="careers" element={<GenericPage title="Careers at 1shopapp" description="Join our team and help build the future of e-commerce." />} />
+              <Route path="partner" element={<GenericPage title="Partner with Us" description="Explore partnership opportunities and grow together." />} />
+              <Route path="docs/:topic" element={<GenericPage />} />
+              <Route path="category/:id" element={<GenericPage />} />
             </Route>
 
             {/* Auth Routes */}

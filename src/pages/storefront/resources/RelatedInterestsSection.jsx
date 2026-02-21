@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from '@emotion/styled';
 import { Sparkles, ArrowRight, Laptop, Shirt, Home, Trophy, BookOpen, Car } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 
 const SectionContainer = styled.section`
   margin: 4rem 0;
@@ -148,6 +149,8 @@ const Tag = styled.span`
 `;
 
 const RelatedInterestsSection = () => {
+  const navigate = useNavigate();
+
   const interests = [
     {
       id: 1,
@@ -212,23 +215,26 @@ const RelatedInterestsSection = () => {
         </SectionSubtitle>
       </SectionHeader>
       <InterestsGrid>
-        {interests.map((interest) => (
-          <InterestCard key={interest.id}>
-            <CardHeader>
-              <IconWrapper>
-                <interest.icon size={28} />
-              </IconWrapper>
-              <CardTitle>{interest.title}</CardTitle>
-              <CardArrow className="card-arrow" size={20} />
-            </CardHeader>
-            <CardDescription>{interest.description}</CardDescription>
-            <CardTags>
-              {interest.tags.map((tag, idx) => (
-                <Tag key={idx}>{tag}</Tag>
-              ))}
-            </CardTags>
-          </InterestCard>
-        ))}
+        {interests.map((interest) => {
+          const catSlug = interest.title.toLowerCase().replace(/[^a-z0-9]+/g, '-');
+          return (
+            <InterestCard key={interest.id} onClick={() => navigate(`/category/${catSlug}`)}>
+              <CardHeader>
+                <IconWrapper>
+                  <interest.icon size={28} />
+                </IconWrapper>
+                <CardTitle>{interest.title}</CardTitle>
+                <CardArrow className="card-arrow" size={20} />
+              </CardHeader>
+              <CardDescription>{interest.description}</CardDescription>
+              <CardTags>
+                {interest.tags.map((tag, idx) => (
+                  <Tag key={idx}>{tag}</Tag>
+                ))}
+              </CardTags>
+            </InterestCard>
+          );
+        })}
       </InterestsGrid>
     </SectionContainer>
   );

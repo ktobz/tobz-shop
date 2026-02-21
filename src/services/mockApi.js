@@ -137,7 +137,7 @@ const mockProducts = [
         name: 'Sneakers',
         price: 79.99,
         category: 'Fashion',
-        image: '/api/placeholder/150/150',
+        image: 'https://placehold.co/800x800/1e1e1e/white?text=Sneakers',
         description: 'Stylish sneakers for everyday wear.',
         rating: 4.6,
         inStock: true
@@ -147,7 +147,7 @@ const mockProducts = [
         name: 'Dress',
         price: 39.99,
         category: 'Fashion',
-        image: '/api/placeholder/150/150',
+        image: 'https://placehold.co/800x800/1e1e1e/white?text=Dress',
         description: 'Elegant dress for special occasions.',
         rating: 4.3,
         inStock: false
@@ -157,7 +157,7 @@ const mockProducts = [
         name: 'Jacket',
         price: 89.99,
         category: 'Fashion',
-        image: '/api/placeholder/150/150',
+        image: 'https://placehold.co/800x800/1e1e1e/white?text=Jacket',
         description: 'Warm jacket for cold weather.',
         rating: 4.5,
         inStock: true
@@ -167,7 +167,7 @@ const mockProducts = [
         name: 'Hat',
         price: 19.99,
         category: 'Fashion',
-        image: '/api/placeholder/150/150',
+        image: 'https://placehold.co/800x800/1e1e1e/white?text=Hat',
         description: 'Fashionable hat to complete your look.',
         rating: 4.1,
         inStock: true
@@ -177,7 +177,7 @@ const mockProducts = [
         name: 'Scarf',
         price: 24.99,
         category: 'Fashion',
-        image: '/api/placeholder/150/150',
+        image: 'https://placehold.co/800x800/1e1e1e/white?text=Scarf',
         description: 'Soft scarf for added style and warmth.',
         rating: 4.2,
         inStock: true
@@ -187,7 +187,7 @@ const mockProducts = [
         name: 'Sunglasses',
         price: 29.99,
         category: 'Fashion',
-        image: '/api/placeholder/150/150',
+        image: 'https://placehold.co/800x800/1e1e1e/white?text=Sunglasses',
         description: 'UV-protective sunglasses with trendy design.',
         rating: 4.4,
         inStock: false
@@ -197,7 +197,7 @@ const mockProducts = [
         name: 'Belt',
         price: 34.99,
         category: 'Fashion',
-        image: '/api/placeholder/150/150',
+        image: 'https://placehold.co/800x800/1e1e1e/white?text=Belt',
         description: 'Leather belt for a polished appearance.',
         rating: 4.0,
         inStock: true
@@ -207,7 +207,7 @@ const mockProducts = [
         name: 'Watch',
         price: 149.99,
         category: 'Fashion',
-        image: '/api/placeholder/150/150',
+        image: 'https://placehold.co/800x800/1e1e1e/white?text=Watch',
         description: 'Stylish watch to accessorize your outfit.',
         rating: 4.5,
         inStock: true
@@ -217,7 +217,7 @@ const mockProducts = [
         name: 'Throw Pillow',
         price: 24.99,
         category: 'Home',
-        image: '/api/placeholder/150/150',
+        image: 'https://placehold.co/800x800/1e1e1e/white?text=Throw%20Pillow',
         description: 'Soft throw pillow to enhance your home decor.',
         rating: 4.3,
         inStock: true
@@ -227,7 +227,7 @@ const mockProducts = [
         name: 'Table Lamp',
         price: 39.99,
         category: 'Home',
-        image: '/api/placeholder/150/150',
+        image: 'https://placehold.co/800x800/1e1e1e/white?text=Table%20Lamp',
         description: 'Modern table lamp for ambient lighting.',
         rating: 4.4,
         inStock: true
@@ -237,7 +237,7 @@ const mockProducts = [
         name: 'Curtains',
         price: 49.99,
         category: 'Home',
-        image: '/api/placeholder/150/150',
+        image: 'https://placehold.co/800x800/1e1e1e/white?text=Curtains',
         description: 'Beautiful curtains to decorate your windows.',
         rating: 4.2,
         inStock: true
@@ -247,7 +247,7 @@ const mockProducts = [
         name: 'Plant Pot',
         price: 14.99,
         category: 'Home',
-        image: '/api/placeholder/150/150',
+        image: 'https://placehold.co/800x800/1e1e1e/white?text=Plant%20Pot',
         description: 'Ceramic plant pot for indoor plants.',
         rating: 4.1,
         inStock: false
@@ -257,7 +257,7 @@ const mockProducts = [
         name: 'Blanket',
         price: 29.99,
         category: 'Home',
-        image: '/api/placeholder/150/150',
+        image: 'https://placehold.co/800x800/1e1e1e/white?text=Blanket',
         description: 'Cozy blanket for comfortable nights.',
         rating: 4.6,
         inStock: true
@@ -267,7 +267,7 @@ const mockProducts = [
         name: 'Picture Frame',
         price: 19.99,
         category: 'Home',
-        image: '/api/placeholder/150/150',
+        image: 'https://placehold.co/800x800/1e1e1e/white?text=Picture%20Frame',
         description: 'Elegant picture frame to display memories.',
         rating: 4.0,
         inStock: true
@@ -277,7 +277,7 @@ const mockProducts = [
         name: 'Rug',
         price: 79.99,
         category: 'Home',
-        image: '/api/placeholder/150/150',
+        image: 'https://placehold.co/800x800/1e1e1e/white?text=Rug',
         description: 'Soft rug to add warmth to your floor.',
         rating: 4.5,
         inStock: true
@@ -287,7 +287,7 @@ const mockProducts = [
         name: 'Candles',
         price: 12.99,
         category: 'Home',
-        image: '/api/placeholder/150/150',
+        image: 'https://placehold.co/800x800/1e1e1e/white?text=Candles',
         description: 'Scented candles for a relaxing atmosphere.',
         rating: 4.3,
         inStock: true
@@ -297,7 +297,7 @@ const mockProducts = [
         name: 'Wall Art',
         price: 34.99,
         category: 'Home',
-        image: '/api/placeholder/150/150',
+        image: 'https://placehold.co/800x800/1e1e1e/white?text=Wall%20Art',
         description: 'Artistic wall decor to personalize your space.',
         rating: 4.4,
         inStock: false
@@ -307,7 +307,7 @@ const mockProducts = [
         name: 'Vase',
         price: 22.99,
         category: 'Home',
-        image: '/api/placeholder/150/150',
+        image: 'https://placehold.co/800x800/1e1e1e/white?text=Vase',
         description: 'Decorative vase for flowers or display.',
         rating: 4.2,
         inStock: true
@@ -317,7 +317,7 @@ const mockProducts = [
         name: 'Lipstick',
         price: 19.99,
         category: 'Beauty',
-        image: '/api/placeholder/150/150',
+        image: 'https://placehold.co/800x800/1e1e1e/white?text=Lipstick',
         description: 'Long-lasting lipstick in vibrant colors.',
         rating: 4.4,
         inStock: true
@@ -327,7 +327,7 @@ const mockProducts = [
         name: 'Foundation',
         price: 29.99,
         category: 'Beauty',
-        image: '/api/placeholder/150/150',
+        image: 'https://placehold.co/800x800/1e1e1e/white?text=Foundation',
         description: 'Smooth foundation for flawless skin.',
         rating: 4.3,
         inStock: true
@@ -337,7 +337,7 @@ const mockProducts = [
         name: 'Shampoo',
         price: 14.99,
         category: 'Beauty',
-        image: '/api/placeholder/150/150',
+        image: 'https://placehold.co/800x800/1e1e1e/white?text=Shampoo',
         description: 'Nourishing shampoo for healthy hair.',
         rating: 4.5,
         inStock: true
@@ -347,7 +347,7 @@ const mockProducts = [
         name: 'Moisturizer',
         price: 24.99,
         category: 'Beauty',
-        image: '/api/placeholder/150/150',
+        image: 'https://placehold.co/800x800/1e1e1e/white?text=Moisturizer',
         description: 'Hydrating moisturizer for daily use.',
         rating: 4.6,
         inStock: false
@@ -357,7 +357,7 @@ const mockProducts = [
         name: 'Eyeliner',
         price: 9.99,
         category: 'Beauty',
-        image: '/api/placeholder/150/150',
+        image: 'https://placehold.co/800x800/1e1e1e/white?text=Eyeliner',
         description: 'Precise eyeliner for defined eyes.',
         rating: 4.2,
         inStock: true
@@ -367,7 +367,7 @@ const mockProducts = [
         name: 'Perfume',
         price: 49.99,
         category: 'Beauty',
-        image: '/api/placeholder/150/150',
+        image: 'https://placehold.co/800x800/1e1e1e/white?text=Perfume',
         description: 'Elegant perfume with a captivating scent.',
         rating: 4.7,
         inStock: true
@@ -377,7 +377,7 @@ const mockProducts = [
         name: 'Nail Polish',
         price: 7.99,
         category: 'Beauty',
-        image: '/api/placeholder/150/150',
+        image: 'https://placehold.co/800x800/1e1e1e/white?text=Nail%20Polish',
         description: 'Quick-drying nail polish in various shades.',
         rating: 4.1,
         inStock: true
@@ -387,7 +387,7 @@ const mockProducts = [
         name: 'Hair Brush',
         price: 12.99,
         category: 'Beauty',
-        image: '/api/placeholder/150/150',
+        image: 'https://placehold.co/800x800/1e1e1e/white?text=Hair%20Brush',
         description: 'Gentle hair brush for detangling.',
         rating: 4.3,
         inStock: true
@@ -397,7 +397,7 @@ const mockProducts = [
         name: 'Face Mask',
         price: 18.99,
         category: 'Beauty',
-        image: '/api/placeholder/150/150',
+        image: 'https://placehold.co/800x800/1e1e1e/white?text=Face%20Mask',
         description: 'Revitalizing face mask for glowing skin.',
         rating: 4.5,
         inStock: false
@@ -407,7 +407,7 @@ const mockProducts = [
         name: 'Body Lotion',
         price: 16.99,
         category: 'Beauty',
-        image: '/api/placeholder/150/150',
+        image: 'https://placehold.co/800x800/1e1e1e/white?text=Body%20Lotion',
         description: 'Soothing body lotion for smooth skin.',
         rating: 4.4,
         inStock: true
@@ -417,7 +417,7 @@ const mockProducts = [
         name: 'Yoga Mat',
         price: 39.99,
         category: 'Sports',
-        image: '/api/placeholder/150/150',
+        image: 'https://placehold.co/800x800/1e1e1e/white?text=Yoga%20Mat',
         description: 'Non-slip yoga mat for fitness routines.',
         rating: 4.5,
         inStock: true
@@ -427,7 +427,7 @@ const mockProducts = [
         name: 'Dumbbells',
         price: 59.99,
         category: 'Sports',
-        image: '/api/placeholder/150/150',
+        image: 'https://placehold.co/800x800/1e1e1e/white?text=Dumbbells',
         description: 'Adjustable dumbbells for strength training.',
         rating: 4.6,
         inStock: true
@@ -437,7 +437,7 @@ const mockProducts = [
         name: 'Running Shoes',
         price: 89.99,
         category: 'Sports',
-        image: '/api/placeholder/150/150',
+        image: 'https://placehold.co/800x800/1e1e1e/white?text=Running%20Shoes',
         description: 'Comfortable running shoes for athletes.',
         rating: 4.7,
         inStock: true
@@ -447,7 +447,7 @@ const mockProducts = [
         name: 'Basketball',
         price: 24.99,
         category: 'Sports',
-        image: '/api/placeholder/150/150',
+        image: 'https://placehold.co/800x800/1e1e1e/white?text=Basketball',
         description: 'Durable basketball for outdoor play.',
         rating: 4.3,
         inStock: false
@@ -457,7 +457,7 @@ const mockProducts = [
         name: 'Tennis Racket',
         price: 79.99,
         category: 'Sports',
-        image: '/api/placeholder/150/150',
+        image: 'https://placehold.co/800x800/1e1e1e/white?text=Tennis%20Racket',
         description: 'Lightweight tennis racket for precision.',
         rating: 4.4,
         inStock: true
@@ -467,7 +467,7 @@ const mockProducts = [
         name: 'Swimming Goggles',
         price: 14.99,
         category: 'Sports',
-        image: '/api/placeholder/150/150',
+        image: 'https://placehold.co/800x800/1e1e1e/white?text=Swimming%20Goggles',
         description: 'Anti-fog swimming goggles for clear vision.',
         rating: 4.2,
         inStock: true
@@ -477,7 +477,7 @@ const mockProducts = [
         name: 'Bike Helmet',
         price: 49.99,
         category: 'Sports',
-        image: '/api/placeholder/150/150',
+        image: 'https://placehold.co/800x800/1e1e1e/white?text=Bike%20Helmet',
         description: 'Safety bike helmet for cycling.',
         rating: 4.5,
         inStock: true
@@ -487,7 +487,7 @@ const mockProducts = [
         name: 'Golf Clubs',
         price: 199.99,
         category: 'Sports',
-        image: '/api/placeholder/150/150',
+        image: 'https://placehold.co/800x800/1e1e1e/white?text=Golf%20Clubs',
         description: 'Professional golf clubs set.',
         rating: 4.6,
         inStock: true
@@ -497,7 +497,7 @@ const mockProducts = [
         name: 'Soccer Ball',
         price: 29.99,
         category: 'Sports',
-        image: '/api/placeholder/150/150',
+        image: 'https://placehold.co/800x800/1e1e1e/white?text=Soccer%20Ball',
         description: 'High-quality soccer ball for matches.',
         rating: 4.4,
         inStock: false
@@ -507,7 +507,7 @@ const mockProducts = [
         name: 'Fitness Tracker',
         price: 149.99,
         category: 'Sports',
-        image: '/api/placeholder/150/150',
+        image: 'https://placehold.co/800x800/1e1e1e/white?text=Fitness%20Tracker',
         description: 'Wearable fitness tracker to monitor activity.',
         rating: 4.8,
         inStock: true

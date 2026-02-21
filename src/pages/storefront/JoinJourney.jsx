@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from '@emotion/styled';
+import { NavLink } from 'react-router-dom';
 import { Rocket, Target, Users, ArrowRight, Heart, Zap } from 'lucide-react';
 
 const JourneyContainer = styled.div`
@@ -61,6 +62,13 @@ const StepNumber = styled.span`
 `;
 
 const JoinJourney = () => {
+    const [subscribed, setSubscribed] = useState(false);
+
+    const handleSubscribe = () => {
+        setSubscribed(true);
+        setTimeout(() => setSubscribed(false), 3000);
+    };
+
     return (
         <JourneyContainer className="fade-in">
             <Hero>
@@ -69,12 +77,12 @@ const JoinJourney = () => {
                     Be a part of the most ambitious project in digital trade. Together, we can build the tools of tomorrow.
                 </p>
                 <div style={{ marginTop: '3rem', display: 'flex', gap: '1rem', justifyContent: 'center' }}>
-                    <button className="btn-secondary" style={{ padding: '1rem 2.5rem', background: 'white', color: 'var(--primary)', border: 'none' }}>
+                    <NavLink to="/partner" className="btn-secondary" style={{ padding: '1rem 2.5rem', background: 'white', color: 'var(--primary)', border: 'none', textDecoration: 'none' }}>
                         Partner with Us
-                    </button>
-                    <button className="btn-outline" style={{ padding: '1rem 2.5rem', borderColor: 'white', color: 'white' }}>
+                    </NavLink>
+                    <NavLink to="/careers" className="btn-outline" style={{ padding: '1rem 2.5rem', borderColor: 'white', color: 'white', textDecoration: 'none' }}>
                         View Careers
-                    </button>
+                    </NavLink>
                 </div>
             </Hero>
 
@@ -130,8 +138,8 @@ const JoinJourney = () => {
                                 color: 'white'
                             }}
                         />
-                        <button className="btn-primary" style={{ padding: '0.8rem 2rem' }}>
-                            Subscribe <ArrowRight size={18} style={{ marginLeft: '0.5rem' }} />
+                        <button className="btn-primary" onClick={handleSubscribe} style={{ padding: '0.8rem 2rem' }}>
+                            {subscribed ? 'Subscribed!' : <span style={{ display: 'flex', alignItems: 'center' }}>Subscribe <ArrowRight size={18} style={{ marginLeft: '0.5rem' }} /></span>}
                         </button>
                     </div>
                 </div>

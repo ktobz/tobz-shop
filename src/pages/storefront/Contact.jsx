@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import styled from '@emotion/styled';
 import { Mail, Send, MapPin, MessageCircle, ChevronRight, Search, Book, CreditCard, User, Shield, Target, Zap } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 import FAQSection from './resources/FAQSection';
 
 const PageContainer = styled.div`
@@ -102,6 +103,7 @@ const InfoItem = styled.div`
 
 const Contact = () => {
   const [submitted, setSubmitted] = useState(false);
+  const navigate = useNavigate();
 
   const categories = [
     { icon: Book, title: 'Documentation', desc: 'Detailed guides on how to use our platform and features.' },
@@ -130,16 +132,19 @@ const Contact = () => {
       </Hero>
 
       <CategoryGrid>
-        {categories.map((cat, i) => (
-          <CategoryCard key={i}>
-            <cat.icon size={32} color="var(--primary)" style={{ marginBottom: '1.5rem' }} />
-            <h3 style={{ fontSize: '1.3rem', fontWeight: '700', marginBottom: '0.75rem' }}>{cat.title}</h3>
-            <p style={{ color: 'var(--text-secondary)', fontSize: '0.95rem', lineHeight: '1.6' }}>{cat.desc}</p>
-            <div style={{ marginTop: '1.5rem', color: 'var(--primary)', fontWeight: '600', display: 'flex', alignItems: 'center', gap: '0.25rem' }}>
-              Learn more <ChevronRight size={16} />
-            </div>
-          </CategoryCard>
-        ))}
+        {categories.map((cat, i) => {
+          const catSlug = cat.title.toLowerCase().replace(/[^a-z0-9]+/g, '-');
+          return (
+            <CategoryCard key={i} onClick={() => navigate(`/docs/${catSlug}`)}>
+              <cat.icon size={32} color="var(--primary)" style={{ marginBottom: '1.5rem' }} />
+              <h3 style={{ fontSize: '1.3rem', fontWeight: '700', marginBottom: '0.75rem' }}>{cat.title}</h3>
+              <p style={{ color: 'var(--text-secondary)', fontSize: '0.95rem', lineHeight: '1.6' }}>{cat.desc}</p>
+              <div style={{ marginTop: '1.5rem', color: 'var(--primary)', fontWeight: '600', display: 'flex', alignItems: 'center', gap: '0.25rem' }}>
+                Learn more <ChevronRight size={16} />
+              </div>
+            </CategoryCard>
+          );
+        })}
       </CategoryGrid>
 
       <ContactSection>

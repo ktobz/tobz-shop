@@ -1,6 +1,7 @@
 import React, { useState, useEffect, lazy, Suspense } from 'react';
 import styled from '@emotion/styled';
 import { BookOpen, FileText, Code, Heart, ChevronUp } from 'lucide-react';
+import { NavLink } from 'react-router-dom';
 import { useAuth } from '../../hooks/useAuth';
 import { useWatchlist } from '../../hooks/useWatchlist';
 import { fetchProducts } from '../../services/mockApi';
@@ -171,7 +172,7 @@ const ResourceLinks = styled.ul`
   align-items: center;
 `;
 
-const ResourceLink = styled.a`
+const ResourceLink = styled(NavLink)`
   color: var(--primary);
   font-weight: 600;
   text-decoration: none;
@@ -360,21 +361,36 @@ const Resources = () => {
       icon: BookOpen,
       title: 'Our Apps',
       description: 'Explore our ecosystem of powerful applications',
-      links: ['Inventory App', 'Analytics Pro', 'Marketing Suite', 'Support Tools'],
+      links: [
+        { label: 'Inventory App', path: '/inventory' },
+        { label: 'Analytics Pro', path: '/dashboard/analytics' },
+        { label: 'Marketing Suite', path: '/marketing' },
+        { label: 'Support Tools', path: '/contact' }
+      ],
       image: resourceImages[0]
     },
     {
       icon: FileText,
       title: 'Tutorials',
       description: 'Step-by-step tutorials for common tasks',
-      links: ['Store Setup', 'Product Management', 'Marketing Guide', 'Analytics'],
+      links: [
+        { label: 'Store Setup', path: '/contact' },
+        { label: 'Product Management', path: '/inventory' },
+        { label: 'Marketing Guide', path: '/marketing' },
+        { label: 'Analytics', path: '/dashboard/analytics' }
+      ],
       image: resourceImages[1]
     },
     {
       icon: Code,
       title: 'Developer Resources',
       description: 'Tools and resources for developers',
-      links: ['API Docs', 'SDKs', 'Code Examples', 'Developer Community'],
+      links: [
+        { label: 'API Docs', path: '/docs/api' },
+        { label: 'SDKs', path: '/docs/sdk' },
+        { label: 'Code Examples', path: '/docs/examples' },
+        { label: 'Developer Community', path: '/contact' }
+      ],
       image: resourceImages[2]
     },
   ];
@@ -399,9 +415,9 @@ const Resources = () => {
               <CardTitle>{category.title}</CardTitle>
               <CardDescription>{category.description}</CardDescription>
               <ResourceLinks>
-                {category.links.map((link, idx) => (
+                {category.links.map((linkObj, idx) => (
                   <li key={idx}>
-                    <ResourceLink href="#">{link}</ResourceLink>
+                    <ResourceLink to={linkObj.path}>{linkObj.label}</ResourceLink>
                   </li>
                 ))}
               </ResourceLinks>

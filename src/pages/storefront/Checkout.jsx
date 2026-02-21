@@ -90,11 +90,9 @@ const Checkout = () => {
     const handlePlaceOrder = (e) => {
         e.preventDefault();
         setLoading(true);
-        // Simulate API call
         setTimeout(() => {
-            clearCart();
-            navigate('/payment-success');
-        }, 2000);
+            navigate('/payment');
+        }, 1000);
     };
 
     return (
@@ -135,33 +133,13 @@ const Checkout = () => {
                         </FormGroup>
                     </div>
 
-                    <Title style={{ marginTop: '3rem' }}><CreditCard /> Payment Details</Title>
-                    <FormGroup>
-                        <Label>Card Number</Label>
-                        <Input placeholder="0000 0000 0000 0000" required />
-                    </FormGroup>
-                    <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
-                        <FormGroup>
-                            <Label>Expiry Date</Label>
-                            <Input placeholder="MM/YY" required />
-                        </FormGroup>
-                        <FormGroup>
-                            <Label>CVV</Label>
-                            <Input placeholder="123" required />
-                        </FormGroup>
-                    </div>
-
-                    <p style={{ color: 'var(--text-secondary)', fontSize: '0.85rem', marginTop: '2rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                        <Lock size={14} /> Your transaction is secured with 256-bit SSL encryption.
-                    </p>
-
                     <button
                         type="submit"
                         className="btn-primary"
                         disabled={loading || cartItems.length === 0}
                         style={{ width: '100%', padding: '1.25rem', marginTop: '2rem', fontSize: '1.1rem' }}
                     >
-                        {loading ? 'Processing...' : `Pay $${total.toFixed(2)}`}
+                        {loading ? 'Processing...' : `Continue to Payment`}
                     </button>
                 </form>
             </FormSection>

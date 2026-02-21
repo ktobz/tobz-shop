@@ -3,6 +3,7 @@ import styled from '@emotion/styled';
 import { Heart, Star, TrendingUp, ShoppingCart } from 'lucide-react';
 import { useWatchlist } from '../../../hooks/useWatchlist';
 import { useCart } from '../../../hooks/useCart';
+import { useNavigate } from 'react-router-dom';
 
 import { fetchProducts } from '../../../services/mockApi';
 
@@ -230,6 +231,7 @@ const TopPicksSection = ({ user }) => {
   const [loading, setLoading] = useState(true);
   const { toggleWatchlist, isInWatchlist } = useWatchlist();
   const { addToCart } = useCart();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchTopPicks = async () => {
@@ -328,6 +330,7 @@ const TopPicksSection = ({ user }) => {
                       onClick={(e) => {
                         e.stopPropagation();
                         addToCart(pick);
+                        navigate('/checkout');
                       }}
                       style={{ padding: '0.4rem 0.8rem', fontSize: '0.75rem' }}
                     >
