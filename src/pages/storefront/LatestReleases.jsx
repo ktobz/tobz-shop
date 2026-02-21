@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { ShoppingCart, Star, Heart, ArrowRight } from 'lucide-react';
-import { useCart } from '../../hooks/useCart';
-import { useWatchlist } from '../../hooks/useWatchlist';
 import { fetchProducts } from '../../services/mockApi';
+import ProductCard from '../../components/storefront/ProductCard';
 
 import './LatestReleases.scss';
 
@@ -12,9 +10,6 @@ const LatestReleases = () => {
     const [error, setError] = useState(null);
     const [currentPage, setCurrentPage] = useState(1);
     const itemsPerPage = 8;
-
-    const { addToCart } = useCart();
-    const { toggleWatchlist, isInWatchlist } = useWatchlist();
 
     useEffect(() => {
         const fetchClothing = async () => {
@@ -76,34 +71,7 @@ const LatestReleases = () => {
 
             <div className="product-grid">
                 {currentProducts.map((product) => (
-                    <div key={product.id} className="product-card">
-                        <div className="product-image-container">
-                            <img src={product.image} alt={product.name} className="product-image" />
-                            <div className="product-overlay" style={{ position: 'absolute', top: '1rem', right: '1rem', display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
-                                <button
-                                    className={`wishlist-btn ${isInWatchlist(product.id) ? 'active' : ''}`}
-                                    onClick={() => toggleWatchlist(product.id)}
-                                    style={{ background: 'white', border: 'none', borderRadius: '50%', width: '36px', height: '36px', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 2px 4px rgba(0,0,0,0.1)' }}
-                                >
-                                    <Heart size={18} fill={isInWatchlist(product.id) ? "#ef4444" : "none"} color={isInWatchlist(product.id) ? "#ef4444" : "#718096"} />
-                                </button>
-                            </div>
-                        </div>
-                        <div className="product-info">
-                            <span className="product-category">{product.category}</span>
-                            <h3 className="product-name">{product.name}</h3>
-                            <div className="product-footer">
-                                <span className="product-price">${product.price.toFixed(2)}</span>
-                                <button
-                                    className="btn-primary"
-                                    onClick={() => addToCart(product)}
-                                    style={{ padding: '0.5rem', borderRadius: '8px' }}
-                                >
-                                    <ShoppingCart size={18} />
-                                </button>
-                            </div>
-                        </div>
-                    </div>
+                    <ProductCard key={product.id} product={product} />
                 ))}
             </div>
 

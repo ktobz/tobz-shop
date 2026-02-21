@@ -6,6 +6,7 @@ const mockProducts = [
         id: 1,
         name: 'Wireless Headphones',
         price: 199.99,
+        originalPrice: 249.99,
         category: 'Electronics',
         image: 'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&w=800&q=80',
         description: 'High-quality wireless headphones with noise cancellation.',
@@ -156,6 +157,7 @@ const mockProducts = [
         id: 15,
         name: 'Jacket',
         price: 89.99,
+        originalPrice: 119.99,
         category: 'Fashion',
         image: 'https://placehold.co/800x800/1e1e1e/white?text=Jacket',
         description: 'Warm jacket for cold weather.',
@@ -470,7 +472,8 @@ const mockProducts = [
         image: 'https://placehold.co/800x800/1e1e1e/white?text=Swimming%20Goggles',
         description: 'Anti-fog swimming goggles for clear vision.',
         rating: 4.2,
-        inStock: true
+        inStock: true,
+        isNew: true
     },
     {
         id: 47,
@@ -480,7 +483,8 @@ const mockProducts = [
         image: 'https://placehold.co/800x800/1e1e1e/white?text=Bike%20Helmet',
         description: 'Safety bike helmet for cycling.',
         rating: 4.5,
-        inStock: true
+        inStock: true,
+        isNew: true
     },
     {
         id: 48,
@@ -490,7 +494,8 @@ const mockProducts = [
         image: 'https://placehold.co/800x800/1e1e1e/white?text=Golf%20Clubs',
         description: 'Professional golf clubs set.',
         rating: 4.6,
-        inStock: true
+        inStock: true,
+        isNew: true
     },
     {
         id: 49,
@@ -500,17 +505,20 @@ const mockProducts = [
         image: 'https://placehold.co/800x800/1e1e1e/white?text=Soccer%20Ball',
         description: 'High-quality soccer ball for matches.',
         rating: 4.4,
-        inStock: false
+        inStock: false,
+        isNew: true
     },
     {
         id: 50,
         name: 'Fitness Tracker',
         price: 149.99,
+        originalPrice: 179.99,
         category: 'Sports',
         image: 'https://placehold.co/800x800/1e1e1e/white?text=Fitness%20Tracker',
         description: 'Wearable fitness tracker to monitor activity.',
         rating: 4.8,
-        inStock: true
+        inStock: true,
+        isNew: true
     }
 ];
 

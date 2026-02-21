@@ -1,8 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { ShoppingCart, Star, Heart, ArrowRight, Search, Filter } from 'lucide-react';
+import { Search, Filter } from 'lucide-react';
 import { fetchProducts, getCategories } from '../../services/mockApi';
-import { useCart } from '../../hooks/useCart';
-import { useWatchlist } from '../../hooks/useWatchlist';
+import ProductCard from '../../components/storefront/ProductCard';
 
 import './ProductCatalog.scss';
 
@@ -16,8 +15,6 @@ const ProductCatalog = () => {
     const [currentPage, setCurrentPage] = useState(1);
     const [total, setTotal] = useState(0);
     const limit = 12;
-    const { addToCart } = useCart();
-    const { toggleWatchlist, isInWatchlist } = useWatchlist();
 
     const loadProducts = useCallback(async () => {
         try {
@@ -120,44 +117,7 @@ const ProductCatalog = () => {
 
             <div className="product-grid">
                 {products.map((product) => (
-                    <div key={product.id} className="product-card">
-                        {!product.inStock && <div className="product-badge" style={{ background: '#ef4444' }}>Out of Stock</div>}
-                        <div className="product-image-container">
-                            <img src={product.image} alt={product.name} className="product-image" />
-                            <div className="product-overlay" style={{ position: 'absolute', top: '1rem', right: '1rem', display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
-                                <button
-                                    className={`wishlist-btn icon-btn ${isInWatchlist(product.id) ? 'active' : ''}`}
-                                    title={isInWatchlist(product.id) ? 'Remove from wishlist' : 'Add to wishlist'}
-                                    onClick={(e) => {
-                                        e.stopPropagation();
-                                        toggleWatchlist(product.id);
-                                    }}
-                                    style={{ background: 'white', border: '1px solid var(--border-color)', borderRadius: '50%', width: '36px', height: '36px' }}
-                                >
-                                    <Heart size={18} fill={isInWatchlist(product.id) ? '#ef4444' : 'none'} color={isInWatchlist(product.id) ? '#ef4444' : 'currentColor'} />
-                                </button>
-                            </div>
-                        </div>
-                        <div className="product-info">
-                            <span className="product-category">{product.category}</span>
-                            <h3 className="product-name" title={product.name}>{product.name}</h3>
-                            <div className="product-rating" style={{ display: 'flex', alignItems: 'center', gap: '0.25rem', marginBottom: '0.5rem' }}>
-                                <Star size={14} fill="#f59e0b" color="#f59e0b" />
-                                <span style={{ fontSize: '0.875rem', fontWeight: 500 }}>{product.rating}</span>
-                            </div>
-                            <div className="product-footer" style={{ marginTop: 'auto', display: 'flex', alignItems: 'center', justifyContent: 'space-between', width: '100%' }}>
-                                <span className="product-price">${product.price.toFixed(2)}</span>
-                                <button
-                                    className="btn-primary"
-                                    disabled={!product.inStock}
-                                    onClick={() => addToCart(product)}
-                                    style={{ padding: '0.5rem 1rem', borderRadius: '8px' }}
-                                >
-                                    <ShoppingCart size={16} />
-                                </button>
-                            </div>
-                        </div>
-                    </div>
+                    <ProductCard key={product.id} product={product} />
                 ))}
             </div>
             {total > limit && (

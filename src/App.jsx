@@ -37,6 +37,9 @@ import GenericPage from './pages/storefront/GenericPage';
 import Login from './pages/auth/Login';
 import Signup from './pages/auth/Signup';
 
+// Context Providers
+import { StoreProvider } from './context/StoreContext';
+
 import './App.scss';
 
 function App() {
@@ -51,45 +54,47 @@ function App() {
       <ThemeProvider theme={theme}>
         <CssBaseline />
         <ConfigProvider theme={{ algorithm: antdTheme.defaultAlgorithm }}>
-          <Routes>
-            {/* Storefront Routes */}
-            <Route path="/" element={<StorefrontLayout />}>
-              <Route index element={<LandingPage />} />
-              <Route path="catalog" element={<ProductCatalog />} />
-              <Route path="about" element={<About />} />
-              <Route path="contact" element={<Contact />} />
-              <Route path="inventory" element={<Inventory />} />
-              <Route path="whats-new" element={<WhatsNew />} />
-              <Route path="resources" element={<Resources />} />
-              <Route path="latest-releases" element={<LatestReleases />} />
-              <Route path="cart" element={<Cart />} />
-              <Route path="wishlist" element={<Wishlist />} />
-              <Route path="terms" element={<Terms />} />
-              <Route path="warranty" element={<Warranty />} />
-              <Route path="checkout" element={<Checkout />} />
-              <Route path="payment" element={<GenericPage title="Payment Processing" description="Securely complete your transaction" />} />
-              <Route path="payment-success" element={<PaymentSuccess />} />
-              <Route path="marketing" element={<Marketing />} />
-              <Route path="join-journey" element={<JoinJourney />} />
+          <StoreProvider>
+            <Routes>
+              {/* Storefront Routes */}
+              <Route path="/" element={<StorefrontLayout />}>
+                <Route index element={<LandingPage />} />
+                <Route path="catalog" element={<ProductCatalog />} />
+                <Route path="about" element={<About />} />
+                <Route path="contact" element={<Contact />} />
+                <Route path="inventory" element={<Inventory />} />
+                <Route path="whats-new" element={<WhatsNew />} />
+                <Route path="resources" element={<Resources />} />
+                <Route path="latest-releases" element={<LatestReleases />} />
+                <Route path="cart" element={<Cart />} />
+                <Route path="wishlist" element={<Wishlist />} />
+                <Route path="terms" element={<Terms />} />
+                <Route path="warranty" element={<Warranty />} />
+                <Route path="checkout" element={<Checkout />} />
+                <Route path="payment" element={<GenericPage title="Payment Processing" description="Securely complete your transaction" />} />
+                <Route path="payment-success" element={<PaymentSuccess />} />
+                <Route path="marketing" element={<Marketing />} />
+                <Route path="join-journey" element={<JoinJourney />} />
 
-              {/* New Dynamic/Placeholder Routes */}
-              <Route path="careers" element={<GenericPage title="Careers at 1shopapp" description="Join our team and help build the future of e-commerce." />} />
-              <Route path="partner" element={<GenericPage title="Partner with Us" description="Explore partnership opportunities and grow together." />} />
-              <Route path="docs/:topic" element={<GenericPage />} />
-              <Route path="category/:id" element={<GenericPage />} />
-            </Route>
+                {/* New Dynamic/Placeholder Routes */}
+                <Route path="careers" element={<GenericPage title="Careers at 1shopapp" description="Join our team and help build the future of e-commerce." />} />
+                <Route path="partner" element={<GenericPage title="Partner with Us" description="Explore partnership opportunities and grow together." />} />
+                <Route path="docs/:topic" element={<GenericPage />} />
+                <Route path="category/:id" element={<GenericPage />} />
+              </Route>
 
-            {/* Auth Routes */}
-            <Route path="/login" element={<Login />} />
-            <Route path="/signup" element={<Signup />} />
+              {/* Auth Routes */}
+              <Route path="/login" element={<Login />} />
+              <Route path="/signup" element={<Signup />} />
 
-            {/* Admin Dashboard Routes */}
-            <Route path="/dashboard" element={<Layout />}>
-              <Route index element={<Dashboard />} />
-              <Route path="analytics" element={<Analytics />} />
-              <Route path="settings" element={<Settings />} />
-            </Route>
-          </Routes>
+              {/* Admin Dashboard Routes */}
+              <Route path="/dashboard" element={<Layout />}>
+                <Route index element={<Dashboard />} />
+                <Route path="analytics" element={<Analytics />} />
+                <Route path="settings" element={<Settings />} />
+              </Route>
+            </Routes>
+          </StoreProvider>
         </ConfigProvider>
       </ThemeProvider>
     </ChakraProvider>
