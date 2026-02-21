@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import styled from '@emotion/styled';
+import { useNavigate } from 'react-router-dom';
 import { Award, Users, Zap, Globe, Heart, Shield, Rocket, Target, Star, ChevronRight } from 'lucide-react';
 
 const AboutContainer = styled.div`
@@ -275,125 +276,130 @@ const MemberRole = styled.p`
 `;
 
 const About = () => {
-    const [images, setImages] = useState([]);
+  const [images, setImages] = useState([]);
+  const navigate = useNavigate();
 
-    useEffect(() => {
-        const fetchImages = async () => {
-            try {
-                const response = await fetch('https://fakestoreapi.com/products?limit=10');
-                const data = await response.json();
-                setImages(data.map(item => item.image));
-            } catch (err) {
-                console.error('Failed to fetch images', err);
-            }
-        };
-        fetchImages();
-    }, []);
+  useEffect(() => {
+    const fetchImages = async () => {
+      try {
+        const response = await fetch('https://fakestoreapi.com/products?limit=10');
+        const data = await response.json();
+        setImages(data.map(item => item.image));
+      } catch (err) {
+        console.error('Failed to fetch images', err);
+      }
+    };
+    fetchImages();
+  }, []);
 
-    const values = [
-        { icon: Rocket, title: 'Innovation', desc: 'Pushing boundaries to create world-class e-commerce tools.' },
-        { icon: Heart, title: 'Passion', desc: 'Driven by our love for technology and merchant success.' },
-        { icon: Shield, title: 'Trust', desc: 'Reliability and security are at the core of everything we build.' },
-        { icon: Globe, title: 'Impact', desc: 'Empowering businesses globally to reach their full potential.' }
-    ];
+  const values = [
+    { icon: Rocket, title: 'Innovation', desc: 'Pushing boundaries to create world-class e-commerce tools.' },
+    { icon: Heart, title: 'Passion', desc: 'Driven by our love for technology and merchant success.' },
+    { icon: Shield, title: 'Trust', desc: 'Reliability and security are at the core of everything we build.' },
+    { icon: Globe, title: 'Impact', desc: 'Empowering businesses globally to reach their full potential.' }
+  ];
 
-    const stats = [
-        { n: '10K+', l: 'Merchants' },
-        { n: '50M+', l: 'Revenue' },
-        { n: '200+', l: 'Countries' },
-        { n: '24/7', l: 'Support' }
-    ];
+  const stats = [
+    { n: '10K+', l: 'Merchants' },
+    { n: '50M+', l: 'Revenue' },
+    { n: '200+', l: 'Countries' },
+    { n: '24/7', l: 'Support' }
+  ];
 
-    return (
-        <AboutContainer className="fade-in">
-            <HeroSection bgImage={images[0]}>
-                <HeroContent>
-                    <HeroTitle>The Future of <span className="text-gradient">Commerce</span></HeroTitle>
-                    <HeroSubtitle>We are on a mission to empower every merchant with the most advanced, beautiful, and functional tools on the planet.</HeroSubtitle>
-                    <button className="btn-primary" style={{ padding: '1rem 2.5rem', fontSize: '1.1rem' }}>
-                        Join Our Journey <ChevronRight size={20} />
-                    </button>
-                </HeroContent>
-            </HeroSection>
+  return (
+    <AboutContainer className="fade-in">
+      <HeroSection bgImage={images[0]}>
+        <HeroContent>
+          <HeroTitle>The Future of Commerce</HeroTitle>
+          <HeroSubtitle>We are on a mission to empower every merchant with the most advanced, beautiful, and functional tools on the planet.</HeroSubtitle>
+          <button
+            className="btn-primary"
+            style={{ padding: '1rem 2.5rem', fontSize: '1.1rem' }}
+            onClick={() => navigate('/join-journey')}
+          >
+            Join Our Journey <ChevronRight size={20} />
+          </button>
+        </HeroContent>
+      </HeroSection>
 
-            <GlassSection>
-                <StorySection>
-                    <ImageComposition>
-                        <MainImage src={images[2] || '/api/placeholder/600/400'} />
-                        <SubImage src={images[3] || '/api/placeholder/400/300'} />
-                    </ImageComposition>
-                    <div>
-                        <Badge>Our Story</Badge>
-                        <SectionTitle>Built by dreamers, for <span className="text-secondary">Doers</span>.</SectionTitle>
-                        <CardText style={{ marginBottom: '2rem' }}>
-                            Founded in 2024, 1shopapp started as a small project with a big vision:
-                            to level the playing field for online merchants. We saw a gap in the market
-                            between complex corporate systems and overly simple site builders.
-                        </CardText>
-                        <CardText>
-                            Today, we provide a unified platform that combines powerful logistics,
-                            stunning design, and advanced analytics. Our goal remains the same:
-                            to make selling online as easy as clicking a button, while delivering
-                            a premium experience that wows customers.
-                        </CardText>
-                    </div>
-                </StorySection>
-            </GlassSection>
+      <GlassSection>
+        <StorySection>
+          <ImageComposition>
+            <MainImage src={images[2] || '/api/placeholder/600/400'} />
+            <SubImage src={images[3] || '/api/placeholder/400/300'} />
+          </ImageComposition>
+          <div>
+            <Badge>Our Story</Badge>
+            <SectionTitle>Built by dreamers, for <span className="text-secondary">Doers</span>.</SectionTitle>
+            <CardText style={{ marginBottom: '2rem' }}>
+              Founded in 2024, 1shopapp started as a small project with a big vision:
+              to level the playing field for online merchants. We saw a gap in the market
+              between complex corporate systems and overly simple site builders.
+            </CardText>
+            <CardText>
+              Today, we provide a unified platform that combines powerful logistics,
+              stunning design, and advanced analytics. Our goal remains the same:
+              to make selling online as easy as clicking a button, while delivering
+              a premium experience that wows customers.
+            </CardText>
+          </div>
+        </StorySection>
+      </GlassSection>
 
-            <StatGrid>
-                {stats.map((s, i) => (
-                    <StatItem key={i}>
-                        <StatNumber>{s.n}</StatNumber>
-                        <StatLabel>{s.l}</StatLabel>
-                    </StatItem>
-                ))}
-            </StatGrid>
+      <StatGrid>
+        {stats.map((s, i) => (
+          <StatItem key={i}>
+            <StatNumber>{s.n}</StatNumber>
+            <StatLabel>{s.l}</StatLabel>
+          </StatItem>
+        ))}
+      </StatGrid>
 
-            <GlassSection>
-                <SectionHeader>
-                    <Badge>Our Values</Badge>
-                    <SectionTitle>Guided by <span className="text-primary">Integrity</span></SectionTitle>
-                    <CardText>We believe that success is only meaningful when it's built on a foundation of shared values and ethical practices.</CardText>
-                </SectionHeader>
-                <Grid>
-                    {values.map((v, i) => (
-                        <ValueCard key={i}>
-                            <IconWrapper>
-                                <v.icon size={32} />
-                            </IconWrapper>
-                            <CardTitle>{v.title}</CardTitle>
-                            <CardText>{v.desc}</CardText>
-                        </ValueCard>
-                    ))}
-                </Grid>
-            </GlassSection>
+      <GlassSection>
+        <SectionHeader>
+          <Badge>Our Values</Badge>
+          <SectionTitle>Guided by <span className="text-primary">Integrity</span></SectionTitle>
+          <CardText>We believe that success is only meaningful when it's built on a foundation of shared values and ethical practices.</CardText>
+        </SectionHeader>
+        <Grid>
+          {values.map((v, i) => (
+            <ValueCard key={i}>
+              <IconWrapper>
+                <v.icon size={32} />
+              </IconWrapper>
+              <CardTitle>{v.title}</CardTitle>
+              <CardText>{v.desc}</CardText>
+            </ValueCard>
+          ))}
+        </Grid>
+      </GlassSection>
 
-            <GlassSection>
-                <SectionHeader>
-                    <Badge>The Team</Badge>
-                    <SectionTitle>Meet the <span className="text-secondary">Visionaries</span></SectionTitle>
-                    <CardText>Our diverse team of experts is dedicated to building the tools that will shape the future of digital trade.</CardText>
-                </SectionHeader>
-                <TeamGrid>
-                    {[1, 2, 3, 4].map((n) => (
-                        <TeamCard key={n}>
-                            <MemberPhoto src={images[n + 4] || '/api/placeholder/200/200'} />
-                            <MemberName>Core Member {n}</MemberName>
-                            <MemberRole>{n % 2 === 0 ? 'Lead Architect' : 'Product Designer'}</MemberRole>
-                        </TeamCard>
-                    ))}
-                </TeamGrid>
-            </GlassSection>
+      <GlassSection>
+        <SectionHeader>
+          <Badge>The Team</Badge>
+          <SectionTitle>Meet the <span className="text-secondary">Visionaries</span></SectionTitle>
+          <CardText>Our diverse team of experts is dedicated to building the tools that will shape the future of digital trade.</CardText>
+        </SectionHeader>
+        <TeamGrid>
+          {[1, 2, 3, 4].map((n) => (
+            <TeamCard key={n}>
+              <MemberPhoto src={images[n + 4] || '/api/placeholder/200/200'} />
+              <MemberName>Core Member {n}</MemberName>
+              <MemberRole>{n % 2 === 0 ? 'Lead Architect' : 'Product Designer'}</MemberRole>
+            </TeamCard>
+          ))}
+        </TeamGrid>
+      </GlassSection>
 
-            <section style={{ padding: '6rem 2rem', textAlign: 'center', background: 'var(--gradient-primary)', color: 'white', borderTopLeftRadius: '4rem', borderTopRightRadius: '4rem' }}>
-                <SectionTitle style={{ color: 'white' }}>Ready to elevate your business?</SectionTitle>
-                <p style={{ fontSize: '1.2rem', marginBottom: '2.5rem', opacity: 0.9 }}>Join 10,000+ merchants who are already shaping their future with 1shopapp.</p>
-                <button className="btn-secondary" style={{ padding: '1rem 3rem', background: 'white', color: 'var(--primary)', border: 'none' }}>
-                    Get Started Now
-                </button>
-            </section>
-        </AboutContainer>
-    );
+      <section style={{ padding: '6rem 2rem', textAlign: 'center', background: 'var(--gradient-primary)', color: 'white', borderTopLeftRadius: '4rem', borderTopRightRadius: '4rem' }}>
+        <SectionTitle style={{ color: 'white' }}>Ready to elevate your business?</SectionTitle>
+        <p style={{ fontSize: '1.2rem', marginBottom: '2.5rem', opacity: 0.9 }}>Join 10,000+ merchants who are already shaping their future with 1shopapp.</p>
+        <button className="btn-secondary" style={{ padding: '1rem 3rem', background: 'white', color: 'var(--primary)', border: 'none' }}>
+          Get Started Now
+        </button>
+      </section>
+    </AboutContainer>
+  );
 };
 
 export default About;

@@ -2,6 +2,7 @@ import React, { useState, useEffect, lazy, Suspense } from 'react';
 import styled from '@emotion/styled';
 import { BookOpen, FileText, Code, Heart, ChevronUp } from 'lucide-react';
 import { useAuth } from '../../hooks/useAuth';
+import { useWatchlist } from '../../hooks/useWatchlist';
 
 // Lazy load components for code splitting
 const TopPicksSection = lazy(() => import('./resources/TopPicksSection'));
@@ -317,13 +318,9 @@ const LoadingFallback = styled.div`
 
 const Resources = () => {
   const { user } = useAuth();
+  const { toggleWatchlist } = useWatchlist();
   const [resourceImages, setResourceImages] = useState([]);
   const [showBackToTop, setShowBackToTop] = useState(false);
-  const [watchlist, setWatchlist] = useState(() => {
-    // Load watchlist from localStorage
-    const savedWatchlist = localStorage.getItem('resources_watchlist');
-    return savedWatchlist ? new Set(JSON.parse(savedWatchlist)) : new Set();
-  });
 
   useEffect(() => {
     const fetchImages = async () => {
@@ -354,17 +351,8 @@ const Resources = () => {
     });
   };
 
-  const toggleWatchlist = (id) => {
-    setWatchlist(prev => {
-      const newSet = new Set(prev);
-      if (newSet.has(id)) {
-        newSet.delete(id);
-      } else {
-        newSet.add(id);
-      }
-      localStorage.setItem('resources_watchlist', JSON.stringify([...newSet]));
-      return newSet;
-    });
+  const toggleWatchlistHandler = (id) => {
+    toggleWatchlist(id);
   };
 
   const resourceCategories = [
@@ -422,11 +410,8 @@ const Resources = () => {
         ))}
       </ResourcesGrid>
 
-      {/* Top Picks Section */}
       <Suspense fallback={<LoadingFallback>Loading Top Picks...</LoadingFallback>}>
         <TopPicksSection
-          watchlist={watchlist}
-          toggleWatchlist={toggleWatchlist}
           user={user}
         />
       </Suspense>

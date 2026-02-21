@@ -1,192 +1,206 @@
-import React, { useState, useEffect } from 'react';
-import { Mail, Phone, MapPin, Send } from 'lucide-react';
+import React, { useState } from 'react';
+import styled from '@emotion/styled';
+import { Mail, Send, MapPin, MessageCircle, ChevronRight, Search, Book, CreditCard, User, Shield, Target, Zap } from 'lucide-react';
 import FAQSection from './resources/FAQSection';
 
+const PageContainer = styled.div`
+  max-width: 1400px;
+  margin: 0 auto;
+  font-family: var(--font-sans);
+`;
+
+const Hero = styled.section`
+  padding: 8rem 2rem;
+  background: var(--gradient-primary);
+  color: white;
+  text-align: center;
+  border-bottom-left-radius: 4rem;
+  border-bottom-right-radius: 4rem;
+`;
+
+const SearchBox = styled.div`
+  max-width: 600px;
+  margin: 3rem auto 0;
+  position: relative;
+
+  input {
+    width: 100%;
+    padding: 1.25rem 1.5rem 1.25rem 3.5rem;
+    border-radius: var(--radius-full);
+    border: none;
+    background: white;
+    box-shadow: var(--shadow-xl);
+    font-size: 1.1rem;
+    color: var(--text-primary);
+    outline: none;
+
+    &::placeholder {
+      color: var(--text-secondary);
+    }
+  }
+
+  svg {
+    position: absolute;
+    left: 1.25rem;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--primary);
+  }
+`;
+
+const CategoryGrid = styled.div`
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 2rem;
+  padding: 6rem 2rem;
+`;
+
+const CategoryCard = styled.div`
+  background: var(--bg-card);
+  padding: 2.5rem;
+  border-radius: var(--radius-2xl);
+  border: 1px solid var(--glass-border);
+  transition: all 0.3s ease;
+  cursor: pointer;
+
+  &:hover {
+    transform: translateY(-8px);
+    border-color: var(--primary);
+    box-shadow: var(--shadow-lg);
+  }
+`;
+
+const ContactSection = styled.section`
+  padding: 6rem 2rem;
+  display: grid;
+  grid-template-columns: 1fr 1.5fr;
+  gap: 6rem;
+  background: var(--bg-card);
+
+  @media (max-width: 992px) {
+    grid-template-columns: 1fr;
+    gap: 4rem;
+  }
+`;
+
+const InfoItem = styled.div`
+  display: flex;
+  gap: 1.5rem;
+  margin-bottom: 2.5rem;
+
+  .icon {
+    width: 50px;
+    height: 50px;
+    background: rgba(196, 165, 232, 0.1);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--primary);
+  }
+`;
+
 const Contact = () => {
-    const [heroImage, setHeroImage] = useState('');
+  const [submitted, setSubmitted] = useState(false);
 
-    useEffect(() => {
-        const fetchImage = async () => {
-            try {
-                const response = await fetch('https://fakestoreapi.com/products?limit=10');
-                const data = await response.json();
-                setHeroImage(data[9]?.image); // Use a different image than about
-            } catch (err) {
-                console.error('Failed to fetch image', err);
-            }
-        };
-        fetchImage();
-    }, []);
+  const categories = [
+    { icon: Book, title: 'Documentation', desc: 'Detailed guides on how to use our platform and features.' },
+    { icon: CreditCard, title: 'Billing & Plans', desc: 'Questions about invoices, payments, and subscription tiers.' },
+    { icon: User, title: 'Account Settings', desc: 'Manage your profile, security, and team permissions.' },
+    { icon: Shield, title: 'Security & Privacy', desc: 'Learn about how we protect your data and privacy.' },
+    { icon: Target, title: 'Marketing Tools', desc: 'Tutorials on launching and tracking your campaigns.' },
+    { icon: Zap, title: 'API & Integrations', desc: 'Technical docs for developers and third-party apps.' }
+  ];
 
-    const [formData, setFormData] = useState({
-        name: '',
-        email: '',
-        subject: '',
-        message: '',
-    });
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    setSubmitted(true);
+    setTimeout(() => setSubmitted(false), 3000);
+  };
 
-    const [submitted, setSubmitted] = useState(false);
-    const [errors, setErrors] = useState({});
+  return (
+    <PageContainer className="fade-in">
+      <Hero>
+        <h1 style={{ fontSize: '3.5rem', fontWeight: '900' }}>How can we <span style={{ color: '#fff' }}>help?</span></h1>
+        <p style={{ fontSize: '1.2rem', opacity: 0.9, marginTop: '1rem' }}>Search our help center or speak with a specialist.</p>
+        <SearchBox>
+          <Search />
+          <input type="text" placeholder="Search for answers..." />
+        </SearchBox>
+      </Hero>
 
-    const handleChange = (e) => {
-        const { name, value } = e.target;
-        setFormData(prev => ({ ...prev, [name]: value }));
-        if (errors[name]) {
-            setErrors(prev => ({ ...prev, [name]: '' }));
-        }
-    };
-
-    const validateForm = () => {
-        const newErrors = {};
-        if (!formData.name.trim()) newErrors.name = 'Name is required';
-        if (!formData.email.trim()) newErrors.email = 'Email is required';
-        else if (!/\S+@\S+\.\S+/.test(formData.email)) newErrors.email = 'Email is invalid';
-        if (!formData.subject.trim()) newErrors.subject = 'Subject is required';
-        if (!formData.message.trim()) newErrors.message = 'Message is required';
-        return newErrors;
-    };
-
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        const validationErrors = validateForm();
-        if (Object.keys(validationErrors).length > 0) {
-            setErrors(validationErrors);
-            return;
-        }
-        setErrors({});
-        console.log('Form submitted:', formData);
-        setSubmitted(true);
-        setTimeout(() => {
-            setFormData({ name: '', email: '', subject: '', message: '' });
-            setSubmitted(false);
-        }, 3000);
-    };
-
-    const contactInfo = [
-        {
-            icon: Mail,
-            title: 'Email',
-            detail: 'support@1shopapp.com',
-            description: 'We\'ll respond within 24 hours'
-        },
-        {
-            icon: Phone,
-            title: 'Phone',
-            detail: '+1 (555) 123-4567',
-            description: 'Available Monday-Friday, 9AM-6PM EST'
-        },
-        {
-            icon: MapPin,
-            title: 'Address',
-            detail: '123 Commerce Street',
-            description: 'San Francisco, CA 94105'
-        },
-    ];
-
-    return (
-        <div className="contact-page fade-in">
-            {/* Hero Section */}
-            <section className="contact-hero" style={{ background: heroImage ? `linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url(${heroImage}) center/cover no-repeat` : 'var(--gradient-primary)', padding: '6rem 2rem' }}>
-                <h1 className="hero-title white-text">Get in <span className="text-gradient">Touch</span></h1>
-                <p className="white-text" style={{ maxWidth: '600px', margin: '0 auto' }}>Have questions? We'd love to hear from you. Send us a message and we'll respond as soon as possible.</p>
-            </section>
-
-            <div className="contact-container">
-                {/* Contact Info Cards */}
-                <section className="contact-info">
-                    <div className="info-grid">
-                        {contactInfo.map((info, i) => (
-                            <div key={i} className="info-card glass-panel">
-                                <div className="info-icon">
-                                    <info.icon size={32} />
-                                </div>
-                                <h3>{info.title}</h3>
-                                <p className="info-detail">{info.detail}</p>
-                                <p className="info-description">{info.description}</p>
-                            </div>
-                        ))}
-                    </div>
-                </section>
-
-                {/* Contact Form */}
-                <section className="contact-form-section">
-                    <div className="glass-panel form-container">
-                        <h2>Send us a Message</h2>
-                        {submitted ? (
-                            <div className="success-message">
-                                <p>✓ Thanks for reaching out! We'll get back to you soon.</p>
-                            </div>
-                        ) : (
-                            <form onSubmit={handleSubmit} className="contact-form">
-                                <div className="form-group">
-                                    <label htmlFor="name">Full Name</label>
-                                    <input
-                                        type="text"
-                                        id="name"
-                                        name="name"
-                                        value={formData.name}
-                                        onChange={handleChange}
-                                        placeholder="John Doe"
-                                        required
-                                    />
-                                    {errors.name && <span className="error">{errors.name}</span>}
-                                </div>
-
-                                <div className="form-group">
-                                    <label htmlFor="email">Email Address</label>
-                                    <input
-                                        type="email"
-                                        id="email"
-                                        name="email"
-                                        value={formData.email}
-                                        onChange={handleChange}
-                                        placeholder="john@example.com"
-                                        required
-                                    />
-                                    {errors.email && <span className="error">{errors.email}</span>}
-                                </div>
-
-                                <div className="form-group">
-                                    <label htmlFor="subject">Subject</label>
-                                    <input
-                                        type="text"
-                                        id="subject"
-                                        name="subject"
-                                        value={formData.subject}
-                                        onChange={handleChange}
-                                        placeholder="How can we help?"
-                                        required
-                                    />
-                                    {errors.subject && <span className="error">{errors.subject}</span>}
-                                </div>
-
-                                <div className="form-group">
-                                    <label htmlFor="message">Message</label>
-                                    <textarea
-                                        id="message"
-                                        name="message"
-                                        value={formData.message}
-                                        onChange={handleChange}
-                                        placeholder="Tell us more..."
-                                        rows="6"
-                                        required
-                                    ></textarea>
-                                    {errors.message && <span className="error">{errors.message}</span>}
-                                </div>
-
-                                <button type="submit" className="btn-primary submit-btn">
-                                    <Send size={18} />
-                                    Send Message
-                                </button>
-                            </form>
-                        )}
-                    </div>
-                </section>
+      <CategoryGrid>
+        {categories.map((cat, i) => (
+          <CategoryCard key={i}>
+            <cat.icon size={32} color="var(--primary)" style={{ marginBottom: '1.5rem' }} />
+            <h3 style={{ fontSize: '1.3rem', fontWeight: '700', marginBottom: '0.75rem' }}>{cat.title}</h3>
+            <p style={{ color: 'var(--text-secondary)', fontSize: '0.95rem', lineHeight: '1.6' }}>{cat.desc}</p>
+            <div style={{ marginTop: '1.5rem', color: 'var(--primary)', fontWeight: '600', display: 'flex', alignItems: 'center', gap: '0.25rem' }}>
+              Learn more <ChevronRight size={16} />
             </div>
+          </CategoryCard>
+        ))}
+      </CategoryGrid>
 
-            <FAQSection />
+      <ContactSection>
+        <div>
+          <h2 style={{ fontSize: '2.5rem', fontWeight: '800', marginBottom: '2rem' }}>Contact Us</h2>
+          <p style={{ color: 'var(--text-secondary)', marginBottom: '3rem', fontSize: '1.1rem' }}>
+            Prefer to talk? Reach out to our team directly. We're available 24/7 to assist you.
+          </p>
+
+          <InfoItem>
+            <div className="icon"><Mail size={24} /></div>
+            <div>
+              <h4 style={{ fontSize: '1.1rem', fontWeight: '700' }}>Email Us</h4>
+              <p style={{ color: 'var(--text-secondary)' }}>support@1shopapp.com</p>
+            </div>
+          </InfoItem>
+
+          <InfoItem>
+            <div className="icon"><MessageCircle size={24} /></div>
+            <div>
+              <h4 style={{ fontSize: '1.1rem', fontWeight: '700' }}>Live Chat</h4>
+              <p style={{ color: 'var(--text-secondary)' }}>Wait time: ~2 minutes</p>
+            </div>
+          </InfoItem>
+
+          <InfoItem>
+            <div className="icon"><MapPin size={24} /></div>
+            <div>
+              <h4 style={{ fontSize: '1.1rem', fontWeight: '700' }}>Office</h4>
+              <p style={{ color: 'var(--text-secondary)' }}>123 Commerce St, San Francisco, CA</p>
+            </div>
+          </InfoItem>
         </div>
-    );
+
+        <div className="glass-panel" style={{ padding: '3rem', borderRadius: '2rem', border: '1px solid var(--glass-border)' }}>
+          <h3 style={{ fontSize: '1.5rem', fontWeight: '700', marginBottom: '2rem' }}>Send a Message</h3>
+
+          {submitted ? (
+            <div style={{ padding: '2rem', textAlign: 'center', background: 'rgba(196, 165, 232, 0.1)', borderRadius: '1rem', color: 'var(--primary)' }}>
+              <h4 style={{ fontWeight: '700' }}>Message Sent!</h4>
+              <p>We'll get back to you within 2 hours.</p>
+            </div>
+          ) : (
+            <form onSubmit={handleSubmit}>
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem', marginBottom: '1.5rem' }}>
+                <input type="text" placeholder="Your Name" style={{ padding: '1rem', borderRadius: '12px', background: 'rgba(255,255,255,0.05)', border: '1px solid var(--glass-border)', color: 'white' }} required />
+                <input type="email" placeholder="Email Address" style={{ padding: '1rem', borderRadius: '12px', background: 'rgba(255,255,255,0.05)', border: '1px solid var(--glass-border)', color: 'white' }} required />
+              </div>
+              <input type="text" placeholder="Subject" style={{ width: '100%', padding: '1rem', borderRadius: '12px', background: 'rgba(255,255,255,0.05)', border: '1px solid var(--glass-border)', color: 'white', marginBottom: '1.5rem' }} required />
+              <textarea placeholder="How can we help?" rows="5" style={{ width: '100%', padding: '1rem', borderRadius: '12px', background: 'rgba(255,255,255,0.05)', border: '1px solid var(--glass-border)', color: 'white', marginBottom: '2rem' }} required></textarea>
+              <button type="submit" className="btn-primary" style={{ width: '100%', padding: '1rem' }}>
+                <Send size={18} style={{ marginRight: '0.75rem' }} /> Send Message
+              </button>
+            </form>
+          )}
+        </div>
+      </ContactSection>
+
+      <FAQSection />
+    </PageContainer>
+  );
 };
 
 export default Contact;

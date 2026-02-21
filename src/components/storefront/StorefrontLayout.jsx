@@ -20,14 +20,15 @@ const StorefrontLayout = () => {
                         <ul style={{ listStyle: 'none', padding: 0, fontSize: '0.9rem' }}>
                             <li style={{ marginBottom: '0.75rem' }}><a href="/catalog" style={{ color: 'inherit', textDecoration: 'none' }}>All Products</a></li>
                             <li style={{ marginBottom: '0.75rem' }}><a href="/latest-releases" style={{ color: 'inherit', textDecoration: 'none' }}>Latest Releases</a></li>
-                            <li style={{ marginBottom: '0.75rem' }}><a href="/whats-new" style={{ color: 'inherit', textDecoration: 'none' }}>What's New</a></li>
+                            <li style={{ marginBottom: '0.75rem' }}><a href="/marketing" style={{ color: 'inherit', textDecoration: 'none' }}>Marketing Tools</a></li>
                         </ul>
                     </div>
                     <div>
                         <h5 style={{ color: 'var(--text-primary)', marginBottom: '1.25rem', fontWeight: '700' }}>Company</h5>
                         <ul style={{ listStyle: 'none', padding: 0, fontSize: '0.9rem' }}>
                             <li style={{ marginBottom: '0.75rem' }}><a href="/about" style={{ color: 'inherit', textDecoration: 'none' }}>About Us</a></li>
-                            <li style={{ marginBottom: '0.75rem' }}><a href="/contact" style={{ color: 'inherit', textDecoration: 'none' }}>Support</a></li>
+                            <li style={{ marginBottom: '0.75rem' }}><a href="/join-journey" style={{ color: 'inherit', textDecoration: 'none' }}>Join Our Journey</a></li>
+                            <li style={{ marginBottom: '0.75rem' }}><a href="/contact" style={{ color: 'inherit', textDecoration: 'none' }}>Contact & Support</a></li>
                             <li style={{ marginBottom: '0.75rem' }}><a href="/resources" style={{ color: 'inherit', textDecoration: 'none' }}>Resources</a></li>
                         </ul>
                     </div>

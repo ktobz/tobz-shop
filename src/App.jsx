@@ -29,6 +29,8 @@ import Terms from './pages/storefront/Terms';
 import Warranty from './pages/storefront/Warranty';
 import Checkout from './pages/storefront/Checkout';
 import PaymentSuccess from './pages/storefront/PaymentSuccess';
+import Marketing from './pages/storefront/Marketing';
+import JoinJourney from './pages/storefront/JoinJourney';
 
 /* Auth Components */
 import Login from './pages/auth/Login';
@@ -65,6 +67,8 @@ function App() {
               <Route path="warranty" element={<Warranty />} />
               <Route path="checkout" element={<Checkout />} />
               <Route path="payment-success" element={<PaymentSuccess />} />
+              <Route path="marketing" element={<Marketing />} />
+              <Route path="join-journey" element={<JoinJourney />} />
             </Route>
 
             {/* Auth Routes */}

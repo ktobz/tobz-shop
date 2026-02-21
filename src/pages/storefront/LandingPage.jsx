@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Zap, Shield, Globe, ArrowRight, ChevronLeft, ChevronRight } from 'lucide-react';
 import { NavLink } from 'react-router-dom';
 import Carousel from '../../components/Carousel';
+import { fetchProducts } from '../../services/mockApi';
 
 const LandingPage = () => {
     const [currentSlide, setCurrentSlide] = useState(0);

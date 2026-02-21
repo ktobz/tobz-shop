@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
-import { WatchlistContext } from './watchlistContext';
+import { createContext, useState } from 'react';
+
+export const WatchlistContext = createContext();
 
 export const WatchlistProvider = ({ children }) => {
     const [watchlist, setWatchlist] = useState(() => {

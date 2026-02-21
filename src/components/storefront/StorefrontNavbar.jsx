@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
-import { ShoppingBag, User, LogOut, Menu, X, ChevronDown, Package, BookOpen, Users, Mail, BarChart3, AppWindow, Megaphone, Building, Headphones, ShoppingCart, Heart } from 'lucide-react';
+import { ShoppingBag, User, LogOut, Menu, X, ChevronDown, Package, BookOpen, Users, Mail, BarChart3, AppWindow, Megaphone, Building, Headphones, ShoppingCart, Heart, Rocket } from 'lucide-react';
 import { useAuth } from '../../hooks/useAuth';
 import { useCart } from '../../hooks/useCart';
 import { useWatchlist } from '../../hooks/useWatchlist';
@@ -47,15 +47,16 @@ const StorefrontNavbar = () => {
             icon: BookOpen,
             items: [
                 { label: 'Apps & Resources', path: '/resources', description: 'Guides, tutorials and more', icon: AppWindow },
-                { label: 'Help Center', path: '/contact', description: 'Get technical support', icon: Headphones },
+                { label: 'Help Center', path: '/contact', description: 'Get professional support', icon: Headphones },
             ]
         },
         company: {
             label: 'Company',
             icon: Users,
             items: [
+                { label: 'Join Our Journey', path: '/join-journey', description: 'Be part of our mission', icon: Rocket },
                 { label: 'Analytics', path: '/dashboard/analytics', description: 'Track your performance', icon: BarChart3 },
-                { label: 'Marketing', path: '/resources#api', description: 'Developer resources', icon: Megaphone },
+                { label: 'Marketing', path: '/marketing', description: 'Growth and outreach tools', icon: Megaphone },
             ]
         }
     };

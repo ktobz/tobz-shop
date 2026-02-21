@@ -111,12 +111,16 @@ const Inventory = () => {
                 </button>
             </div>
 
-            <div className="inventory-grid">
+            <div className="inventory-grid" style={{
+                display: 'grid',
+                gridTemplateColumns: 'repeat(auto-fill, minmax(220px, 1fr))',
+                gap: '1.5rem'
+            }}>
                 {inventory.map((item) => {
                     const status = getStockStatus(item.stock);
                     return (
-                        <div key={item.id} className="inventory-card glass-panel">
-                            <div className="inventory-image" style={{ height: '180px', overflow: 'hidden', borderRadius: '12px', marginBottom: '1rem' }}>
+                        <div key={item.id} className="inventory-card glass-panel" style={{ padding: '1rem' }}>
+                            <div className="inventory-image" style={{ height: '140px', overflow: 'hidden', borderRadius: '10px', marginBottom: '0.75rem' }}>
                                 <img
                                     src={item.image || "/api/placeholder/150/150"}
                                     alt={item.name}
@@ -126,8 +130,8 @@ const Inventory = () => {
                             </div>
 
                             <div className="inventory-info">
-                                <div className="inventory-category">{item.supplier}</div>
-                                <h3 className="inventory-name">{item.name}</h3>
+                                <div className="inventory-category" style={{ fontSize: '0.7rem' }}>{item.supplier}</div>
+                                <h3 className="inventory-name" style={{ fontSize: '1rem', marginBottom: '0.5rem' }}>{item.name}</h3>
 
                                 <div className="inventory-details">
                                     <div className="detail-row">
