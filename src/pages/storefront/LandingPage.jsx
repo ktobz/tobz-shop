@@ -84,17 +84,8 @@ const LandingPage = () => {
     useEffect(() => {
         const fetchFeatured = async () => {
             try {
-                const response = await fetch('https://fakestoreapi.com/products?limit=8');
-                const data = await response.json();
-                // Map API data to Carousel expected format
-                const formattedProducts = data.map(product => ({
-                    id: product.id,
-                    name: product.title,
-                    price: product.price,
-                    image: product.image,
-                    category: product.category
-                }));
-                setFeaturedProducts(formattedProducts);
+                const response = await fetchProducts({ limit: 8 });
+                setFeaturedProducts(response.data);
             } catch (err) {
                 console.error('Failed to fetch featured products:', err);
             }

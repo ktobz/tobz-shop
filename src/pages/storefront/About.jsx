@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import styled from '@emotion/styled';
 import { useNavigate } from 'react-router-dom';
 import { Award, Users, Zap, Globe, Heart, Shield, Rocket, Target, Star, ChevronRight } from 'lucide-react';
+import { fetchProducts } from '../../services/mockApi';
 
 const AboutContainer = styled.div`
   max-width: 1400px;
@@ -282,9 +283,8 @@ const About = () => {
   useEffect(() => {
     const fetchImages = async () => {
       try {
-        const response = await fetch('https://fakestoreapi.com/products?limit=10');
-        const data = await response.json();
-        setImages(data.map(item => item.image));
+        const response = await fetchProducts({ limit: 10 });
+        setImages(response.data.map(item => item.image));
       } catch (err) {
         console.error('Failed to fetch images', err);
       }

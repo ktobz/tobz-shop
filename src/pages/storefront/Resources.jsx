@@ -3,6 +3,7 @@ import styled from '@emotion/styled';
 import { BookOpen, FileText, Code, Heart, ChevronUp } from 'lucide-react';
 import { useAuth } from '../../hooks/useAuth';
 import { useWatchlist } from '../../hooks/useWatchlist';
+import { fetchProducts } from '../../services/mockApi';
 
 // Lazy load components for code splitting
 const TopPicksSection = lazy(() => import('./resources/TopPicksSection'));
@@ -325,9 +326,8 @@ const Resources = () => {
   useEffect(() => {
     const fetchImages = async () => {
       try {
-        const response = await fetch('https://fakestoreapi.com/products?limit=3');
-        const data = await response.json();
-        setResourceImages(data.map(item => item.image));
+        const response = await fetchProducts({ limit: 3 });
+        setResourceImages(response.data.map(item => item.image));
       } catch (err) {
         console.error('Failed to fetch images', err);
       }
