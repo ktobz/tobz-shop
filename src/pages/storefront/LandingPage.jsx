@@ -3,10 +3,9 @@ import { Zap, Shield, Globe, ArrowRight } from 'lucide-react';
 import { NavLink } from 'react-router-dom';
 import Carousel from '../../components/Carousel';
 import { fetchProducts } from '../../services/mockApi';
+import heroImage from '../../images/photo-1498050108023-c5249f4df085.jpg';
 
 const LandingPage = () => {
-    const heroImage = 'src\images\photo-1498050108023-c5249f4df085.jpg'//https://images.nsplash.com/photo-1498050108023-c5249f4df085?w=1600&h=900&fit=crop&q=80';
-
     const [heroProduct, setHeroProduct] = useState(null);
     const [loadingHero, setLoadingHero] = useState(true);
 
@@ -78,7 +77,7 @@ const LandingPage = () => {
                     <div
                         className="hero-bg"
                         style={{
-                            backgroundImage: 'ur("src/images/photo-1498050108023-c5249f4df085.jpg")', //`url(${heroProduct?.image || heroImage})`,
+                            backgroundImage: `url(${heroImage})`,
                             backgroundSize: 'cover',
                             backgroundPosition: 'center',
                             backgroundRepeat: 'no-repeat'
