@@ -5,7 +5,7 @@ import Carousel from '../../components/Carousel';
 import { fetchProducts } from '../../services/mockApi';
 
 const LandingPage = () => {
-    const heroImage = 'https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=1600&h=900&fit=crop&q=80';
+    const heroImage = 'src\images\photo-1498050108023-c5249f4df085.jpg'//https://images.nsplash.com/photo-1498050108023-c5249f4df085?w=1600&h=900&fit=crop&q=80';
 
     const [heroProduct, setHeroProduct] = useState(null);
     const [loadingHero, setLoadingHero] = useState(true);
@@ -78,23 +78,23 @@ const LandingPage = () => {
                     <div
                         className="hero-bg"
                         style={{
-                            backgroundImage: `url(${heroProduct?.image || heroImage})`,
+                            backgroundImage: 'ur("src/images/photo-1498050108023-c5249f4df085.jpg")', //`url(${heroProduct?.image || heroImage})`,
                             backgroundSize: 'cover',
                             backgroundPosition: 'center',
                             backgroundRepeat: 'no-repeat'
                         }}
                     ></div>
                 )}
-                <div className="hero-overlay" style={{ background: 'linear-gradient(to right, rgba(20, 20, 20, 0.4), rgba(20, 20, 20, 0.1))', width: '100%', height: '100%', position: 'absolute', top: 0, left: 0, display: 'flex', alignItems: 'center', padding: '0 4rem' }}>
-                    <div className="hero-content" style={{ maxWidth: '650px', zIndex: 3 }}>
-                        <h1 className="hero-title" style={{ fontSize: '3.5rem', fontWeight: 800, color: '#ffffff', lineHeight: 1.1, marginBottom: '1.5rem', textShadow: '0 2px 10px rgba(0,0,0,0.3)' }}>
+                <div className="hero-overlay" style={{ background: 'linear-gradient(to right, rgba(0, 0, 0, 0.25), rgba(0, 0, 0, 0.05))', width: '100%', height: '100%', position: 'absolute', top: 0, left: 0, display: 'flex', alignItems: 'center', padding: '0 4rem' }}>
+                    <div className="hero-content" style={{ maxWidth: '700px', zIndex: 3 }}>
+                        <h1 className="hero-title" style={{ fontSize: '3.75rem', fontWeight: 900, color: '#ffffff', lineHeight: 1.1, marginBottom: '1.5rem', textShadow: '2px 4px 12px rgba(0,0,0,0.4)' }}>
                             {heroProduct ? (
-                                <>Discover <span style={{ color: '#a78bfa' }}>Amazing {heroProduct.category || heroProduct.name}</span> Products</>
+                                <>Discover <span style={{ color: '#c4b5fd' }}>Amazing {heroProduct.category || heroProduct.name}</span> Products</>
                             ) : (
-                                <>Discover <span style={{ color: '#a78bfa' }}>Amazing Things</span> Today</>
+                                <>Discover <span style={{ color: '#c4b5fd' }}>Amazing Things</span> Today</>
                             )}
                         </h1>
-                        <p className="hero-subtitle" style={{ fontSize: '1.25rem', color: '#f1f5f9', marginBottom: '2.5rem', lineHeight: 1.6, textShadow: '0 1px 4px rgba(0,0,0,0.2)' }}>
+                        <p className="hero-subtitle" style={{ fontSize: '1.3rem', color: '#f8fafc', fontWeight: 500, marginBottom: '2.5rem', lineHeight: 1.6, textShadow: '1px 2px 6px rgba(0,0,0,0.3)' }}>
                             {heroProduct ? (heroProduct.title || heroProduct.description) : "Explore our premium hand-picked collections and discover unique products just for you."}
                         </p>
                         <div className="hero-btns" style={{ display: 'flex', gap: '1rem' }}>
