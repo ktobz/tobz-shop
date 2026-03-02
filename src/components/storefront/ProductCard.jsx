@@ -21,6 +21,8 @@ const Toast = ({ msg }) => (
 const QuickView = ({ product, onClose }) => {
     const { addToCart, toggleWishlist, isInWishlist } = useStore();
     const inWishlist = isInWishlist(product.id);
+    const [imageLoaded, setImageLoaded] = useState(false);
+    const [imageError, setImageError] = useState(false);
     const discount = product.originalPrice
         ? Math.round(((product.originalPrice - product.price) / product.originalPrice) * 100)
         : 0;
@@ -50,7 +52,34 @@ const QuickView = ({ product, onClose }) => {
                     <div className="qv-body">
                         {/* Image */}
                         <div className="qv-image">
-                            <img src={product.image} alt={product.name} />
+                            {!imageLoaded && !imageError && (
+                                <div className="skeleton-shimmer" style={{ 
+                                    position: 'absolute',
+                                    inset: 0,
+                                    zIndex: 1
+                                }}></div>
+                            )}
+                            {imageError && (
+                                <div className="image-error-placeholder" style={{ 
+                                    position: 'absolute',
+                                    inset: 8,
+                                    zIndex: 1
+                                }}>
+                                    <span>Image unavailable</span>
+                                </div>
+                            )}
+                            <img 
+                                src={product.image} 
+                                alt={product.name}
+                                crossOrigin="anonymous"
+                                referrerPolicy="no-referrer"
+                                style={{ 
+                                    opacity: imageLoaded ? 1 : 0,
+                                    transition: 'opacity 0.3s ease'
+                                }}
+                                onLoad={() => setImageLoaded(true)}
+                                onError={() => setImageError(true)}
+                            />
                             {discount > 0 && (
                                 <span className="qv-discount-badge">-{discount}% OFF</span>
                             )}
@@ -126,6 +155,8 @@ const ProductCard = ({ product }) => {
     const [hovered, setHovered] = useState(false);
     const [quickView, setQuickView] = useState(false);
     const [toast, setToast] = useState(null);
+    const [imageLoaded, setImageLoaded] = useState(false);
+    const [imageError, setImageError] = useState(false);
 
     const inWishlist = isInWishlist(product.id);
 
@@ -173,11 +204,26 @@ const ProductCard = ({ product }) => {
             >
                 {/* ── Image ── */}
                 <div className="product-card__image-container">
+                    {!imageLoaded && !imageError && (
+                        <div className="skeleton-shimmer"></div>
+                    )}
+                    {imageError && (
+                        <div className="image-error-placeholder">
+                            <span>Image unavailable</span>
+                        </div>
+                    )}
                     <img
                         src={product.image}
                         alt={product.name}
                         className="product-card__img"
-                        loading="lazy"
+                        crossOrigin="anonymous"
+                        referrerPolicy="no-referrer"
+                        style={{ 
+                            display: imageLoaded ? 'block' : 'none',
+                            opacity: imageLoaded ? 1 : 0
+                        }}
+                        onLoad={() => setImageLoaded(true)}
+                        onError={() => setImageError(true)}
                     />
 
                     {/* Hover overlay */}
