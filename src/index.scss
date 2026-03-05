@@ -3168,18 +3168,19 @@ img {
 }
 
 .mobile-drawer-panel {
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(255, 255, 255, 0.95);
+  width: 100vw;
+  height: 100vh;
+  background: rgba(255, 255, 255, 0.98);
   backdrop-filter: blur(20px) saturate(180%);
   -webkit-backdrop-filter: blur(20px) saturate(180%);
   display: flex;
   flex-direction: column;
   animation: slideInFull 0.3s cubic-bezier(0.22, 1, 0.36, 1);
   overflow-y: auto;
+  z-index: 1000;
 }
 
 @keyframes slideInFull {
@@ -3222,9 +3223,11 @@ img {
 
 .mobile-nav-items {
   flex: 1;
-  padding: 1rem 0;
+  padding: 1.5rem 1rem;
   display: flex;
   flex-direction: column;
+  gap: 0.5rem;
+  overflow-y: auto;
 }
 
 .mobile-nav-link {
@@ -3239,14 +3242,12 @@ img {
 
   &:hover {
     background: #f9fafb;
-    color: #111;
-    border-left-color: #111;
   }
 
   &.active {
-    color: #111;
-    background: #f3f4f6;
-    border-left-color: #111;
+    color: #111827;
+    background: #e5e7eb;
+    border-left-color: #111827;
   }
 }
 
