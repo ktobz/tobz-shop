@@ -59,7 +59,7 @@ const PaymentSuccess = () => {
             <IconWrapper>
                 <CheckCircle size={60} />
             </IconWrapper>
-            <Title>Order <span className="text-gradient">Placed!</span></Title>
+            <Title>Order Placed!</Title>
             <Text>
                 Thank you for your purchase. We've sent a confirmation email to your inbox.
                 Your order #12345 is being processed and will ship soon.

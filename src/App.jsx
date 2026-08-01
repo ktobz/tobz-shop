@@ -36,6 +36,7 @@ import GenericPage from './pages/storefront/GenericPage';
 /* Auth Components */
 import Login from './pages/auth/Login';
 import Signup from './pages/auth/Signup';
+import AuthCallback from './pages/auth/AuthCallback';
 
 // Context Providers
 import { StoreProvider } from './context/StoreContext';
@@ -47,7 +48,7 @@ function App() {
     palette: {
       mode: 'light',
     },
-  }); // Light MUI theme
+  });
 
   return (
     <ChakraProvider value={defaultSystem}>
@@ -86,6 +87,7 @@ function App() {
               {/* Auth Routes */}
               <Route path="/login" element={<Login />} />
               <Route path="/signup" element={<Signup />} />
+              <Route path="/auth/callback" element={<AuthCallback />} />
 
               {/* Admin Dashboard Routes */}
               <Route path="/dashboard" element={<Layout />}>

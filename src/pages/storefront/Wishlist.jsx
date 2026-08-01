@@ -60,7 +60,7 @@ const Wishlist = () => {
     if (wishlistItems.length === 0) {
         return (
             <div className="wishlist-page flex-center" style={{ minHeight: '60vh', flexDirection: 'column', gap: '2rem' }}>
-                <div className="glass-panel flex-center" style={{ width: '100px', height: '100px', borderRadius: '50%', background: 'rgba(236, 72, 153, 0.1)', color: 'var(--primary)' }}>
+                <div className="glass-panel flex-center" style={{ width: '100px', height: '100px', borderRadius: '50%', background: 'rgba(0,0,0,0.05)', color: '#374151' }}>
                     <Heart size={48} />
                 </div>
                 <div style={{ textAlign: 'center' }}>
@@ -74,7 +74,7 @@ const Wishlist = () => {
 
     return (
         <div className="wishlist-page fade-in" style={{ padding: '2rem', maxWidth: '1200px', margin: '0 auto' }}>
-            <h1 className="hero-title" style={{ marginBottom: '3rem' }}>Your <span className="text-gradient">Wishlist</span></h1>
+            <h1 style={{ marginBottom: '3rem', fontSize: 'clamp(2rem, 5vw, 2.75rem)', fontWeight: '900', color: '#111827', letterSpacing: '-0.02em' }}>Your Wishlist</h1>
 
             <div className="wishlist-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))', gap: '2rem' }}>
                 {wishlistItems.map((product) => (

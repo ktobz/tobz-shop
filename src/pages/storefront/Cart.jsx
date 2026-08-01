@@ -13,7 +13,7 @@ const Cart = () => {
     if (cartItems.length === 0) {
         return (
             <div className="cart-page flex-center" style={{ minHeight: '60vh', flexDirection: 'column', gap: '2rem' }}>
-                <div className="glass-panel flex-center" style={{ width: '100px', height: '100px', borderRadius: '50%', background: 'rgba(236, 72, 153, 0.1)', color: 'var(--primary)' }}>
+                <div className="glass-panel flex-center" style={{ width: '100px', height: '100px', borderRadius: '50%', background: 'rgba(0,0,0,0.05)', color: '#374151' }}>
                     <ShoppingBag size={48} />
                 </div>
                 <div style={{ textAlign: 'center' }}>
@@ -27,7 +27,7 @@ const Cart = () => {
 
     return (
         <div className="cart-page fade-in" style={{ padding: '2rem', maxWidth: '1200px', margin: '0 auto' }}>
-            <h1 className="hero-title" style={{ marginBottom: '3rem' }}>Your <span className="text-gradient">Shopping Cart</span></h1>
+            <h1 style={{ marginBottom: '3rem', fontSize: 'clamp(2rem, 5vw, 2.75rem)', fontWeight: '900', color: '#111827', letterSpacing: '-0.02em' }}>Your Shopping Cart</h1>
 
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 350px', gap: '2rem', alignItems: 'start' }}>
                 <div className="cart-items-list" style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
@@ -36,7 +36,7 @@ const Cart = () => {
                             <div className="cart-img" style={{ height: '100px', width: '100px', background: `white url(${item.image}) center/contain no-repeat`, borderRadius: '12px' }}></div>
                             <div>
                                 <h3 style={{ marginBottom: '0.5rem' }}>{item.title}</h3>
-                                <p style={{ color: 'var(--primary)', fontWeight: '700', fontSize: '1.1rem' }}>${item.price.toFixed(2)}</p>
+                                <p style={{ color: '#111827', fontWeight: '700', fontSize: '1.1rem' }}>${item.price.toFixed(2)}</p>
                             </div>
                             <div style={{ display: 'flex', alignItems: 'center', gap: '1.5rem' }}>
                                 <div className="quantity-controls" style={{ display: 'flex', alignItems: 'center', gap: '1rem', background: 'rgba(255,255,255,0.05)', padding: '0.5rem', borderRadius: '8px' }}>

@@ -1,74 +1,100 @@
-import { createContext, useState, useEffect } from 'react';
+import { createContext, useState, useEffect, useCallback } from 'react';
+import { authAPI } from '../services/api';
 import { supabase } from '../config/supabase';
 
 export const AuthContext = createContext();
+
+const enrichUser = (apiUser) => {
+    if (!apiUser) {
+        return null;
+    }
+
+    return {
+        ...apiUser,
+        displayName: apiUser.username || apiUser.email.split('@')[0],
+        user_metadata: {
+            full_name: apiUser.username,
+            name: apiUser.username,
+            avatar_url: null,
+        },
+    };
+};
 
 export const AuthProvider = ({ children }) => {
     const [user, setUser] = useState(null);
     const [loading, setLoading] = useState(true);
 
-    useEffect(() => {
-        // Get initial session
-        const getSession = async () => {
-            const { data: { session } } = await supabase.auth.getSession();
-            setUser(session?.user ?? null);
-            setLoading(false);
-        };
-
-        getSession();
-
-        // Listen for auth changes
-        const {
-            data: { subscription },
-        } = supabase.auth.onAuthStateChange((_event, session) => {
-            setUser(session?.user ?? null);
-            setLoading(false);
-        });
-
-        return () => subscription.unsubscribe();
+    const setSessionUser = useCallback((nextUser) => {
+        setUser(enrichUser(nextUser));
     }, []);
 
+    useEffect(() => {
+        const checkAuth = async () => {
+            try {
+                if (authAPI.isAuthenticated()) {
+                    const profile = await authAPI.getProfile();
+                    setSessionUser(profile.user);
+                }
+            } catch (error) {
+                console.error('Failed to restore auth session', error);
+                authAPI.logout();
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        checkAuth();
+    }, [setSessionUser]);
+
+    useEffect(() => {
+        const { data: { subscription } } = supabase.auth.onAuthStateChange(async (event, session) => {
+            if (event === 'SIGNED_IN' && session?.access_token) {
+                try {
+                    const data = await authAPI.googleLogin(session.access_token);
+                    setSessionUser(data.user);
+                } catch (err) {
+                    console.error('Failed to exchange Supabase session:', err);
+                }
+            }
+        });
+
+        return () => { subscription?.unsubscribe(); };
+    }, [setSessionUser]);
+
     const login = async (email, password) => {
-        const { data, error } = await supabase.auth.signInWithPassword({
-            email,
-            password,
-        });
-        if (error) throw error;
-        return data.user;
+        const data = await authAPI.login(email, password);
+        setSessionUser(data.user);
+        return enrichUser(data.user);
     };
 
-    const signup = async (name, email, password) => {
-        const { data, error } = await supabase.auth.signUp({
-            email,
-            password,
-            options: {
-                data: {
-                    full_name: name,
-                },
-            },
-        });
-        if (error) throw error;
-        return data.user;
+    const signup = async (username, email, password) => {
+        const data = await authAPI.register(username, email, password);
+        setSessionUser(data.user);
+        return enrichUser(data.user);
     };
 
-    const loginWithGoogle = async () => {
-        const { data, error } = await supabase.auth.signInWithOAuth({
-            provider: 'google',
-            options: {
-                redirectTo: `${window.location.origin}/`,
-            },
-        });
-        if (error) throw error;
-        return data;
+    const loginWithGoogle = async (accessToken) => {
+        const data = await authAPI.googleLogin(accessToken);
+        setSessionUser(data.user);
+        return enrichUser(data.user);
     };
 
     const logout = async () => {
-        const { error } = await supabase.auth.signOut();
-        if (error) throw error;
+        authAPI.logout();
+        setSessionUser(null);
     };
 
     return (
-        <AuthContext.Provider value={{ user, login, signup, logout, loginWithGoogle, loading }}>
+        <AuthContext.Provider value={{
+            user,
+            login,
+            signup,
+            logout,
+            loginWithGoogle,
+            loading,
+            isMockAuth: false,
+            isConfigured: true,
+        }}>
             {children}
         </AuthContext.Provider>
     );

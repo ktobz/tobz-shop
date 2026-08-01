@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { Search, Filter } from 'lucide-react';
-import { fetchProducts, getCategories } from '../../services/mockApi';
+import { productAPI } from '../../services/api';
 import ProductCard from '../../components/storefront/ProductCard';
 
 import './ProductCatalog.scss';
@@ -19,10 +19,11 @@ const ProductCatalog = () => {
     const loadProducts = useCallback(async () => {
         try {
             setLoading(true);
-            const response = await fetchProducts({ search, category, page: currentPage, limit });
+            const response = await productAPI.getProducts({ search, category, page: currentPage, limit });
             setProducts(response.data);
             setTotal(response.total);
         } catch (err) {
+            console.error('Failed to load products:', err);
             setError(err.message);
         } finally {
             setLoading(false);
@@ -40,7 +41,7 @@ const ProductCatalog = () => {
     useEffect(() => {
         const loadCategories = async () => {
             try {
-                const cats = await getCategories();
+                const cats = await productAPI.getCategories();
                 setCategories(cats);
             } catch (err) {
                 console.error('Failed to load categories:', err);
@@ -53,7 +54,7 @@ const ProductCatalog = () => {
         return (
             <div className="product-catalog">
                 <div className="catalog-header">
-                    <h1>Product <span className="text-gradient">Catalog</span></h1>
+                    <h1>Product Catalog</h1>
                     <p className="catalog-subtitle">Loading amazing products for you...</p>
                 </div>
                 <div className="loading-grid">
@@ -85,27 +86,49 @@ const ProductCatalog = () => {
     return (
         <div className="product-catalog fade-in">
             <div className="catalog-header">
-                <h1>Product <span className="text-gradient">Catalog</span></h1>
+                <h1>Product Catalog</h1>
                 <p className="catalog-subtitle">Browse our complete collection of premium products</p>
             </div>
 
-            <div className="filters-section" style={{ marginBottom: '2rem', display: 'flex', gap: '1rem', alignItems: 'center' }}>
-                <div className="search-bar" style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', background: 'var(--glass-bg)', padding: '0.5rem 1rem', borderRadius: '8px', flex: 1 }}>
-                    <Search size={18} />
+            <div className="filters-section" style={{ marginBottom: '2.5rem', display: 'flex', gap: '1rem', alignItems: 'center' }}>
+                <div className="search-bar" style={{
+                    display: 'flex', alignItems: 'center', gap: '0.75rem',
+                    background: '#111827',
+                    padding: '0.8rem 1.25rem',
+                    borderRadius: '14px',
+                    flex: 1,
+                    boxShadow: '0 2px 8px rgba(0,0,0,0.08)',
+                    transition: 'box-shadow 0.25s ease',
+                }}>
+                    <Search size={18} color="#9ca3af" />
                     <input
                         type="text"
                         placeholder="Search products..."
                         value={search}
                         onChange={(e) => setSearch(e.target.value)}
-                        style={{ border: 'none', background: 'transparent', outline: 'none', flex: 1, color: 'var(--text-color)' }}
+                        style={{
+                            border: 'none', background: 'transparent', outline: 'none',
+                            flex: 1, color: '#f9fafb', fontSize: '0.95rem',
+                            fontWeight: 500,
+                        }}
                     />
                 </div>
                 <div className="category-filter" style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                    <Filter size={18} />
+                    <Filter size={18} color="#6b7280" />
                     <select
                         value={category}
                         onChange={(e) => setCategory(e.target.value)}
-                        style={{ padding: '0.5rem', borderRadius: '4px', border: '1px solid var(--border-color)', background: 'var(--bg-color)' }}
+                        style={{
+                            padding: '0.7rem 1rem',
+                            borderRadius: '12px',
+                            border: '1px solid rgba(209,213,219,0.5)',
+                            background: 'rgba(255,255,255,0.7)',
+                            color: '#374151',
+                            fontWeight: 600,
+                            fontSize: '0.875rem',
+                            cursor: 'pointer',
+                            outline: 'none',
+                        }}
                     >
                         <option value="">All Categories</option>
                         {categories.map(cat => (

@@ -167,7 +167,7 @@ const Checkout = () => {
                 </SummaryRow>
                 <SummaryRow bold large divider style={{ marginTop: '1rem' }}>
                     <span>Total</span>
-                    <span className="text-gradient">${total.toFixed(2)}</span>
+                    <span>${total.toFixed(2)}</span>
                 </SummaryRow>
 
                 <div style={{ marginTop: '3rem', padding: '1.5rem', background: 'rgba(196, 165, 232, 0.05)', borderRadius: '12px', border: '1px dashed var(--primary)' }}>

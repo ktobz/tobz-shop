@@ -108,7 +108,7 @@ const LandingPage = () => {
 
             <section className="featured-section" style={{ padding: '4rem 2rem' }}>
                 <div className="section-header">
-                    <h2>Featured <span className="text-gradient">Collections</span></h2>
+                    <h2>Featured Collections</h2>
                     <p>Hand-picked favorites just for you</p>
                 </div>
                 {featuredProducts.length > 0 ? (

@@ -43,19 +43,11 @@ const ResourcesHeader = styled.div`
 
 const HeroTitle = styled.h1`
   font-size: clamp(2rem, 5vw, 3rem);
-  font-weight: 800;
-  font-family: var(--font-display);
+  font-weight: 900;
   margin-bottom: 1rem;
-  color: var(--text-primary);
-  letter-spacing: -0.02em;
+  color: #111827;
+  letter-spacing: -0.03em;
   line-height: 1.15;
-`;
-
-const TextGradient = styled.span`
-  background: var(--gradient-primary);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
 `;
 
 const Subtitle = styled.p`
@@ -77,40 +69,45 @@ const ResourcesGrid = styled.div`
 `;
 
 const ResourceCard = styled.div`
-  background: var(--bg-card);
-  backdrop-filter: blur(12px);
-  border: 1px solid var(--glass-border);
-  border-radius: var(--radius-2xl);
-  padding: 2.5rem 2rem;
+  background: rgba(255, 255, 255, 0.35);
+  backdrop-filter: blur(10px) saturate(180%);
+  -webkit-backdrop-filter: blur(10px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  border-radius: 24px;
+  padding: 3rem 2rem;
   text-align: center;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 1.5rem;
-  transition: all var(--transition-base);
+  gap: 1.25rem;
+  transition: all 0.4s cubic-bezier(0.22, 1, 0.36, 1);
   position: relative;
   overflow: hidden;
+  box-shadow:
+    0 1px 3px rgba(0, 0, 0, 0.04),
+    0 6px 16px rgba(0, 0, 0, 0.06);
 
   &:hover {
-    transform: translateY(-8px);
-    box-shadow: var(--shadow-lg);
-    border-color: var(--primary-light);
+    transform: translateY(-6px);
+    box-shadow:
+      0 2px 6px rgba(0, 0, 0, 0.05),
+      0 12px 36px rgba(0, 0, 0, 0.1),
+      0 0 0 1px rgba(0, 0, 0, 0.06);
+    border-color: rgba(156, 163, 175, 0.5);
   }
 
   @media (max-width: 768px) {
     padding: 2rem 1.5rem;
+    border-radius: 20px;
   }
 `;
 
 const ResourceCardImage = styled.div`
   position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 150px;
-  background: ${props => props.bgImage ? `url(${props.bgImage}) center/cover no-repeat` : 'linear-gradient(135deg, #362952, #453965)'};
-  opacity: 0.4;
+  inset: 0;
+  background: ${props => props.bgImage ? `url(${props.bgImage}) center/cover no-repeat` : 'linear-gradient(135deg, #374151, #1f2937)'};
   z-index: 0;
+  border-radius: 20px;
 `;
 
 const ResourceCardContent = styled.div`
@@ -121,70 +118,63 @@ const ResourceCardContent = styled.div`
 `;
 
 const ResourceIcon = styled.div`
-  width: 64px;
-  height: 64px;
-  border-radius: var(--radius-lg);
-  background: linear-gradient(135deg, rgba(196, 165, 232, 0.2), rgba(255, 186, 210, 0.15));
+  width: 56px;
+  height: 56px;
+  border-radius: 16px;
+  background: #111827;
   display: flex;
   align-items: center;
   justify-content: center;
-  color: var(--primary);
-  position: relative;
-  margin: 0 auto 1rem;
+  color: #fff;
+  margin: 0 auto 0.5rem;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.25);
+  transition: transform 0.3s ease;
 
-  &::after {
-    content: '✦';
-    position: absolute;
-    top: -5px;
-    left: -5px;
-    font-size: 0.9rem;
-    color: var(--secondary);
-    animation: twinkle 3.2s ease-in-out infinite;
-  }
-
-  @keyframes twinkle {
-    0%, 100% { opacity: 0.3; }
-    50% { opacity: 1; }
+  .card:hover & {
+    transform: scale(1.06);
   }
 `;
 
 const CardTitle = styled.h3`
-  font-size: 1.3rem;
-  font-weight: 700;
-  font-family: var(--font-display);
-  color: var(--text-primary);
-  margin-bottom: 0.75rem;
+  font-size: 1.2rem;
+  font-weight: 800;
+  color: #111827;
+  margin-bottom: 0.5rem;
+  letter-spacing: -0.01em;
+  text-shadow: 0 1px 2px rgba(255,255,255,0.5);
 `;
 
 const CardDescription = styled.p`
-  color: var(--text-secondary);
-  line-height: 1.6;
+  color: #374151;
+  line-height: 1.55;
   margin-bottom: 1rem;
-  font-size: 0.95rem;
+  font-size: 0.92rem;
+  font-weight: 500;
 `;
 
 const ResourceLinks = styled.ul`
   list-style: none;
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
+  gap: 0.35rem;
   width: 100%;
   align-items: center;
+  padding: 0;
 `;
 
 const ResourceLink = styled(NavLink)`
-  color: var(--primary);
+  color: #374151;
   font-weight: 600;
   text-decoration: none;
-  transition: all var(--transition-fast);
+  transition: all 0.18s ease;
   display: inline-block;
-  font-size: 0.9rem;
-  padding: 0.25rem 0.5rem;
-  border-radius: var(--radius-sm);
+  font-size: 0.875rem;
+  padding: 0.35rem 0.75rem;
+  border-radius: 8px;
 
   &:hover {
-    text-decoration: underline;
-    background: rgba(196, 165, 232, 0.1);
+    background: rgba(0, 0, 0, 0.06);
+    color: #111827;
   }
 `;
 
@@ -199,27 +189,31 @@ const HelpSection = styled.section`
 
 const HelpCard = styled.div`
   background: ${props => props.bgImage
-    ? `linear-gradient(rgba(0,0,0,0.8), rgba(0,0,0,0.8)), url(${props.bgImage}) center/cover no-repeat`
-    : 'var(--bg-card)'};
-  backdrop-filter: blur(12px);
-  border: 1px solid var(--glass-border);
-  border-radius: var(--radius-2xl);
+    ? `linear-gradient(rgba(255,255,255,0.85), rgba(255,255,255,0.85)), url(${props.bgImage}) center/cover no-repeat`
+    : 'rgba(255,255,255,0.65)'};
+  backdrop-filter: blur(22px) saturate(200%);
+  -webkit-backdrop-filter: blur(22px) saturate(200%);
+  border: 1px solid rgba(255, 255, 255, 0.75);
+  border-radius: 24px;
   padding: 3rem;
   max-width: 600px;
   margin: 0 auto;
-  box-shadow: var(--shadow-lg);
+  box-shadow:
+    0 2px 8px rgba(0, 0, 0, 0.05),
+    0 8px 32px rgba(0, 0, 0, 0.08);
 
   @media (max-width: 768px) {
     padding: 2rem 1.5rem;
+    border-radius: 20px;
   }
 `;
 
 const HelpTitle = styled.h2`
   font-size: 2rem;
-  font-weight: 800;
-  font-family: var(--font-display);
+  font-weight: 900;
   margin-bottom: 1rem;
-  color: var(--text-primary);
+  color: #111827;
+  letter-spacing: -0.02em;
 
   @media (max-width: 768px) {
     font-size: 1.5rem;
@@ -227,47 +221,32 @@ const HelpTitle = styled.h2`
 `;
 
 const HelpText = styled.p`
-  color: var(--text-secondary);
+  color: #6b7280;
   font-size: 1.05rem;
   margin-bottom: 2rem;
   line-height: 1.6;
 `;
 
 const PrimaryButton = styled.button`
-  background: var(--gradient-primary);
+  background: #111827;
   color: white;
-  padding: 0.75rem 1.5rem;
-  border-radius: var(--radius-full);
-  font-weight: 600;
+  padding: 0.85rem 2rem;
+  border-radius: 12px;
+  font-weight: 700;
   font-size: 0.9rem;
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
-  transition: all var(--transition-base);
+  transition: all 0.25s ease;
   border: none;
   cursor: pointer;
-  box-shadow: var(--shadow-md);
-  position: relative;
-  overflow: hidden;
-
-  &::before {
-    content: '✦';
-    position: absolute;
-    right: -20px;
-    opacity: 0;
-    transition: all var(--transition-base);
-    color: rgba(255, 255, 255, 0.8);
-  }
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+  letter-spacing: 0.02em;
 
   &:hover {
+    background: #374151;
     transform: translateY(-2px);
-    box-shadow: var(--shadow-lg);
-    padding-right: 2rem;
-  }
-
-  &:hover::before {
-    right: 1rem;
-    opacity: 1;
+    box-shadow: 0 6px 24px rgba(0, 0, 0, 0.25);
   }
 
   &:active {
@@ -281,24 +260,25 @@ const BackToTopButton = styled.button`
   right: 2rem;
   width: 50px;
   height: 50px;
-  border-radius: var(--radius-full);
-  background: var(--gradient-primary);
+  border-radius: 14px;
+  background: #111827;
   color: white;
   border: none;
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: var(--shadow-lg);
-  transition: all var(--transition-base);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+  transition: all 0.3s ease;
   z-index: 1000;
   opacity: ${props => props.visible ? 1 : 0};
   visibility: ${props => props.visible ? 'visible' : 'hidden'};
   transform: ${props => props.visible ? 'translateY(0)' : 'translateY(20px)'};
 
   &:hover {
+    background: #374151;
     transform: translateY(-4px);
-    box-shadow: var(--shadow-xl);
+    box-shadow: 0 8px 28px rgba(0, 0, 0, 0.3);
   }
 
   @media (max-width: 768px) {
@@ -398,9 +378,7 @@ const Resources = () => {
   return (
     <ResourcesPage>
       <ResourcesHeader>
-        <HeroTitle>
-          Apps & <TextGradient>Resources</TextGradient>
-        </HeroTitle>
+        <HeroTitle>Apps &amp; Resources</HeroTitle>
         <Subtitle>Discover powerful applications and helpful guides for 1shopapp</Subtitle>
       </ResourcesHeader>
 

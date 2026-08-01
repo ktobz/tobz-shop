@@ -88,7 +88,7 @@ const JoinJourney = () => {
 
             <ContentSection>
                 <div style={{ textAlign: 'center', marginBottom: '5rem' }}>
-                    <h2 style={{ fontSize: '2.5rem', fontWeight: '800' }}>Why Join <span className="text-gradient">1shopapp?</span></h2>
+                    <h2 style={{ fontSize: '2.5rem', fontWeight: '800' }}>Why Join 1shopapp?</h2>
                     <p style={{ color: 'var(--text-secondary)', marginTop: '1rem' }}>We're not just building a product; we're building a movement.</p>
                 </div>
 

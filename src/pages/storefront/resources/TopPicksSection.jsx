@@ -121,7 +121,7 @@ const CardImage = styled.div`
   height: 200px;
   background: ${props => props.bgImage
     ? `url(${props.bgImage}) center/cover no-repeat`
-    : 'linear-gradient(135deg, #362952, #453965)'};
+    : 'linear-gradient(135deg, #374151, #1f2937)'};
   position: relative;
   overflow: hidden;
 
@@ -260,7 +260,7 @@ const TopPicksSection = ({ user }) => {
             Top Picks
           </SectionTitle>
           <SectionSubtitle>
-            {user ? `Personalized recommendations for ${user.name}` : 'Curated resources just for you'}
+            {user ? `Personalized recommendations for ${user.displayName}` : 'Curated resources just for you'}
           </SectionSubtitle>
         </div>
       </SectionHeader>

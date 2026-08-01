@@ -160,7 +160,7 @@ const StorefrontNavbar = () => {
                     {/* User */}
                     {user ? (
                         <div className="user-menu">
-                            <span className="user-name desktop-only">Hi, {user.name.split(' ')[0]}</span>
+                            <span className="user-name desktop-only">Hi, {user.displayName.split(' ')[0]}</span>
                             <button onClick={handleLogout} className="icon-link" title="Logout">
                                 <LogOut size={19} />
                             </button>
