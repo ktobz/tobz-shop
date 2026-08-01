@@ -90,45 +90,21 @@ const ProductCatalog = () => {
                 <p className="catalog-subtitle">Browse our complete collection of premium products</p>
             </div>
 
-            <div className="filters-section" style={{ marginBottom: '2.5rem', display: 'flex', gap: '1rem', alignItems: 'center' }}>
-                <div className="search-bar" style={{
-                    display: 'flex', alignItems: 'center', gap: '0.75rem',
-                    background: '#111827',
-                    padding: '0.8rem 1.25rem',
-                    borderRadius: '14px',
-                    flex: 1,
-                    boxShadow: '0 2px 8px rgba(0,0,0,0.08)',
-                    transition: 'box-shadow 0.25s ease',
-                }}>
-                    <Search size={18} color="#9ca3af" />
+            <div className="filters-section">
+                <div className="search-bar">
+                    <Search size={18} className="search-icon" />
                     <input
                         type="text"
                         placeholder="Search products..."
                         value={search}
                         onChange={(e) => setSearch(e.target.value)}
-                        style={{
-                            border: 'none', background: 'transparent', outline: 'none',
-                            flex: 1, color: '#f9fafb', fontSize: '0.95rem',
-                            fontWeight: 500,
-                        }}
                     />
                 </div>
-                <div className="category-filter" style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                    <Filter size={18} color="#6b7280" />
+                <div className="category-filter">
+                    <Filter size={18} className="filter-icon" />
                     <select
                         value={category}
                         onChange={(e) => setCategory(e.target.value)}
-                        style={{
-                            padding: '0.7rem 1rem',
-                            borderRadius: '12px',
-                            border: '1px solid rgba(209,213,219,0.5)',
-                            background: 'rgba(255,255,255,0.7)',
-                            color: '#374151',
-                            fontWeight: 600,
-                            fontSize: '0.875rem',
-                            cursor: 'pointer',
-                            outline: 'none',
-                        }}
                     >
                         <option value="">All Categories</option>
                         {categories.map(cat => (

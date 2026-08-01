@@ -69,10 +69,10 @@ const ResourcesGrid = styled.div`
 `;
 
 const ResourceCard = styled.div`
-  background: rgba(255, 255, 255, 0.35);
-  backdrop-filter: blur(10px) saturate(180%);
-  -webkit-backdrop-filter: blur(10px) saturate(180%);
-  border: 1px solid rgba(255, 255, 255, 0.6);
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(14px) saturate(180%);
+  -webkit-backdrop-filter: blur(14px) saturate(180%);
+  border: 1px solid rgba(0, 0, 0, 0.08);
   border-radius: 24px;
   padding: 3rem 2rem;
   text-align: center;
@@ -84,16 +84,16 @@ const ResourceCard = styled.div`
   position: relative;
   overflow: hidden;
   box-shadow:
-    0 1px 3px rgba(0, 0, 0, 0.04),
-    0 6px 16px rgba(0, 0, 0, 0.06);
+    0 1px 3px rgba(0, 0, 0, 0.05),
+    0 6px 20px rgba(0, 0, 0, 0.08);
 
   &:hover {
     transform: translateY(-6px);
     box-shadow:
-      0 2px 6px rgba(0, 0, 0, 0.05),
-      0 12px 36px rgba(0, 0, 0, 0.1),
+      0 2px 6px rgba(0, 0, 0, 0.06),
+      0 12px 40px rgba(0, 0, 0, 0.12),
       0 0 0 1px rgba(0, 0, 0, 0.06);
-    border-color: rgba(156, 163, 175, 0.5);
+    border-color: rgba(0, 0, 0, 0.15);
   }
 
   @media (max-width: 768px) {

@@ -37,19 +37,19 @@ const SectionHeader = styled.div`
 const SectionTitle = styled.h2`
   font-size: clamp(1.75rem, 4vw, 2.5rem);
   font-weight: 800;
-  font-family: var(--font-display);
-  color: var(--text-primary);
+  color: #111827;
   display: flex;
   align-items: center;
   gap: 0.75rem;
+  letter-spacing: -0.02em;
 
   svg {
-    color: var(--primary);
+    color: #374151;
   }
 `;
 
 const SectionSubtitle = styled.p`
-  color: var(--text-secondary);
+  color: #6b7280;
   font-size: 1rem;
   margin-top: 0.5rem;
 `;
@@ -98,21 +98,27 @@ const CardsGrid = styled.div`
 `;
 
 const PickCard = styled.div`
-  background: var(--bg-card);
-  backdrop-filter: blur(12px);
-  border: 1px solid var(--glass-border);
-  border-radius: var(--radius-xl);
+  background: rgba(255, 255, 255, 0.75);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  border-radius: 20px;
   overflow: hidden;
-  transition: all var(--transition-base);
+  transition: all 0.35s cubic-bezier(0.22, 1, 0.36, 1);
   cursor: pointer;
   position: relative;
   display: flex;
   flex-direction: column;
+  box-shadow:
+    0 1px 3px rgba(0, 0, 0, 0.04),
+    0 4px 12px rgba(0, 0, 0, 0.06);
 
   &:hover {
     transform: translateY(-8px);
-    box-shadow: var(--shadow-lg);
-    border-color: var(--primary-light);
+    box-shadow:
+      0 2px 6px rgba(0, 0, 0, 0.06),
+      0 12px 36px rgba(0, 0, 0, 0.1);
+    border-color: rgba(0, 0, 0, 0.15);
   }
 `;
 
@@ -142,23 +148,23 @@ const WatchlistButton = styled.button`
   right: 0.75rem;
   width: 40px;
   height: 40px;
-  border-radius: var(--radius-full);
+  border-radius: 9999px;
   background: rgba(255, 255, 255, 0.95);
   border: none;
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
-  color: ${props => props.active ? 'var(--danger)' : 'var(--text-secondary)'};
-  transition: all var(--transition-base);
-  box-shadow: var(--shadow-md);
+  color: ${props => props.active ? '#ef4444' : '#6b7280'};
+  transition: all 0.25s ease;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
   backdrop-filter: blur(10px);
   z-index: 2;
 
   &:hover {
     transform: scale(1.1);
     background: white;
-    color: var(--danger);
+    color: #ef4444;
   }
 
   svg {
@@ -177,8 +183,7 @@ const CardContent = styled.div`
 const CardTitle = styled.h3`
   font-size: 1.1rem;
   font-weight: 700;
-  font-family: var(--font-display);
-  color: var(--text-primary);
+  color: #111827;
   line-height: 1.3;
   display: -webkit-box;
   -webkit-line-clamp: 2;
@@ -187,7 +192,7 @@ const CardTitle = styled.h3`
 `;
 
 const CardDescription = styled.p`
-  color: var(--text-secondary);
+  color: #374151;
   font-size: 0.85rem;
   line-height: 1.5;
   display: -webkit-box;
@@ -219,10 +224,10 @@ const CategoryBadge = styled.span`
   font-size: 0.7rem;
   text-transform: uppercase;
   font-weight: 600;
-  color: var(--primary);
-  background: rgba(196, 165, 232, 0.18);
+  color: #374151;
+  background: rgba(0, 0, 0, 0.06);
   padding: 0.3rem 0.8rem;
-  border-radius: var(--radius-full);
+  border-radius: 9999px;
   letter-spacing: 0.5px;
 `;
 
@@ -248,7 +253,31 @@ const TopPicksSection = ({ user }) => {
   }, []);
 
   if (loading) {
-    // ... loading state unchanged ...
+    return (
+      <SectionContainer>
+        <SectionHeader>
+          <div>
+            <SectionTitle>
+              <TrendingUp size={28} />
+              Top Picks
+            </SectionTitle>
+            <SectionSubtitle>Loading curated picks for you...</SectionSubtitle>
+          </div>
+        </SectionHeader>
+        <CardsGrid>
+          {[...Array(4)].map((_, i) => (
+            <PickCard key={i}>
+              <CardImage />
+              <CardContent>
+                <div style={{ height: '16px', width: '60%', background: '#e5e7eb', borderRadius: '8px', marginBottom: '8px' }} />
+                <div style={{ height: '14px', width: '90%', background: '#e5e7eb', borderRadius: '8px' }} />
+                <div style={{ height: '14px', width: '40%', background: '#e5e7eb', borderRadius: '8px' }} />
+              </CardContent>
+            </PickCard>
+          ))}
+        </CardsGrid>
+      </SectionContainer>
+    );
   }
 
   return (
@@ -303,8 +332,8 @@ const TopPicksSection = ({ user }) => {
                       display: 'flex',
                       alignItems: 'center',
                       justifyContent: 'center',
-                      color: 'var(--primary)',
-                      boxShadow: 'var(--shadow-md)',
+                      color: '#374151',
+                      boxShadow: '0 2px 8px rgba(0,0,0,0.12)',
                       zIndex: 2
                     }}
                   >

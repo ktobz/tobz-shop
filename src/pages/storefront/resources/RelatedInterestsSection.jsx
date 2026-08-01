@@ -22,20 +22,20 @@ const SectionHeader = styled.div`
 const SectionTitle = styled.h2`
   font-size: clamp(1.75rem, 4vw, 2.5rem);
   font-weight: 800;
-  font-family: var(--font-display);
-  color: var(--text-primary);
+  color: #111827;
   display: flex;
   align-items: center;
   gap: 0.75rem;
   margin-bottom: 0.5rem;
+  letter-spacing: -0.02em;
 
   svg {
-    color: var(--primary);
+    color: #374151;
   }
 `;
 
 const SectionSubtitle = styled.p`
-  color: var(--text-secondary);
+  color: #6b7280;
   font-size: 1rem;
 `;
 
@@ -51,18 +51,22 @@ const InterestsGrid = styled.div`
 `;
 
 const InterestCard = styled.div`
-  background: var(--bg-card);
-  backdrop-filter: blur(12px);
-  border: 1px solid var(--glass-border);
-  border-radius: var(--radius-xl);
+  background: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  border-radius: 20px;
   padding: 2rem;
-  transition: all var(--transition-base);
+  transition: all 0.35s cubic-bezier(0.22, 1, 0.36, 1);
   cursor: pointer;
   position: relative;
   overflow: hidden;
   display: flex;
   flex-direction: column;
   gap: 1rem;
+  box-shadow:
+    0 1px 3px rgba(0, 0, 0, 0.04),
+    0 4px 12px rgba(0, 0, 0, 0.05);
 
   &::before {
     content: '';
@@ -70,17 +74,19 @@ const InterestCard = styled.div`
     top: 0;
     left: 0;
     right: 0;
-    height: 4px;
-    background: var(--gradient-primary);
+    height: 3px;
+    background: linear-gradient(90deg, #111827, #374151, #6b7280, #374151, #111827);
     transform: scaleX(0);
     transform-origin: left;
-    transition: transform var(--transition-base);
+    transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
   }
 
   &:hover {
-    transform: translateY(-4px);
-    box-shadow: var(--shadow-lg);
-    border-color: var(--primary-light);
+    transform: translateY(-6px);
+    box-shadow:
+      0 2px 6px rgba(0, 0, 0, 0.06),
+      0 8px 24px rgba(0, 0, 0, 0.1);
+    border-color: rgba(0, 0, 0, 0.15);
 
     &::before {
       transform: scaleX(1);
@@ -88,6 +94,7 @@ const InterestCard = styled.div`
 
     .card-arrow {
       transform: translateX(4px);
+      color: #111827;
     }
   }
 `;
@@ -102,31 +109,37 @@ const CardHeader = styled.div`
 const IconWrapper = styled.div`
   width: 56px;
   height: 56px;
-  border-radius: var(--radius-lg);
-  background: linear-gradient(135deg, rgba(196, 165, 232, 0.2), rgba(255, 186, 210, 0.15));
+  border-radius: 14px;
+  background: #111827;
   display: flex;
   align-items: center;
   justify-content: center;
-  color: var(--primary);
+  color: #ffffff;
   flex-shrink: 0;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  transition: transform 0.3s ease;
+
+  ${InterestCard}:hover & {
+    transform: scale(1.08);
+  }
 `;
 
 const CardTitle = styled.h3`
   font-size: 1.25rem;
   font-weight: 700;
-  font-family: var(--font-display);
-  color: var(--text-primary);
+  color: #111827;
   flex: 1;
+  letter-spacing: -0.01em;
 `;
 
 const CardArrow = styled(ArrowRight)`
-  color: var(--primary);
-  transition: transform var(--transition-base);
+  color: #6b7280;
+  transition: all 0.3s ease;
   flex-shrink: 0;
 `;
 
 const CardDescription = styled.p`
-  color: var(--text-secondary);
+  color: #374151;
   font-size: 0.95rem;
   line-height: 1.6;
   margin-bottom: 0.5rem;
@@ -142,9 +155,9 @@ const CardTags = styled.div`
 const Tag = styled.span`
   font-size: 0.75rem;
   padding: 0.35rem 0.75rem;
-  background: rgba(196, 165, 232, 0.15);
-  color: var(--primary);
-  border-radius: var(--radius-full);
+  background: rgba(0, 0, 0, 0.06);
+  color: #374151;
+  border-radius: 9999px;
   font-weight: 600;
 `;
 
