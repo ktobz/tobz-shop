@@ -3,6 +3,7 @@ import { DollarSign, Users, ShoppingCart, TrendingUp, RefreshCw, Download } from
 import { useToast } from '../context/ToastContext';
 import { useCountUp } from '../hooks/useCountUp';
 import { exportCSV } from '../utils/csvExport';
+import { fetchAnalytics, getUsers, getOrders } from '../services/mockApi';
 import styled from '@emotion/styled';
 
 const GlassCard = styled.div`
@@ -66,26 +67,30 @@ const Dashboard = () => {
   const { addToast } = useToast();
   const [analytics, setAnalytics] = useState(null);
   const [orders, setOrders] = useState([]);
+  const [userCount, setUserCount] = useState(0);
   const [loading, setLoading] = useState(true);
   const [refreshing, setRefreshing] = useState(false);
 
   const salesCount = useCountUp(analytics?.totalSales || 0, 1000);
   const ordersCount = useCountUp(analytics?.totalOrders || 0, 900);
   const avgValue = useCountUp(analytics?.averageOrderValue || 0, 800);
+  const usersCount = useCountUp(userCount, 900);
 
   const loadData = async () => {
     try {
-      const [{ default: api }] = await Promise.all([import('../services/mockApi')]);
-      const [analyticsData, ordersData] = await Promise.all([
-        api.fetchAnalytics(),
-        api.getOrders(),
-        api.getUsers(),
-      ]).then(([a, o, u]) => [a, o.map(order => ({
-        ...order,
-        customer: u.find(usr => usr.id === order.userId)?.name || 'Unknown',
-      }))]);
+      const [analyticsData, usersData, ordersData] = await Promise.all([
+        fetchAnalytics(),
+        getUsers(),
+        getOrders(),
+      ]);
       setAnalytics(analyticsData);
-      setOrders(ordersData);
+      setUserCount(usersData.length);
+      setOrders(
+        ordersData.map((order) => ({
+          ...order,
+          customer: usersData.find((u) => u.id === order.userId)?.name || 'Unknown',
+        }))
+      );
     } catch (err) {
       addToast('Failed to load dashboard data', 'error');
     } finally {
@@ -129,7 +134,7 @@ const Dashboard = () => {
     },
     {
       label: 'Active Users', icon: Users, trend: '+5%',
-      displayValue: '230',
+      displayValue: usersCount.count.toLocaleString(),
       sparklineData: mockSparkData.users,
     },
     {
