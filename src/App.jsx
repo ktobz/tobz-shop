@@ -12,6 +12,9 @@ import Layout from './components/Layout';
 import Dashboard from './pages/Dashboard';
 import Analytics from './pages/Analytics';
 import Settings from './pages/Settings';
+import DashboardProducts from './pages/DashboardProducts';
+import DashboardOrders from './pages/DashboardOrders';
+import DashboardUsers from './pages/DashboardUsers';
 
 /* Storefront Components */
 import StorefrontLayout from './components/storefront/StorefrontLayout';
@@ -40,6 +43,7 @@ import AuthCallback from './pages/auth/AuthCallback';
 
 // Context Providers
 import { StoreProvider } from './context/StoreContext';
+import { ToastProvider } from './context/ToastContext';
 
 import './App.scss';
 
@@ -56,9 +60,10 @@ function App() {
         <CssBaseline />
         <ConfigProvider theme={{ algorithm: antdTheme.defaultAlgorithm }}>
           <StoreProvider>
-            <Routes>
-              {/* Storefront Routes */}
-              <Route path="/" element={<StorefrontLayout />}>
+            <ToastProvider>
+              <Routes>
+                {/* Storefront Routes */}
+                <Route path="/" element={<StorefrontLayout />}>
                 <Route index element={<LandingPage />} />
                 <Route path="catalog" element={<ProductCatalog />} />
                 <Route path="about" element={<About />} />
@@ -92,11 +97,15 @@ function App() {
               {/* Admin Dashboard Routes */}
               <Route path="/dashboard" element={<Layout />}>
                 <Route index element={<Dashboard />} />
+                <Route path="products" element={<DashboardProducts />} />
+                <Route path="orders" element={<DashboardOrders />} />
+                <Route path="users" element={<DashboardUsers />} />
                 <Route path="analytics" element={<Analytics />} />
                 <Route path="settings" element={<Settings />} />
               </Route>
             </Routes>
-          </StoreProvider>
+          </ToastProvider>
+        </StoreProvider>
         </ConfigProvider>
       </ThemeProvider>
     </ChakraProvider>
